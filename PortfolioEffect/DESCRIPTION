@@ -1,0 +1,16 @@
+Package: PortfolioEffect
+Type: Package
+Title: R Interface to PortfolioEffect
+Version: 1.2
+Date: 2015-08-20
+Depends: R (>= 2.13.2), methods, grid, ggplot2, rJava
+Imports: 
+LazyData: yes
+ByteCompile: TRUE
+Author: Kostin Andrey
+Maintainer: Kostin Andrey <andrey.kostin@portfolioeffect.com>
+Description: Provides R interface to PortfolioEffect service for intraday portfolio analytics with high frequency market data.
+URL: https://www.portfolioeffect.com
+License: GPL (>= 3)
+NeedsCompilation: no
+Repository: CRAN
