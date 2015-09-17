@@ -205,7 +205,7 @@ Copyright &copy; 2015 PortfolioEffect
 
 [PortfolioEffect Terms]: https://www.portfolioeffect.com/docs/terms
 [website]: https://www.portfolioeffect.com/registration
-[website downloads]: https://www.portfolioeffect.com/docs/platform/quant
+[website downloads]: https://www.portfolioeffect.com/docs/platform/quant/downloads
 [portfolio_create()]: https://www.portfolioeffect.com/docs/platform/quant/functions/general-functions/portfolio-create
 [portfolio_addPosition()]: https://www.portfolioeffect.com/docs/platform/quant/functions/general-functions/portfolio-add-position
 [symbology]: https://www.portfolioeffect.com/docs/symbology
