@@ -43,9 +43,13 @@ Start R from the command line or in your GUI editor and type
 
 			install.packages(c("rJava", "ggplot2"))
 			
-You are now ready to install the PortfolioEffect package either via CRAN
-or directly from [website downloads][] section.
+### Build R Package and Documentation			
+You are are building PortfolioEffect package from source, check out the source code from this repository
+and use R build tools to create a package:
 
+			R CMD build PortfolioEffect
+			R CMD Rd2pdf PortfolioEffect
+			  
 
 ## Account Credentials
 
