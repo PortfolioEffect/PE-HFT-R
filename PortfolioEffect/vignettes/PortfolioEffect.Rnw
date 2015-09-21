@@ -107,6 +107,7 @@ Inc.}}\\[2cm]
 \bibliographystyle{amsplain}%}
 \renewcommand{\bibname}{Contents}
 \tableofcontents
+%\VignetteIndexEntry{PorfolioEffect package}
 
 \SweaveOpts{concordance=TRUE}
 
@@ -290,7 +291,7 @@ portfolio_addPosition(portfolio,
 			quantity=c(500,600))
 
 # Single position with rebalancing
-portfolio_addPosition(portfolio, 
+portfolio_addPosition(portfolio,
 			symbol='AAPL', 
 			quantity=c(300,150), 
 			time=c("2014-09-01 09:00:00","2014-09-07 14:30:00"))

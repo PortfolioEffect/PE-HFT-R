@@ -1,6 +1,6 @@
 \name{util_setCredentials}
 \alias{util_setCredentials}
-\title{Set Credentials}
+\title{Set API Credentials}
 
 \usage{util_setCredentials(username,password,apiKey,hostname="snowfall04.snowfallsystems.com")
 }

@@ -34,9 +34,9 @@ setMethod ("show" , "portfolio" ,
 			
 			portfolio_startBatch(portfolio)
 			.jcall(portfolio@java,returnSig="V", method="createCallGroup",as.integer(9))
-			.jcall(portfolio@java,returnSig="Lcom/snowfallsystems/ice9/quant/client/result/MethodResult;", method="getMetric",paste('{"metric":"PORTFOLIO_PROFIT"}'))
-			.jcall(portfolio@java,returnSig="Lcom/snowfallsystems/ice9/quant/client/result/MethodResult;", method="getMetric",paste('{"metric":"PORTFOLIO_RETURN"}'))
-			.jcall(portfolio@java,returnSig="Lcom/snowfallsystems/ice9/quant/client/result/MethodResult;", method="getMetric",paste('{"metric":"PORTFOLIO_VALUE"}'))
+			.jcall(portfolio@java,returnSig="Lcom/portfolioeffect/quant/client/result/MethodResult;", method="getMetric",paste('{"metric":"PORTFOLIO_PROFIT"}'))
+			.jcall(portfolio@java,returnSig="Lcom/portfolioeffect/quant/client/result/MethodResult;", method="getMetric",paste('{"metric":"PORTFOLIO_RETURN"}'))
+			.jcall(portfolio@java,returnSig="Lcom/portfolioeffect/quant/client/result/MethodResult;", method="getMetric",paste('{"metric":"PORTFOLIO_VALUE"}'))
 			
 			portfolio_endBatch(portfolio)
 			
@@ -156,60 +156,106 @@ portfolio_getSettings<-function(portfolio){
 	temp$densityModel<-.jcall(portfolio@java,returnSig="S", method="getParam","densityApproxModel")
 	temp
 }
-portfolio_create<-function(
-		index,fromTime,toTime,priceDataIx){
-}
+#portfolio_create<-function(
+#		index,fromTime,toTime,priceDataIx){
+#}
 
-portfolio_create_funct=function(
-		index,fromTime,toTime){
-	util_validate()
-	portfolio=new("portfolio", java=.jnew("com.snowfallsystems.ice9.quant.client.portfolio.Portfolio",clientConnection),optimization_info=NULL)
-	result<-.jcall(portfolio@java,returnSig="Lcom/snowfallsystems/ice9/quant/client/result/MethodResult;", method="setFromTime", fromTime)
-	util_checkErrors(result)
-	result<-.jcall(portfolio@java,returnSig="Lcom/snowfallsystems/ice9/quant/client/result/MethodResult;", method="setToTime", toTime)
-	util_checkErrors(result)
-	result<-.jcall(portfolio@java,returnSig="Lcom/snowfallsystems/ice9/quant/client/result/MethodResult;", method="addIndex", index)
-	util_checkErrors(result)
-	portfolio_mainSettings(portfolio)
-	return(portfolio)
-}
-portfolio_create_functSPY=function(fromTime,toTime){
-	portfolio_create_funct("SPY",fromTime,toTime)
-}
-portfolio_create_funct_SPY=function(index,fromTime){
-	portfolio_create_funct("SPY",index,fromTime)
-}
+#portfolio_create_funct=function(
+#		index,fromTime,toTime){
+#	util_validate()
+##	clientConnection=get('clientConnection', envir=globalenv())
+#	clientConnection=getOption('clientConnection')
+#	portfolio=new("portfolio", java=.jnew("com.portfolioeffect.quant.client.portfolio.Portfolio",clientConnection),optimization_info=NULL)
+#	result<-.jcall(portfolio@java,returnSig="Lcom/portfolioeffect/quant/client/result/MethodResult;", method="setFromTime", fromTime)
+#	util_checkErrors(result)
+#	result<-.jcall(portfolio@java,returnSig="Lcom/portfolioeffect/quant/client/result/MethodResult;", method="setToTime", toTime)
+#	util_checkErrors(result)
+#	result<-.jcall(portfolio@java,returnSig="Lcom/portfolioeffect/quant/client/result/MethodResult;", method="addIndex", index)
+#	util_checkErrors(result)
+#	portfolio_mainSettings(portfolio)
+#	return(portfolio)
+#}
+#portfolio_create_functSPY=function(fromTime,toTime){
+#	portfolio_create_funct("SPY",fromTime,toTime)
+#}
+#portfolio_create_funct_SPY=function(index,fromTime){
+#	portfolio_create_funct("SPY",index,fromTime)
+#}
 
-setMethod("portfolio_create" ,c(index="character",fromTime="character",toTime="character",priceDataIx="missing"),portfolio_create_funct)
-setMethod("portfolio_create" ,c(index="missing",fromTime="character",toTime="character",priceDataIx="missing"),portfolio_create_functSPY)
-setMethod("portfolio_create" ,c(index="character",fromTime="character",toTime="missing",priceDataIx="missing"),portfolio_create_funct_SPY)
+#setMethod("portfolio_create" ,c(index="character",fromTime="character",toTime="character",priceDataIx="missing"),portfolio_create_funct)
+#setMethod("portfolio_create" ,c(index="missing",fromTime="character",toTime="character",priceDataIx="missing"),portfolio_create_functSPY)
+#setMethod("portfolio_create" ,c(index="character",fromTime="character",toTime="missing",priceDataIx="missing"),portfolio_create_funct_SPY)
 		
-setMethod("portfolio_create" ,c(index="missing",fromTime="missing",toTime="missing",priceDataIx="matrix"),function(
-				priceDataIx){
-			util_validate()
-			portfolio=new("portfolio", java=.jnew("com.snowfallsystems.ice9.quant.client.portfolio.Portfolio",clientConnection),optimization_info=NULL)
-			result<-.jcall(portfolio@java,returnSig="Lcom/snowfallsystems/ice9/quant/client/result/MethodResult;", method="addIndex", as.double(priceDataIx[,2]),.jlong(priceDataIx[,1]))
-			util_checkErrors(result)
-			portfolio_mainSettings(portfolio)
-			return(portfolio)
-		})
+#setMethod("portfolio_create" ,c(index="missing",fromTime="missing",toTime="missing",priceDataIx="matrix"),function(
+#				priceDataIx){
+#			util_validate()
+#			clientConnection=getOption('clientConnection')
+#			portfolio=new("portfolio", java=.jnew("com.portfolioeffect.quant.client.portfolio.Portfolio",clientConnection),optimization_info=NULL)
+#			result<-.jcall(portfolio@java,returnSig="Lcom/portfolioeffect/quant/client/result/MethodResult;", method="addIndex", as.double(priceDataIx[,2]),.jlong(priceDataIx[,1]))
+#			util_checkErrors(result)
+#			portfolio_mainSettings(portfolio)
+#			return(portfolio)
+#		})
+#
+#setMethod("portfolio_create" ,c(index="matrix",fromTime="missing",toTime="missing",priceDataIx="missing"),function(
+#				index){
+#			util_validate()
+#			clientConnection=getOption('clientConnection')
+#			portfolio=new("portfolio", java=.jnew("com.portfolioeffect.quant.client.portfolio.Portfolio",clientConnection),optimization_info=NULL)
+#			result<-.jcall(portfolio@java,returnSig="Lcom/portfolioeffect/quant/client/result/MethodResult;", method="addIndex", as.double(index[,2]),.jlong(index[,1]))
+#			util_checkErrors(result)
+#			portfolio_mainSettings(portfolio)
+#			return(portfolio)
+#		})
 
-setMethod("portfolio_create" ,c(index="matrix",fromTime="missing",toTime="missing",priceDataIx="missing"),function(
-				index){
-			util_validate()
-			portfolio=new("portfolio", java=.jnew("com.snowfallsystems.ice9.quant.client.portfolio.Portfolio",clientConnection),optimization_info=NULL)
-			result<-.jcall(portfolio@java,returnSig="Lcom/snowfallsystems/ice9/quant/client/result/MethodResult;", method="addIndex", as.double(index[,2]),.jlong(index[,1]))
-			util_checkErrors(result)
-			portfolio_mainSettings(portfolio)
-			return(portfolio)
-		})
+#setMethod("portfolio_create" ,c(index="portfolio",fromTime="missing",toTime="missing",priceDataIx="missing"),function(
+#				index){
+#			util_validate()
+#			portfolio=new("portfolio", java=.jnew("com.portfolioeffect.quant.client.portfolio.Portfolio",index@java),optimization_info=NULL)
+#			return(portfolio)
+#		})
 
-setMethod("portfolio_create" ,c(index="portfolio",fromTime="missing",toTime="missing",priceDataIx="missing"),function(
-				index){
-			util_validate()
-			portfolio=new("portfolio", java=.jnew("com.snowfallsystems.ice9.quant.client.portfolio.Portfolio",index@java),optimization_info=NULL)
-			return(portfolio)
-		})
+portfolio_create<-function(index=NULL,fromTime=NULL,toTime=NULL,priceDataIx=NULL){
+	if(is.null(index) & is.null(fromTime)& is.null(toTime)& is.null(priceDataIx)){
+		stop('No arguments provided, please check required arguments list.')
+	}
+	if((class(index)=="matrix")&(is.null(priceDataIx))&&(class(priceDataIx)=="matrix")&(is.null(index))){
+		if((class(index)=="matrix")&(is.null(priceDataIx))){
+			priceDataIx=index
+		}
+		util_validate()
+		clientConnection=getOption('clientConnection')
+		portfolio=new("portfolio", java=.jnew("com.portfolioeffect.quant.client.portfolio.Portfolio",clientConnection),optimization_info=NULL)
+		result<-.jcall(portfolio@java,returnSig="Lcom/portfolioeffect/quant/client/result/MethodResult;", method="addIndex", as.double(priceDataIx[,2]),.jlong(priceDataIx[,1]))
+		util_checkErrors(result)
+		portfolio_mainSettings(portfolio)
+		return(portfolio)
+	}
+	if((class(fromTime)=="character")&(class(toTime)=="character")&(is.null(priceDataIx))){
+		if(is.null(index)){
+			index="SPY"
+		}
+		util_validate()
+		clientConnection=getOption('clientConnection')
+		portfolio=new("portfolio", java=.jnew("com.portfolioeffect.quant.client.portfolio.Portfolio",clientConnection),optimization_info=NULL)
+		result<-.jcall(portfolio@java,returnSig="Lcom/portfolioeffect/quant/client/result/MethodResult;", method="setFromTime", fromTime)
+		util_checkErrors(result)
+		result<-.jcall(portfolio@java,returnSig="Lcom/portfolioeffect/quant/client/result/MethodResult;", method="setToTime", toTime)
+		util_checkErrors(result)
+		result<-.jcall(portfolio@java,returnSig="Lcom/portfolioeffect/quant/client/result/MethodResult;", method="addIndex", index)
+		util_checkErrors(result)
+		portfolio_mainSettings(portfolio)
+		return(portfolio)
+	}
+	if((class(index)=="portfolio")&(is.null(fromTime))&(is.null(toTime))&(is.null(priceDataIx))){
+		util_validate()
+		portfolio=new("portfolio", java=.jnew("com.portfolioeffect.quant.client.portfolio.Portfolio",index@java),optimization_info=NULL)
+		return(portfolio)
+	}
+	if(!exists('portfolio')){
+		stop('Could not create portfolio object.')
+	}
+}
 
 portfolio_addPosition<-function(portfolio,symbol,quantity,time,priceData){
 }
@@ -217,14 +263,14 @@ portfolio_addPosition<-function(portfolio,symbol,quantity,time,priceData){
 setMethod("portfolio_addPosition" ,c(portfolio="portfolio",symbol="character",quantity="ANY",time="missing",priceData="missing"),function(
 				portfolio,symbol,quantity){
 			util_validate()
-			result<-.jcall(portfolio@java,returnSig="Lcom/snowfallsystems/ice9/quant/client/result/MethodResult;", method="addPosition",symbol, as.integer(quantity))
+			result<-.jcall(portfolio@java,returnSig="Lcom/portfolioeffect/quant/client/result/MethodResult;", method="addPosition",symbol, as.integer(quantity))
 			util_checkErrors(result)
 		})
 
 setMethod("portfolio_addPosition" ,c(portfolio="portfolio",symbol="character",quantity="ANY",time="missing",priceData="matrix"),function(
 				portfolio,symbol,quantity,priceData){
 			util_validate()
-			result<-.jcall(portfolio@java,returnSig="Lcom/snowfallsystems/ice9/quant/client/result/MethodResult;", method="addPosition",symbol, as.double(priceData[,2]), as.integer(quantity),.jlong(priceData[,1]))
+			result<-.jcall(portfolio@java,returnSig="Lcom/portfolioeffect/quant/client/result/MethodResult;", method="addPosition",symbol, as.double(priceData[,2]), as.integer(quantity),.jlong(priceData[,1]))
 			util_checkErrors(result)
 		})
 
@@ -234,7 +280,7 @@ setMethod("portfolio_addPosition" ,c(portfolio="portfolio",symbol="character",qu
 			if(!is.numeric(time)){
 				time<-util_dateToPOSIXTime(time)
 			}
-			result<-.jcall(portfolio@java,returnSig="Lcom/snowfallsystems/ice9/quant/client/result/MethodResult;", method="addPosition",symbol, as.integer(quantity),.jlong(time))
+			result<-.jcall(portfolio@java,returnSig="Lcom/portfolioeffect/quant/client/result/MethodResult;", method="addPosition",symbol, as.integer(quantity),.jlong(time))
 			util_checkErrors(result)
 		})
 
@@ -245,7 +291,7 @@ setMethod("portfolio_addPosition" ,c(portfolio="portfolio",symbol="character",qu
 		time<-util_dateToPOSIXTime(time)
 	}
 			time<-util_dateToPOSIXTime(time)
-			result<-.jcall(portfolio@java,returnSig="Lcom/snowfallsystems/ice9/quant/client/result/MethodResult;", method="addPosition",symbol, as.double(priceData[,2]),.jlong(priceData[,1]), as.integer(quantity),.jlong(time))
+			result<-.jcall(portfolio@java,returnSig="Lcom/portfolioeffect/quant/client/result/MethodResult;", method="addPosition",symbol, as.double(priceData[,2]),.jlong(priceData[,1]), as.integer(quantity),.jlong(time))
 			util_checkErrors(result)
 		})
 
@@ -264,13 +310,13 @@ portfolio_removePosition<-function(portfolio,symbol){
 
 position_setQuantity<-function(portfolio,symbol,quantity){
 	util_validate()
-	result<-.jcall(portfolio@java,returnSig="Lcom/snowfallsystems/ice9/quant/client/result/MethodResult;", method="setPositionQuantity",symbol, as.integer(quantity))  
+	result<-.jcall(portfolio@java,returnSig="Lcom/portfolioeffect/quant/client/result/MethodResult;", method="setPositionQuantity",symbol, as.integer(quantity))  
 	util_checkErrors(result)
 }
 
 position_quantity<-function(portfolio,symbol){
 	util_validate(as.list(environment()))
-	result<-.jcall(portfolio@java,returnSig="Lcom/snowfallsystems/ice9/quant/client/result/MethodResult;", method="getPositionQuantity",symbol)  
+	result<-.jcall(portfolio@java,returnSig="Lcom/portfolioeffect/quant/client/result/MethodResult;", method="getPositionQuantity",symbol)  
 	util_checkErrors(result)
 	result<-getResultValuesDoubleArrayWithTime(result)
 	return(result)}
@@ -307,19 +353,19 @@ position_metric<-function(argList,portfolio,...){
 			data[["position"]]<-NULL
 	data$value=data$metric
 	data$metric="POSITION_MATRIX"
-			resultTemp<-.jcall(portfolio@java,returnSig="Lcom/snowfallsystems/ice9/quant/client/result/MethodResult;", method="getMetric",toJSONpe(data))
+			resultTemp<-.jcall(portfolio@java,returnSig="Lcom/portfolioeffect/quant/client/result/MethodResult;", method="getMetric",toJSONpe(data))
 			result<-getResult(resultTemp)
 	}else{
 		symbols=portfolio_symbols(portfolio)
 		portfolio_startBatch(portfolio)
 		for(symbol in symbols){
 			data$position=symbol
-			.jcall(portfolio@java,returnSig="Lcom/snowfallsystems/ice9/quant/client/result/MethodResult;", method="getMetric",toJSONpe(data))
+			.jcall(portfolio@java,returnSig="Lcom/portfolioeffect/quant/client/result/MethodResult;", method="getMetric",toJSONpe(data))
 		}
 		portfolio_endBatch(portfolio)
 		for(symbol in symbols){
 			data$position=symbol
-			resultTemp<-.jcall(portfolio@java,returnSig="Lcom/snowfallsystems/ice9/quant/client/result/MethodResult;", method="getMetric",toJSONpe(data))
+			resultTemp<-.jcall(portfolio@java,returnSig="Lcom/portfolioeffect/quant/client/result/MethodResult;", method="getMetric",toJSONpe(data))
 		util_checkErrors(resultTemp)
 		result<-cbind(result,getResultValuesDoubleArray(resultTemp))
 	}
@@ -327,7 +373,7 @@ position_metric<-function(argList,portfolio,...){
 	colnames(result)<-c("Time",symbols)
 }
 	}else{
-		resultTemp<-.jcall(portfolio@java,returnSig="Lcom/snowfallsystems/ice9/quant/client/result/MethodResult;", method="getMetric",toJSONpe(data))
+		resultTemp<-.jcall(portfolio@java,returnSig="Lcom/portfolioeffect/quant/client/result/MethodResult;", method="getMetric",toJSONpe(data))
 		result<-getResult(resultTemp)
 
 	}
@@ -804,7 +850,7 @@ portfolio_pdf<-function(portfolio,pValueLeft,pValueRight,nPoints,addNormalDensit
 	set<-portfolio_getSettings(portfolioTemp)
     .jcall(portfolioTemp@java,returnSig="V", method="setSamplingInterval","last")
 		
-	z<-.jcall(portfolioTemp@java, returnSig="Lcom/snowfallsystems/ice9/quant/client/result/MethodResult;",method="getPDF",
+	z<-.jcall(portfolioTemp@java, returnSig="Lcom/portfolioeffect/quant/client/result/MethodResult;",method="getPDF",
 			as.double(pValueLeft),as.double(pValueRight),as.integer(nPoints))
 	
 	result<-list(pdf=.jcall(z,returnSig="[[D",method="getDoubleMatrix", "pdf" ,simplify=TRUE),
@@ -818,7 +864,7 @@ portfolio_pdf<-function(portfolio,pValueLeft,pValueRight,nPoints,addNormalDensit
 			portfolio_settings(portfolioTemp,densityModel="NORMAL")
 		}
 		z<-.jcall(portfolioTemp@java,
-				returnSig="Lcom/snowfallsystems/ice9/quant/client/result/MethodResult;",method="getPDF",
+				returnSig="Lcom/portfolioeffect/quant/client/result/MethodResult;",method="getPDF",
 				as.double(pValueLeft),as.double(pValueRight),as.integer(nPoints))
 		
 		result$pdfNormal=.jcall(z,returnSig="[[D",method="getDoubleMatrix", "pdf", simplify=TRUE)
@@ -834,7 +880,7 @@ position_pdf<-function(portfolio,symbol,pValueLeft,pValueRight,nPoints,addNormal
     .jcall(portfolioTemp@java,returnSig="V", method="setSamplingInterval","last")
     
 	z<-.jcall(portfolioTemp@java,
-			returnSig="Lcom/snowfallsystems/ice9/quant/client/result/MethodResult;",method="getPDF",
+			returnSig="Lcom/portfolioeffect/quant/client/result/MethodResult;",method="getPDF",
 			as.double(pValueLeft),as.double(pValueRight),as.integer(nPoints), symbol)
 	
 	result<-list(pdf=.jcall(z,returnSig="[[D",method="getDoubleMatrix", "pdf", simplify=TRUE),
@@ -848,7 +894,7 @@ position_pdf<-function(portfolio,symbol,pValueLeft,pValueRight,nPoints,addNormal
 			portfolio_settings(portfolioTemp,densityModel="NORMAL")
 		}
 		z<-.jcall(portfolioTemp@java,
-				returnSig="Lcom/snowfallsystems/ice9/quant/client/result/MethodResult;",method="getPDF",
+				returnSig="Lcom/portfolioeffect/quant/client/result/MethodResult;",method="getPDF",
 				as.double(pValueLeft),as.double(pValueRight),as.integer(nPoints), symbol)
 		
 		result$pdfNormal=.jcall(z,returnSig="[[D",method="getDoubleMatrix", "pdf", simplify=TRUE)
@@ -874,6 +920,6 @@ portfolio_startBatch<-function(portfolio){
 }
 
 portfolio_endBatch<-function(portfolio){
-	result=.jcall(portfolio@java,returnSig="Lcom/snowfallsystems/ice9/quant/client/result/MethodResult;", method="finishBatch")
+	result=.jcall(portfolio@java,returnSig="Lcom/portfolioeffect/quant/client/result/MethodResult;", method="finishBatch")
 	util_checkErrors(result)
 }

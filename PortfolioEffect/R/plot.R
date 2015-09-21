@@ -4,7 +4,7 @@ setClass("portfolioPlot",
 
 setMethod ("show" , "portfolioPlot",
 		function (object){
-			p=ggplot() + geom_line(data=object@data, aes(x=Time,y=Data,col=Legend),size=object@option$line_size,fill="#004A61") +
+			p=ggplot() + geom_line(data=object@data, aes_string(x='Time',y='Data',col='Legend'),size=object@option$line_size,fill="#004A61") +
 					xlab(NULL) + 
 					ylab(NULL) +
 					ggtitle(bquote(atop(.(object@option$title), atop(italic(.(object@option$subtitle)), "")))) +
@@ -20,7 +20,7 @@ setMethod ("show" , "portfolioPlot",
 		})
 
 util_ggplot<-function (portfolioPlot){
-			p=ggplot() + geom_line(data=portfolioPlot@data, aes(x=Time,y=Data,col=Legend),size=portfolioPlot@option$line_size,fill="#004A61") +
+			p=ggplot() + geom_line(data=portfolioPlot@data, aes_string(x='Time',y='Data',col='Legend'),size=portfolioPlot@option$line_size,fill="#004A61") +
 					xlab(NULL) + 
 					ylab(NULL) +
 					ggtitle(bquote(atop(.(portfolioPlot@option$title), atop(italic(.(portfolioPlot@option$subtitle)), "")))) +
@@ -42,7 +42,7 @@ plotPlot2df<-function (x,y){
 setMethod("plot" ,c(x="portfolioPlot",y="missing"),plotPlot2df)
 
 plotPlot2d<-function (portfolioPlot){
-			p=ggplot() + geom_line(data=portfolioPlot@data, aes(x=Time,y=Data,col=Legend),size=portfolioPlot@option$line_size,fill="#004A61") +
+			p=ggplot() + geom_line(data=portfolioPlot@data, aes_string(x='Time',y='Data',col='Legend'),size=portfolioPlot@option$line_size,fill="#004A61") +
 					xlab(NULL) + 
 					ylab(NULL) +
 					ggtitle(bquote(atop(.(portfolioPlot@option$title), atop(italic(.(portfolioPlot@option$subtitle)), "")))) +
@@ -186,7 +186,7 @@ util_plot2df<-function(formula,data,title=NULL,subtitle=NULL,font_size=10,line_s
 	portfolioPlot
   }else{
     result<-data.frame(x=fml$right,y=fml$left,Legend=data$Legend)
-    p<-ggplot() + geom_line(data=result, aes(x=x,y=y,col=Legend),size=line_size) +
+    p<-ggplot() + geom_line(data=result, aes_string(x='x',y='y',col='Legend'),size=line_size) +
       xlab(fml$right.name) + 
       ylab(fml$left.name) +
       ggtitle(bquote(atop(.(title), atop(italic(.(subtitle)), "")))) +
@@ -476,7 +476,7 @@ util_summary<-function(portfolio){
 	result3<-data.frame(data=printMatrix[,1],symbols=symbols,Legend="Time2")
 	
 	
-	p2<-ggplot(data=result3, aes(x=symbols,y=data)) + geom_bar(stat="identity",position="dodge",fill="#01526D")+ coord_flip() +
+	p2<-ggplot(data=result3, aes_string(x='symbols',y='data')) + geom_bar(stat="identity",position="dodge",fill="#01526D")+ coord_flip() +
 			scale_y_continuous(labels = per_for())+
 			xlab(NULL) + 
 			ylab(NULL) +
@@ -488,7 +488,7 @@ util_summary<-function(portfolio){
 	result4<-data.frame(data=printMatrix[,2],symbols=symbols,Legend="Time2")
 	
 	
-	p3<-ggplot(data=result4, aes(x=symbols,y=data)) + geom_bar(stat="identity",position="dodge",fill="#00A3DC")+ coord_flip() +
+	p3<-ggplot(data=result4, aes_string(x='symbols',y='data')) + geom_bar(stat="identity",position="dodge",fill="#00A3DC")+ coord_flip() +
 #			scale_y_continuous(labels = per_for(2))+
 	        xlab(NULL) + 
 			ylab(NULL) +
@@ -565,13 +565,13 @@ util_plotTheme<-function (base_size = 10, base_family = "sans", horizontal = TRU
 
 
 util_plotDensity<-function(PDF, bw=FALSE){
-	df<-data.frame(x=c(PDF$value),y=c(PDF$pdf))
+	df<-data.frame(x=c(PDF$value),y=c(PDF$pdf),col="Return Density")
 	p<-ggplot() +util_plotTheme(bw=bw)+scale_colour_manual(values=c("#004A61"))
 	if(!is.null(PDF$pdfNormal)){
-		dfNormal<-data.frame(x=c(PDF$valueNormal),y=c(PDF$pdfNormal))
-		p<-p+geom_area(data=dfNormal, aes(x=x,y=y,fill="Normal Density"),size=1,alpha=0.5)+geom_line(data=dfNormal, aes(x=x,y=y),size=0.5,col="red")
+		dfNormal<-data.frame(x=c(PDF$valueNormal),y=c(PDF$pdfNormal),fill="Normal Density")
+		p<-p+geom_area(data=dfNormal, aes_string(x='x',y='y',fill='fill'),size=1,alpha=0.5)+geom_line(data=dfNormal, aes_string(x='x',y='y'),size=0.5,col="red")
 	}
-	p+geom_line(data=df, aes(x=x,y=y,col="Return Density"),size=1.5)
+	p+geom_line(data=df, aes_string(x='x',y='y',col='col'),size=1.5)
 }
 per_for<-function(digits=0){
 		function(x) {

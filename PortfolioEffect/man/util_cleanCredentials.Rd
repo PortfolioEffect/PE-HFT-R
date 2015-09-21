@@ -1,7 +1,6 @@
 \name{util_cleanCredentials}
 \alias{util_cleanCredentials}
-\title{Clean Credentials}
-
+\title{Clean API Credentials}
 \usage{util_cleanCredentials()
 }
 \description{

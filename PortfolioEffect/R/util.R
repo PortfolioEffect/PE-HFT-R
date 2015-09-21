@@ -1,6 +1,7 @@
 util_getComputeTime<-function(time=c("timeMax","timeLeft")){
 	util_validate()
-	result=.jcall(clientConnection,returnSig="Lcom/snowfallsystems/ice9/quant/client/result/MethodResult;", method="getComputeTimeLeft")
+	clientConnection=getOption('clientConnection')
+	result=.jcall(clientConnection,returnSig="Lcom/portfolioeffect/quant/client/result/MethodResult;", method="getComputeTimeLeft")
 	util_checkErrors(result)
 	result=.jcall(result,returnSig="S", method="getInfoParam",time[1])
 	return(result)
@@ -8,7 +9,7 @@ util_getComputeTime<-function(time=c("timeMax","timeLeft")){
 
 util_POSIXTimeToDate<-function(time){
 	if(is.numeric(time)){
-	DateTimeUtil=.jnew("com.snowfallsystems.ice9.quant.client.util.DateTimeUtil")
+	DateTimeUtil=.jnew("com.portfolioeffect.quant.client.util.DateTimeUtil")
 	time=.jcall(DateTimeUtil,returnSig='[S',method="POSIXTimeToDateStr",.jlong(time))
 		}
 	time
@@ -16,7 +17,7 @@ util_POSIXTimeToDate<-function(time){
 
 util_dateToPOSIXTime<-function(time){
 	if(!is.numeric(time)){
-	DateTimeUtil=.jnew("com.snowfallsystems.ice9.quant.client.util.DateTimeUtil")
+	DateTimeUtil=.jnew("com.portfolioeffect.quant.client.util.DateTimeUtil")
 	check=1414818000000-.jcall(DateTimeUtil,returnSig='[J',method="toPOSIXTime",'2014-11-01 01:00:00')
 	time=.jcall(DateTimeUtil,returnSig='[J',method="toPOSIXTime",time)+check
 }
@@ -25,7 +26,7 @@ time
 
 util_screenshot<-function(path, delaySec=15){
 	Sys.sleep(delaySec)
-	J("com.snowfallsystems.ice9.quant.client.util.Screenshots")$takeScreenshot(path)
+	J("com.portfolioeffect.quant.client.util.Screenshots")$takeScreenshot(path)
 }
 
 util_setCredentials<-function(username,password,apiKey,hostname="snowfall04.snowfallsystems.com"){
@@ -42,16 +43,22 @@ util_setCredentials<-function(username,password,apiKey,hostname="snowfall04.snow
 	login<-c(username,password,apiKey,hostname)
 	save(login, file=paste0(way, "/login.RData"))
 	rm(login)
-	if(exists("clientConnection") && clientConnection != NULL){
+	if(!is.null(options('clientConnection')$clientConnection)){
+		clientConnection=getOption('clientConnection')
+		if(clientConnection == NULL){
+			options("clientConnection"=.jnew("com.portfolioeffect.quant.client.ClientConnection"))
+			is.null(options('clientConnection')$clientConnection)
+		}
 		.jcall(clientConnection,returnSig="V", method="setUsername",username)
 		.jcall(clientConnection,returnSig="V", method="setPassword",password)
 		.jcall(clientConnection,returnSig="V", method="setApiKey",apiKey)
 		.jcall(clientConnection,returnSig="V", method="setHost",hostname)
-		resultTemp=.jcall(clientConnection,returnSig="Lcom/snowfallsystems/ice9/quant/client/result/MethodResult;", method="restart")
+		resultTemp=.jcall(clientConnection,returnSig="Lcom/portfolioeffect/quant/client/result/MethodResult;", method="restart")
 		util_checkErrors(resultTemp)
 	}
 	util_validate()
-	resultTemp=.jcall(clientConnection,returnSig="Lcom/snowfallsystems/ice9/quant/client/result/MethodResult;", method="restart")
+	clientConnection=getOption('clientConnection')
+	resultTemp=.jcall(clientConnection,returnSig="Lcom/portfolioeffect/quant/client/result/MethodResult;", method="restart")
 	util_checkErrors(resultTemp)
 }
 
@@ -102,8 +109,10 @@ util_validate<- function(argList=NULL) {
 		stopMessage('FILE_CREDENTIALS_NO_EXISTS')
 	}
 	
-	if(!exists("clientConnection")){
-		assign("clientConnection",.jnew("com.snowfallsystems.ice9.quant.client.ClientConnection"),envir = .GlobalEnv)
+	if(is.null(options('clientConnection')$clientConnection)){
+		options("clientConnection"=.jnew("com.portfolioeffect.quant.client.ClientConnection"))
+		clientConnection=getOption('clientConnection')
+		login<-NULL;
 		load(way)
 		.jcall(clientConnection,returnSig="V", method="setUsername",login[1])
 		.jcall(clientConnection,returnSig="V", method="setPassword",login[2])
@@ -111,9 +120,11 @@ util_validate<- function(argList=NULL) {
 		.jcall(clientConnection,returnSig="V", method="setHost",login[4])
 		
 	}else{
+		clientConnection=getOption('clientConnection')
 		if(clientConnection==NULL){
-			rm(clientConnection,envir= .GlobalEnv)
-			assign("clientConnection",.jnew("com.snowfallsystems.ice9.quant.client.ClientConnection"),envir = .GlobalEnv)
+		options("clientConnection"=.jnew("com.portfolioeffect.quant.client.ClientConnection"))
+		clientConnection=getOption('clientConnection')
+			login<-NULL;
 			load(way)
 			.jcall(clientConnection,returnSig="V", method="setUsername",login[1])
 			.jcall(clientConnection,returnSig="V", method="setPassword",login[2])
@@ -121,6 +132,7 @@ util_validate<- function(argList=NULL) {
 			.jcall(clientConnection,returnSig="V", method="setHost",login[4])
 		}
 		else {
+			login<-NULL;
 			load(way)
 			.jcall(clientConnection,returnSig="V", method="setUsername",login[1])
 			.jcall(clientConnection,returnSig="V", method="setPassword",login[2])
@@ -142,6 +154,7 @@ util_checkErrors<-function(result){
 }
 
 printStatus<-function(){
+	clientConnection=getOption('clientConnection')
 	temp<-.jcall(clientConnection,returnSig="S", method="getStatus")
 	if(temp!=""){print(temp)}
 }
@@ -165,7 +178,7 @@ getResult<-function(data){
 #		FLOAT_MATRIX  =.jcall(data,returnSig="[[D", method="getDoubleMatrix", dataName, simplify=TRUE),
 #		STRING        =.jcall(data,returnSig="[D", method="getDoubleArray", dataName),
 #		STRING_VECTOR =.jcall(data,returnSig="[D", method="getDoubleArray", dataName),
-		PORTFOLIO     =.jcall(data,returnSig="Lcom/snowfallsystems/ice9/quant/client/portfolio/Portfolio;", method="getPortfolio", "portfolio"))
+		PORTFOLIO     =.jcall(data,returnSig="Lcom/portfolioeffect/quant/client/portfolio/Portfolio;", method="getPortfolio", "portfolio"))
 if(dataType=="PORTFOLIO"){
 	result=resultTemp
 }else{
@@ -205,6 +218,6 @@ getResultValuesDouble2DArray<-function(portfolio,result){
 
 }
 getResultValuesPortfolio<-function(result){
-	.jcall(result,returnSig="Lcom/snowfallsystems/ice9/quant/client/portfolio/Portfolio;", method="getPortfolio", "portfolio")
+	.jcall(result,returnSig="Lcom/portfolioeffect/quant/client/portfolio/Portfolio;", method="getPortfolio", "portfolio")
 }
 

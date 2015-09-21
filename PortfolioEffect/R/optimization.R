@@ -29,7 +29,7 @@ optimization_run<-function(optimizer){
 	util_validate(as.list(environment()))
 	
 	## --- BEGIN forecasting code -- ##
-	forecastingPortfolio=new("portfolio", java=.jnew("com.snowfallsystems.ice9.quant.client.portfolio.Portfolio",optimizer@portfolio),optimization_info=NULL)
+	forecastingPortfolio=new("portfolio", java=.jnew("com.portfolioeffect.quant.client.portfolio.Portfolio",optimizer@portfolio),optimization_info=NULL)
 	settings = portfolio_getSettings(forecastingPortfolio)
 	.jcall(forecastingPortfolio@java,returnSig="V", method="setParam",'isRebalancingHistoryEnabled',"false")
 	.jcall(forecastingPortfolio@java,returnSig="V", method="setParam",'windowLength',optimizer@windowLength)
@@ -37,37 +37,37 @@ optimization_run<-function(optimizer){
 
 	if(settings$portfolioMetricsMode == 'portfolio') 
 	{
-		forecastedValues=.jnew("com.snowfallsystems.ice9.quant.client.portfolio.optimizer.ForecastedValues",optimizer@portfolio)
+		forecastedValues=.jnew("com.portfolioeffect.quant.client.portfolio.optimizer.ForecastedValues",optimizer@portfolio)
 		
-		result<-.jcall(forecastedValues,returnSig="Lcom/snowfallsystems/ice9/quant/client/result/MethodResult;",method="setForecastTimeStep",optimizer@forecastLength)
+		result<-.jcall(forecastedValues,returnSig="Lcom/portfolioeffect/quant/client/result/MethodResult;",method="setForecastTimeStep",optimizer@forecastLength)
 		util_checkErrors(result)
-		result<-.jcall(forecastedValues,returnSig="Lcom/snowfallsystems/ice9/quant/client/result/MethodResult;",method="makeSimpleCumulantsForecast",forecastingPortfolio@java,optimizer@forecastType)
+		result<-.jcall(forecastedValues,returnSig="Lcom/portfolioeffect/quant/client/result/MethodResult;",method="makeSimpleCumulantsForecast",forecastingPortfolio@java,optimizer@forecastType)
 		util_checkErrors(result)
 		if(!is.null(optimizer@forecastedValueLists))
 		{
 			for(forecastedValueList in optimizer@forecastedValueLists){	
 				switch(forecastedValueList$metricType,
-			ExpReturn={result<-.jcall(forecastedValues,returnSig="Lcom/snowfallsystems/ice9/quant/client/result/MethodResult;",method="setSymbolForecastedExpReturn",forecastedValueList$symbol,as.double(forecastedValueList$value),.jlong(util_dateToPOSIXTime(forecastedValueList$time)))
+			ExpReturn={result<-.jcall(forecastedValues,returnSig="Lcom/portfolioeffect/quant/client/result/MethodResult;",method="setSymbolForecastedExpReturn",forecastedValueList$symbol,as.double(forecastedValueList$value),.jlong(util_dateToPOSIXTime(forecastedValueList$time)))
 			util_checkErrors(result)},
-		Beta={result<-.jcall(forecastedValues,returnSig="Lcom/snowfallsystems/ice9/quant/client/result/MethodResult;",method="setSymbolForecastedBeta",forecastedValueList$symbol,as.double(forecastedValueList$value),.jlong(util_dateToPOSIXTime(forecastedValueList$time)))
+		Beta={result<-.jcall(forecastedValues,returnSig="Lcom/portfolioeffect/quant/client/result/MethodResult;",method="setSymbolForecastedBeta",forecastedValueList$symbol,as.double(forecastedValueList$value),.jlong(util_dateToPOSIXTime(forecastedValueList$time)))
 			util_checkErrors(result)},
-		Variance={result<-.jcall(forecastedValues,returnSig="Lcom/snowfallsystems/ice9/quant/client/result/MethodResult;",method="setSymbolForecastedVariance",forecastedValueList$symbol,as.double(forecastedValueList$value),.jlong(util_dateToPOSIXTime(forecastedValueList$time)))
+		Variance={result<-.jcall(forecastedValues,returnSig="Lcom/portfolioeffect/quant/client/result/MethodResult;",method="setSymbolForecastedVariance",forecastedValueList$symbol,as.double(forecastedValueList$value),.jlong(util_dateToPOSIXTime(forecastedValueList$time)))
 			util_checkErrors(result)},
-		Skewness={result<-.jcall(forecastedValues,returnSig="Lcom/snowfallsystems/ice9/quant/client/result/MethodResult;",method="setSymbolForecastedSkewness",forecastedValueList$symbol,as.double(forecastedValueList$value),.jlong(util_dateToPOSIXTime(forecastedValueList$time)))
+		Skewness={result<-.jcall(forecastedValues,returnSig="Lcom/portfolioeffect/quant/client/result/MethodResult;",method="setSymbolForecastedSkewness",forecastedValueList$symbol,as.double(forecastedValueList$value),.jlong(util_dateToPOSIXTime(forecastedValueList$time)))
 			util_checkErrors(result)},
-		Kurtosis={result<-.jcall(forecastedValues,returnSig="Lcom/snowfallsystems/ice9/quant/client/result/MethodResult;",method="setSymbolForecastedKurtosis",forecastedValueList$symbol,as.double(forecastedValueList$value),.jlong(util_dateToPOSIXTime(forecastedValueList$time)))
+		Kurtosis={result<-.jcall(forecastedValues,returnSig="Lcom/portfolioeffect/quant/client/result/MethodResult;",method="setSymbolForecastedKurtosis",forecastedValueList$symbol,as.double(forecastedValueList$value),.jlong(util_dateToPOSIXTime(forecastedValueList$time)))
 			util_checkErrors(result)},
-		Cumulant1={result<-.jcall(forecastedValues,returnSig="Lcom/snowfallsystems/ice9/quant/client/result/MethodResult;",method="setSymbolForecastedCumulant1",forecastedValueList$symbol,as.double(forecastedValueList$value),.jlong(util_dateToPOSIXTime(forecastedValueList$time)))
+		Cumulant1={result<-.jcall(forecastedValues,returnSig="Lcom/portfolioeffect/quant/client/result/MethodResult;",method="setSymbolForecastedCumulant1",forecastedValueList$symbol,as.double(forecastedValueList$value),.jlong(util_dateToPOSIXTime(forecastedValueList$time)))
 			util_checkErrors(result)},
-		Cumulant2={result<-.jcall(forecastedValues,returnSig="Lcom/snowfallsystems/ice9/quant/client/result/MethodResult;",method="setSymbolForecastedCumulant2",forecastedValueList$symbol,as.double(forecastedValueList$value),.jlong(util_dateToPOSIXTime(forecastedValueList$time)))
+		Cumulant2={result<-.jcall(forecastedValues,returnSig="Lcom/portfolioeffect/quant/client/result/MethodResult;",method="setSymbolForecastedCumulant2",forecastedValueList$symbol,as.double(forecastedValueList$value),.jlong(util_dateToPOSIXTime(forecastedValueList$time)))
 			util_checkErrors(result)},
-		Cumulant3={result<-.jcall(forecastedValues,returnSig="Lcom/snowfallsystems/ice9/quant/client/result/MethodResult;",method="setSymbolForecastedCumulant3",forecastedValueList$symbol,as.double(forecastedValueList$value),.jlong(util_dateToPOSIXTime(forecastedValueList$time)))
+		Cumulant3={result<-.jcall(forecastedValues,returnSig="Lcom/portfolioeffect/quant/client/result/MethodResult;",method="setSymbolForecastedCumulant3",forecastedValueList$symbol,as.double(forecastedValueList$value),.jlong(util_dateToPOSIXTime(forecastedValueList$time)))
 			util_checkErrors(result)},
-		Cumulant4={result<-.jcall(forecastedValues,returnSig="Lcom/snowfallsystems/ice9/quant/client/result/MethodResult;",method="setSymbolForecastedCumulant4",forecastedValueList$symbol,as.double(forecastedValueList$value),.jlong(util_dateToPOSIXTime(forecastedValueList$time)))
+		Cumulant4={result<-.jcall(forecastedValues,returnSig="Lcom/portfolioeffect/quant/client/result/MethodResult;",method="setSymbolForecastedCumulant4",forecastedValueList$symbol,as.double(forecastedValueList$value),.jlong(util_dateToPOSIXTime(forecastedValueList$time)))
 			util_checkErrors(result)},
 		stop("Incorrect forecast metric type"))
 				# TODO finish with the list
-				# result<-.jcall(forecastedValues,returnSig="Lcom/snowfallsystems/ice9/quant/client/result/MethodResult;",method="makeSimpleCumulantsForecast")
+				# result<-.jcall(forecastedValues,returnSig="Lcom/portfolioeffect/quant/client/result/MethodResult;",method="makeSimpleCumulantsForecast")
 				# util_checkErrors(result)	
 			}
 		}
@@ -76,7 +76,7 @@ optimization_run<-function(optimizer){
 	## --- END forecasting code -- ##
 	
 	if(is.null(optimizer@functions)){
-		result<-.jcall(optimizer@java,returnSig="Lcom/snowfallsystems/ice9/quant/client/result/MethodResult;",method="getOptimizedPortfolio")
+		result<-.jcall(optimizer@java,returnSig="Lcom/portfolioeffect/quant/client/result/MethodResult;",method="getOptimizedPortfolio")
 		portfolio<-new("portfolio", java=getResult(result),optimization_info=NULL)
 		portfolio@optimization_info=c(.jcall(result,returnSig="S", method="getInfoParam","nFunctionExecute"),.jcall(result,returnSig="S", method="getInfoParam","nGlobalStart"),.jcall(result,returnSig="S", method="getInfoParam","nLocalSolution"),.jcall(result,returnSig="S", method="getInfoParam","nOptimizations"),.jcall(result,returnSig="S", method="getInfoParam","nConstraintSatisfied"))
 	}else{
@@ -220,9 +220,9 @@ if((globalOptimumProbability>=1)|(globalOptimumProbability<=0)){
 		stop("Direction not specified")
 	}
 	if(.jcall(portfolio@java,returnSig="S", method="getParam","portfolioMetricsMode")=='portfolio'){
-		path<-"com.snowfallsystems.ice9.quant.client.portfolio.optimizer.StrategyOptimizer"
+		path<-"com.portfolioeffect.quant.client.portfolio.optimizer.StrategyOptimizer"
 	}else{
-		path<-"com.snowfallsystems.ice9.quant.client.portfolio.optimizer.PortfolioOptimizer"
+		path<-"com.portfolioeffect.quant.client.portfolio.optimizer.PortfolioOptimizer"
 	}
 	
 		optimizer<-new("optimizer", java=.jnew(path,portfolio@java,as.double(errorInDecimalPoints),as.double(globalOptimumProbability)),
@@ -406,7 +406,7 @@ optimization_constraint_weight<-function(
 
 util_optimizationFunction<-function(optimizer){
 	balans=NULL
-	portfolio=new("portfolio", java=.jnew("com.snowfallsystems.ice9.quant.client.portfolio.Portfolio",optimizer@portfolio),optimization_info=NULL)
+	portfolio=new("portfolio", java=.jnew("com.portfolioeffect.quant.client.portfolio.Portfolio",optimizer@portfolio),optimization_info=NULL)
 	symbols=portfolio_symbols(portfolio)	
 	rebalancingTimes=portfolio_value(portfolio)[,1]
 	set=portfolio_getSettings(portfolio)
@@ -414,7 +414,7 @@ util_optimizationFunction<-function(optimizer){
 	portfolio_settings(portfolio,set)
 
 	for(time in rebalancingTimes){
-		result<-.jcall(portfolio@java,returnSig="Lcom/snowfallsystems/ice9/quant/client/result/MethodResult;", method="setToTime", util_POSIXTimeToDate(time))
+		result<-.jcall(portfolio@java,returnSig="Lcom/portfolioeffect/quant/client/result/MethodResult;", method="setToTime", util_POSIXTimeToDate(time))
 		util_checkErrors(result)
 		optimizer_temp<-optimization_goal(portfolio,goal=optimizer@goal, direction=optimizer@direction)
 		if(!is.null(optimizer@portfolioValue)){
@@ -436,7 +436,7 @@ util_optimizationFunction<-function(optimizer){
 					optimizer_temp=optimization_constraint(optimizer_temp,optimizer@constraintTypeSimple[[j]],optimizer@constraintMerticSimple[[j]],optimizer@constraintValueSimple[[j]],optimizer@constraintConfidenceInterval[[j]],optimizer@constraintSymbols[[j]])
 				}
 			}
-		result<-.jcall(optimizer_temp@java,returnSig="Lcom/snowfallsystems/ice9/quant/client/result/MethodResult;",method="getOptimizedPortfolio")
+		result<-.jcall(optimizer_temp@java,returnSig="Lcom/portfolioeffect/quant/client/result/MethodResult;",method="getOptimizedPortfolio")
 		portfolio_TempOptim<-new("portfolio", java=getResult(result),optimization_info=NULL)
 		temp=NULL
 		for(symbol in symbols){
@@ -446,7 +446,7 @@ util_optimizationFunction<-function(optimizer){
 		balans=cbind(balans,temp)
 		
 	}
-	portfolioResult=new("portfolio", java=.jnew("com.snowfallsystems.ice9.quant.client.portfolio.Portfolio",optimizer@portfolio),optimization_info=NULL)
+	portfolioResult=new("portfolio", java=.jnew("com.portfolioeffect.quant.client.portfolio.Portfolio",optimizer@portfolio),optimization_info=NULL)
 #	FromTime=.jcall(portfolioResult@java,returnSig="S",method="getFromTime")
 	for(i in 1:length(symbols)){
 		portfolio_addPosition(portfolioResult,symbols[i],balans[i,],time=util_POSIXTimeToDate(rebalancingTimes))
