@@ -11,7 +11,7 @@ Author: Andrey Kostin, Aleksey Zemnitskiy
 Maintainer: Aleksey Zemnitskiy <aleksey.zemnitskiy@portfolioeffect.com>
 Description: R interface to PortfolioEffect services for high frequency portfolio analysis, intraday strategy backtesting and portfolio optimization.
 URL: https://www.portfolioeffect.com/
-License: GPL (>= 3)
+License: BSD_2_clause + file LICENSE
 SystemRequirements: Java (>= 1.7)
 NeedsCompilation: no
 Repository: CRAN

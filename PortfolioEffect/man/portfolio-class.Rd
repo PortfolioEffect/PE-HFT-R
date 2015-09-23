@@ -22,10 +22,14 @@ Class for storing portfolio settings.
 \section{Methods}{
   \describe{
     \item{plot}{\code{signature(x = "portfolio", y = "missing")}: ... }
-    \item{portfolio_addPosition}{\code{signature(portfolio = "portfolio", symbol = "character", quantity = "ANY", time = "ANY", priceData = "matrix")}: ... }
-    \item{portfolio_addPosition}{\code{signature(portfolio = "portfolio", symbol = "character", quantity = "ANY", time = "ANY", priceData = "missing")}: ... }
-    \item{portfolio_addPosition}{\code{signature(portfolio = "portfolio", symbol = "character", quantity = "ANY", time = "missing", priceData = "matrix")}: ... }
-    \item{portfolio_addPosition}{\code{signature(portfolio = "portfolio", symbol = "character", quantity = "ANY", time = "missing", priceData = "missing")}: ... }
+    \item{portfolio_addPosition}{\code{signature(portfolio = "portfolio",
+     symbol = "character", quantity = "ANY", time = "ANY", priceData = "matrix")}: ... }
+    \item{portfolio_addPosition}{\code{signature(portfolio = "portfolio",
+     symbol = "character", quantity = "ANY", time = "ANY", priceData = "missing")}: ... }
+    \item{portfolio_addPosition}{\code{signature(portfolio = "portfolio",
+     symbol = "character", quantity = "ANY", time = "missing", priceData = "matrix")}: ... }
+    \item{portfolio_addPosition}{\code{signature(portfolio = "portfolio",
+     symbol = "character", quantity = "ANY", time = "missing", priceData = "missing")}: ... }
     \item{show}{\code{signature(object = "portfolio")}: ... }
 	 }
 }

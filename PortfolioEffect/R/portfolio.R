@@ -216,10 +216,11 @@ portfolio_getSettings<-function(portfolio){
 #		})
 
 portfolio_create<-function(index=NULL,fromTime=NULL,toTime=NULL,priceDataIx=NULL){
+	
 	if(is.null(index) & is.null(fromTime)& is.null(toTime)& is.null(priceDataIx)){
 		stop('No arguments provided, please check required arguments list.')
 	}
-	if((class(index)=="matrix")&(is.null(priceDataIx))&&(class(priceDataIx)=="matrix")&(is.null(index))){
+	if(((class(index)=="matrix")&(is.null(priceDataIx)))||((class(priceDataIx)=="matrix")&(is.null(index)))){
 		if((class(index)=="matrix")&(is.null(priceDataIx))){
 			priceDataIx=index
 		}
@@ -231,8 +232,13 @@ portfolio_create<-function(index=NULL,fromTime=NULL,toTime=NULL,priceDataIx=NULL
 		portfolio_mainSettings(portfolio)
 		return(portfolio)
 	}
-	if((class(fromTime)=="character")&(class(toTime)=="character")&(is.null(priceDataIx))){
+	if(((class(fromTime)=="character")&(class(toTime)=="character")&(is.null(priceDataIx)))||((class(fromTime)=="character")&(class(index)=="character")&(is.null(toTime))&(is.null(priceDataIx)))){
 		if(is.null(index)){
+			index="SPY"
+		}
+		if(((class(fromTime)=="character")&(class(index)=="character")&(is.null(toTime))&(is.null(priceDataIx)))){
+			toTime=fromTime
+			fromTime=index
 			index="SPY"
 		}
 		util_validate()
