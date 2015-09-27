@@ -149,10 +149,8 @@ Start R from the command line or in your GUI editor and type
 install.packages(c("rJava", "ggplot2"))
 \end{lstlisting}
 
-You are now ready to install the PortfolioEffectHFT package either via CRAN
-or directly from \href{https://www.portfolioeffect.com}{www.portfolioeffect.com}
-account downloads section.
-
+You are now ready to install the PortfolioEffectHFT package directly from 
+\href{https://www.portfolioeffect.com}{www.portfolioeffect.com} downloads section.
 
 
 \chapter{API Credentials}
