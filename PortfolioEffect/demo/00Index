@@ -1,7 +1,0 @@
-portfolio_metrics_demo        Introduction to intraday portfolio metrics (variance, Sharpe Ratio, Value-at-Risk) using server-side high frequency data.
-lf_hf_strategy_demo           Comparison of trading strategies with different trade frequency (high vs low) that are based on the moving average signal.
-holding_period_risks_demo     Impact of holding period aggregation modes (calendar time vs holding time) on trading portfolio risk and performance.
-portfolio_optimization_demo   Introduction to Markowitz portfolio optimization with multiple constraints. 
-efficient_frontier_demo       Construction of an efficient frontiers using high frequency market data for portfolios of different size (ideal and real-world). 
-alpha_decay_demo              Study of alpha decay in portfolios with equal position weights vs position weights computed according to the Treynor-Black model.
-txnCosts_demo                 Transaction cost calculation example for trading strategies and its impact on various portfolio metrics.

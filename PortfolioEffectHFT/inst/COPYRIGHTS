@@ -1,0 +1,91 @@
+The package PortfolioEffectHFT includes other open source software
+components. The following is a list of these components:
+
+** Apache Commons Lang
+
+   Copyright © 2001-2015 Apache Software Foundation.
+   Source: http://www.trieuvan.com/apache//commons/lang/source/commons-lang-2.6-src.zip
+   License Information: http://www.apache.org/licenses/LICENSE-2.0.txt
+   
+   Related files: inst/java/commons-lang-2.4.jar
+
+
+** Apache Log4j
+
+   Copyright © 2001-2015 Apache Software Foundation.
+   Source: http://www.apache.org/dyn/closer.cgi/logging/log4j/1.2.16/log4j-1.2.16.zip  
+   License Information: http://www.apache.org/licenses/LICENSE-2.0.txt
+   
+   Related files: inst/java/log4j-1.2.16.jar
+   
+
+** OpenFAST
+
+   Copyright © 2006-2013 The LaSalle Technology Group, LLC. All Rights Reserved
+   Source: http://sourceforge.net/projects/openfast/files/openfast4j/openfast4j-1.1.2/openfast-1.1.2-src.zip/download
+   License Information: https://www.mozilla.org/en-US/MPL/1.1/
+   
+   Related files: inst/java/openfast-1.1.2.jar
+
+ 
+** GNU Crypto
+
+   Copyright © 2001-2006 Free Software Foundation, Inc.
+   Source: ftp://ftp.gnu.org/gnu/gnu-crypto/releases/gnu-crypto-2.0.1.zip
+   License Information: http://www.gnu.org/licenses/gpl.html
+   
+   Related files: inst/java/gnu-crypto-2.0.1.jar
+
+   
+** GNU Trove
+
+   Copyright © 2001-2006 Free Software Foundation, Inc.
+   Source: https://bitbucket.org/trove4j/trove/downloads/trove-3.0.3.zip
+   License Information: http://www.gnu.org/licenses/lgpl-2.1.html
+   
+   Related files: inst/java/trove4j-3.0.2.jar   
+   
+
+** Google GSON
+
+   Copyright © 2008 Google, Inc.
+   Source: https://github.com/google/gson/archive/gson-2.2.4.zip
+   License Information: http://www.apache.org/licenses/LICENSE-2.0.txt
+   
+   Related files: inst/java/gson-2.2.4.jar   
+   
+   
+** JavaFastPFOR
+   
+   Copyright © Daniel Lemire, Muraoka Taro and others
+   Source: https://github.com/lemire/JavaFastPFOR/archive/JavaFastPFOR-0.1.1.zip
+   License Information: http://www.apache.org/licenses/LICENSE-2.0.txt
+   
+   Related files: inst/java/JavaFastPFOR-0.1.1.jar   
+   
+
+** Snappy 
+
+   Copyright © Dain Sundstrom
+   Source: https://github.com/dain/snappy/archive/snappy-0.3.zip
+   License Information: http://www.apache.org/licenses/LICENSE-2.0.txt
+   
+   Related files: inst/java/snappy-0.3.jar   
+   
+
+** XPP3
+   
+   Copyright © Extreme! Lab, Indiana University
+   Source: http://www.extreme.indiana.edu/dist/java-repository/xpp3/distributions/xpp3-1.1.4c_src.zip
+   License Information: http://www.extreme.indiana.edu/xgws/xsoap/xpp/download/PullParser2/LICENSE.txt
+   
+   Related files: inst/java/xpp3_min-1.1.4c.jar 
+   
+
+** XStream 
+   Copyright © Joe Walnes, Jorg Schaible and others
+   Source: http://repo.maven.apache.org/maven2/com/thoughtworks/xstream/xstream/1.3/xstream-1.3-sources.jar
+   License Information: http://x-stream.github.io/license.html
+   
+   Related files: inst/java/xstream-1.3.jar 
+  
