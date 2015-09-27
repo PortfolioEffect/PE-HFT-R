@@ -88,7 +88,7 @@ Frequency Portfolio Analytics\\}
 \vspace{8cm}
 {\Large \bfseries User Manual \\}
 \vspace{0.3cm}
-{\Huge\bfseries PortfolioEffect HFT Package \\ for R Software\\ }
+{\Huge\bfseries PortfolioEffectHFT Package \\ for R Software\\ }
 % ----------------------------------------------------------------
 \vspace{1.5cm}
 {Andrey Kostin \\ andrey.kostin@portfolioeffect.com} \\[14pt]
@@ -112,7 +112,7 @@ Inc.}}\\[2cm]
 \SweaveOpts{concordance=TRUE}
 
 \chapter{Package Installation}
-PortfolioEffect client for R relies on the rJava package, which assumes that Java runtime is installed and configured on your system.
+PortfolioEffectHFT package for R relies on the rJava package, which assumes that Java runtime is installed and configured on your system.
 To install Java runtime and to configure your R engine to work with it, follow these steps:
 
 \section{Install Latest JDK/JRE Runtime}
@@ -140,7 +140,7 @@ sudo R CMD javareconf
 \end{lstlisting}
 
 \section{Install Required Packages (Optional)}
-If you manually downloaded PortfolioEffect package (you don't want to use CRAN
+If you are manually installing PortfolioEffectHFT package (you don't want to use CRAN
 repositories for some reason), you would need to install all required package
 dependencies first.
 Start R from the command line or in your GUI editor and type
@@ -149,7 +149,7 @@ Start R from the command line or in your GUI editor and type
 install.packages(c("rJava", "ggplot2"))
 \end{lstlisting}
 
-You are now ready to install the PortfolioEffect package either via CRAN
+You are now ready to install the PortfolioEffectHFT package either via CRAN
 or directly from \href{https://www.portfolioeffect.com}{www.portfolioeffect.com}
 account downloads section.
 
@@ -169,16 +169,16 @@ Log in to you account and locate your API credentials on the main page
 \includegraphics[width=5in,natwidth=768,natheight=300]{img/api-settings.png}
 
 \section{Set API Credentials in R} 
-Run the following commands to set your account API credentials for the PortfolioEffect R Package installed. 
+Run the following commands to set your account API credentials for the PortfolioEffectHFT R Package installed. 
 You will need to do it only once as your credentials are stored between sessions
 on your local machine to speed up future logons. \par You would need to repeat
-this procedure if you change your account password or install PortfolioEffect package
+this procedure if you change your account password or install PortfolioEffectHFT package
 on another computer.
 \begin{lstlisting}
 require(PortfolioEffectHFT)
 util_setCredentials("API Username", "API Password", "API Key")
 \end{lstlisting}
-You are now ready to call PortfolioEffect methods.
+You are now ready to call PortfolioEffectHFT methods.
 
 
 
