@@ -33,5 +33,5 @@ optimizer=optimization_constraint_weight(optimizer,">=",0.5,"AAPL")
 optimalPortfolio<-optimization_run(optimizer)
 print(optimalPortfolio)
 }}
-\keyword{PortfolioEffect}
+\keyword{PortfolioEffectHFT}
 \keyword{optimization_constraint_weight}

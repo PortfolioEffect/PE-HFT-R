@@ -37,5 +37,5 @@ portfolio_addPosition(portfolio,'C',300)
 portfolio_addPosition(portfolio,'GOOG',150)
 util_plot2d(position_correlation(portfolio,'AAPL','C'))
 }}
-\keyword{PortfolioEffect}
+\keyword{PortfolioEffectHFT}
 \keyword{position_correlation}

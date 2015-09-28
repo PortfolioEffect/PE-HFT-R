@@ -41,5 +41,5 @@ n=NROW(metric)
 return<-data.frame(Data=metric[,2],Time=metric[,1],Legend=array("Return",dim=n))
 util_plot2df(Data~Time,return,title="Portfolio return")
 }}
-\keyword{PortfolioEffect}
+\keyword{PortfolioEffectHFT}
 \keyword{util_plot2df}

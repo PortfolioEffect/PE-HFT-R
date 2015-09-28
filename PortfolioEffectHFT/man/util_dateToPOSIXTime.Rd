@@ -15,5 +15,5 @@
 time = "2014-11-17 09:30:00"
 util_dateToPOSIXTime(time)
 }}
-\keyword{PortfolioEffect}
+\keyword{PortfolioEffectHFT}
 \keyword{util_dateToPOSIXTime}

@@ -14,5 +14,5 @@ aapl.frame<-data.frame(Data=aapl.data[,2],Time=as.POSIXct(aapl.data[,1]/1000,
 origin = "1970-01-01", tz = "America/New_York"),Legend='AAPL')
 ggplot() + geom_line(data=aapl.frame, aes(x=Time,y=Data,col=Legend))+util_colorScheme()
 }}
-\keyword{PortfolioEffect}
+\keyword{PortfolioEffectHFT}
 \keyword{util_colorScheme}

@@ -35,5 +35,5 @@ portfolio_addPosition(portfolio,'GOOG',150)
 util_plotDensity(portfolio_pdf(portfolio,pValueLeft=0,pValueRight=1,nPoints=100,
 addNormalDensity=TRUE),bw=TRUE)
 }}
-\keyword{PortfolioEffect}
+\keyword{PortfolioEffectHFT}
 \keyword{util_plotDensity}

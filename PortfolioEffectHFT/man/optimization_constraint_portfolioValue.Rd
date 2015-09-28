@@ -25,5 +25,5 @@ optimizer=optimization_constraint_portfolioValue(optimizer,10^9)
 optimalPortfolio<-optimization_run(optimizer)
 print(optimalPortfolio)
 }}
-\keyword{PortfolioEffect}
+\keyword{PortfolioEffectHFT}
 \keyword{optimization_constraint_portfolioValue}

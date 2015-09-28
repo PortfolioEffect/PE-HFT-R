@@ -23,5 +23,5 @@ plot1<-util_ggplot(util_plot2d(position_weight(portfolio,'AAPL'),title="AAPL Wei
 plot2<-util_ggplot(util_plot2d(position_weight(portfolio,'C'),title="C Weight"))
 util_multiplot(plot1,plot2,cols=1)
 }}
-\keyword{PortfolioEffect}
+\keyword{PortfolioEffectHFT}
 \keyword{util_ggplot}

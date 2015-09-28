@@ -37,4 +37,5 @@ Class for storing portfolio settings.
 \examples{
 showClass("portfolio")
 }
+\keyword{PortfolioEffectHFT}
 \keyword{classes}

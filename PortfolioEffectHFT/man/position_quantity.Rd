@@ -34,5 +34,5 @@ portfolio_addPosition(portfolio,'C',300)
 portfolio_addPosition(portfolio,'GOOG',150)
 position_quantity(portfolio,'AAPL')
 }}
-\keyword{PortfolioEffect}
+\keyword{PortfolioEffectHFT}
 \keyword{position_quantity}

@@ -20,5 +20,5 @@ Remaining time is reset to maximum time every day at 12am ET.
 util_getComputeTime("timeMax")
 util_getComputeTime("timeLeft")
 }}
-\keyword{PortfolioEffect}
+\keyword{PortfolioEffectHFT}
 \keyword{util_getComputeTime}

@@ -36,5 +36,5 @@ portfolio_addPosition(portfolio,'GOOG',150)
 portfolio_removePosition(portfolio,'C')
 portfolio_symbols(portfolio)
 }}
-\keyword{PortfolioEffect}
+\keyword{PortfolioEffectHFT}
 \keyword{portfolio_removePosition}

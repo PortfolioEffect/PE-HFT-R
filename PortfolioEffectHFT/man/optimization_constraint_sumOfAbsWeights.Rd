@@ -34,5 +34,5 @@ optimizer=optimization_constraint_sumOfAbsWeights(optimizer,">=",0.8,c('AAPL',"C
 optimalPortfolio<-optimization_run(optimizer)
 print(optimalPortfolio)
 }}
-\keyword{PortfolioEffect}
+\keyword{PortfolioEffectHFT}
 \keyword{optimization_constraint_sumOfAbsWeights}

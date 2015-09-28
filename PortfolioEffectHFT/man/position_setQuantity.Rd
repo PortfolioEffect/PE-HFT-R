@@ -28,5 +28,5 @@ print(portfolio)
 position_setQuantity(portfolio,'GOOG',400)
 print(portfolio)
 }}
-\keyword{PortfolioEffect}
+\keyword{PortfolioEffectHFT}
 \keyword{position_setQuantity}

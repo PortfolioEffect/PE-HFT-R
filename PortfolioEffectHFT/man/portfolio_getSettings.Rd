@@ -24,5 +24,5 @@ portfolio_settings(portfolio,
 				   resultsSamplingInterval = '10s')
 settings=portfolio_getSettings(portfolio)
 }}
-\keyword{PortfolioEffect}
+\keyword{PortfolioEffectHFT}
 \keyword{portfolio_getSettings}

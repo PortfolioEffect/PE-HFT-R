@@ -31,5 +31,5 @@ optimizer=optimization_constraint_beta(optimizer,"<=",0.5)
 optimalPortfolio=optimization_run(optimizer) 
 optimization_info(optimalPortfolio)
 }}
-\keyword{PortfolioEffect}
+\keyword{PortfolioEffectHFT}
 \keyword{optimization_info}

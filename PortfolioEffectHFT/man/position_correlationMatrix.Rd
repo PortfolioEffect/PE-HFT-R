@@ -36,5 +36,5 @@ portfolio_addPosition(portfolio,'C',300)
 portfolio_addPosition(portfolio,'GOOG',150)
 position_correlationMatrix(portfolio)
 }}
-\keyword{PortfolioEffect}
+\keyword{PortfolioEffectHFT}
 \keyword{position_correlationMatrix}

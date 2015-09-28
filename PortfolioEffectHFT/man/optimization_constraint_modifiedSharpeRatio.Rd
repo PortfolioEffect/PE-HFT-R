@@ -33,5 +33,5 @@ optimizer=optimization_constraint_modifiedSharpeRatio(optimizer,">=",0,0.01)
 optimalPortfolio<-optimization_run(optimizer)
 print(optimalPortfolio)
 }}
-\keyword{PortfolioEffect}
+\keyword{PortfolioEffectHFT}
 \keyword{optimization_constraint_modifiedSharpeRatio}

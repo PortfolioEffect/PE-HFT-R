@@ -2,10 +2,9 @@ Package: PortfolioEffectHFT
 Type: Package
 Title: High Frequency Portfolio Analytics by PortfolioEffect
 Version: 1.2
-Date: 2015-09-17
+Date: 2015-09-28
 URL: https://www.portfolioeffect.com/
 Depends: R (>= 2.13.2), methods, grid, ggplot2, rJava
-Imports: rJava
 SystemRequirements: Java (>= 1.7)
 LazyData: yes
 ByteCompile: TRUE
@@ -38,7 +37,7 @@ Authors@R: c(person("Aleksey", "Zemnitskiy", role = c("aut", "cre"),
                    comment = "GNU Trove and GNU Crypto libraries")
            )
 Maintainer: Aleksey Zemnitskiy <aleksey.zemnitskiy@portfolioeffect.com>
-Description: R interface to PortfolioEffect service for high frequency trading (HFT) backtests, intraday portfolio analysis and optimization.
+Description: R interface to PortfolioEffect service for backtesting high frequency trading (HFT) strategies, intraday portfolio analysis and optimization.
 License: BSD_2_clause + file LICENSE
 Copyright: See file COPYRIGHTS
 NeedsCompilation: no

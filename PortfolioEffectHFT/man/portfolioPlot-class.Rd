@@ -34,4 +34,5 @@ Objects can be created by calls of the form \code{new("portfolioPlot", ...)}.
 \examples{
 showClass("portfolioPlot")
 }
+\keyword{PortfolioEffectHFT}
 \keyword{classes}

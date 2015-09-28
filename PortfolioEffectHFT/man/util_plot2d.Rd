@@ -38,5 +38,5 @@ portfolio_addPosition(portfolio,'AAPL',300,priceData=aapl.data)
 portfolio_addPosition(portfolio,'SPY',150,priceData=spy.data)
 util_plot2d(portfolio_return(portfolio),title="Portfolio return")
 }}
-\keyword{PortfolioEffect}
+\keyword{PortfolioEffectHFT}
 \keyword{util_plot2d}

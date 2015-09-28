@@ -54,5 +54,5 @@ portfolio_settings(portfolio,windowLength = '3600s',resultsSamplingInterval='60s
 portfolio_addPosition(portfolio,c('SPY','C'),c(500,600))
 util_plot2d(portfolio_expectedReturn(portfolio))
 }}
-\keyword{PortfolioEffect}
+\keyword{PortfolioEffectHFT}
 \keyword{portfolio_addPosition}

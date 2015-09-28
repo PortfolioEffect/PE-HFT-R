@@ -31,5 +31,5 @@ origin = "1970-01-01", tz = "America/New_York"),Legend='AAPL')
 ggplot() + geom_line(data=aapl.frame, aes(x=Time,y=Data,col=Legend))+
 util_plotTheme()+util_colorScheme()+util_fillScheme()
 }}
-\keyword{PortfolioEffect}
+\keyword{PortfolioEffectHFT}
 \keyword{util_plotTheme}

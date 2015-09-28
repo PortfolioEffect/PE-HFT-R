@@ -35,6 +35,6 @@ util_plot2d(position_VaR(portfolio,"AAPL",0.05),title="Value at Risk , daily",Le
         util_line2d(position_VaR(portfolio,"GOOG",0.05),Legend="GOOG")+
         util_line2d(portfolio_VaR(portfolio,0.05),Legend="Portfolio")
 }}
-\keyword{PortfolioEffect}
+\keyword{PortfolioEffectHFT}
 \keyword{portfolio_startBatch}
 \keyword{portfolio_endBatch}

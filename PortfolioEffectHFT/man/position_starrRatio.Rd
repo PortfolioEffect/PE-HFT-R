@@ -38,5 +38,5 @@ portfolio_addPosition(portfolio,'C',300)
 portfolio_addPosition(portfolio,'GOOG',150)
 util_plot2d(position_starrRatio(portfolio,'AAPL', 0.05))
 }}
-\keyword{PortfolioEffect}
+\keyword{PortfolioEffectHFT}
 \keyword{position_starrRatio}

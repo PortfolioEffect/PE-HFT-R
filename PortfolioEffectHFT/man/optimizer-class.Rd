@@ -26,9 +26,10 @@ Class for storing optimization goals and constraints.
     \item{\code{direction}:}{Object of class \code{"character"} ~~ }
     \item{\code{confidenceInterval}:}{Object of class \code{"numeric"} ~~ }
     \item{\code{forecastedValueLists}:}{Object of class \code{"ANY"} ~~ }
-    \item{\code{forecastLength}:}{Object of class \code{"ANY"} ~~ }
+    \item{\code{forecastExponentialWindow}:}{Object of class \code{"ANY"} ~~ }
     \item{\code{forecastType}:}{Object of class \code{"ANY"} ~~ }
-    \item{\code{windowLength}:}{Object of class \code{"ANY"} ~~ }
+    \item{\code{forecastTimeStep}:}{Object of class \code{"ANY"} ~~ }
+    \item{\code{forecastPortfolioWindow}:}{Object of class \code{"ANY"} ~~ }
   }
 }
 
@@ -36,4 +37,5 @@ Class for storing optimization goals and constraints.
 \examples{
 showClass("optimizer")
 }
+\keyword{PortfolioEffectHFT}
 \keyword{classes}

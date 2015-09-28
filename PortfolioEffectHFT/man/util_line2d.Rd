@@ -25,5 +25,5 @@ util_plot2d(position_return(portfolio,'GOOG'),title="Positions returns",Legend="
 util_line2d(position_return(portfolio,'AAPL'),Legend="AAPL")+
 util_line2d(position_return(portfolio,'SPY'),Legend="SPY")
 }}
-\keyword{PortfolioEffect}
+\keyword{PortfolioEffectHFT}
 \keyword{util_line2d}

@@ -18,9 +18,10 @@ setClass("optimizer",
 		direction="character",
 		confidenceInterval='numeric',
 		forecastedValueLists='ANY',
-		forecastLength='ANY',
-		forecastType='ANY',
-		windowLength='ANY'
+		forecastTimeStep='ANY',
+		forecastType="character",
+		forecastExponentialWindow="character",
+		forecastPortfolioWindow="character"
 ))
 
 
@@ -29,20 +30,23 @@ optimization_run<-function(optimizer){
 	util_validate(as.list(environment()))
 	
 	## --- BEGIN forecasting code -- ##
-	forecastingPortfolio=new("portfolio", java=.jnew("com.portfolioeffect.quant.client.portfolio.Portfolio",optimizer@portfolio),optimization_info=NULL)
-	settings = portfolio_getSettings(forecastingPortfolio)
-	.jcall(forecastingPortfolio@java,returnSig="V", method="setParam",'isRebalancingHistoryEnabled',"false")
-	.jcall(forecastingPortfolio@java,returnSig="V", method="setParam",'windowLength',optimizer@windowLength)
+#	forecastingPortfolio=new("portfolio", java=.jnew("com.portfolioeffect.quant.client.portfolio.Portfolio",optimizer@portfolio),optimization_info=NULL)
+	settings = portfolio_getSettings(new("portfolio", java=.jnew("com.portfolioeffect.quant.client.portfolio.Portfolio",optimizer@portfolio),optimization_info=NULL))
+#	.jcall(forecastingPortfolio@java,returnSig="V", method="setParam",'isRebalancingHistoryEnabled',"false")
+#	.jcall(forecastingPortfolio@java,returnSig="V", method="setParam",'windowLength',optimizer@windowLength)
 	
 
 	if(settings$portfolioMetricsMode == 'portfolio') 
 	{
 		forecastedValues=.jnew("com.portfolioeffect.quant.client.portfolio.optimizer.ForecastedValues",optimizer@portfolio)
 		
-		result<-.jcall(forecastedValues,returnSig="Lcom/portfolioeffect/quant/client/result/MethodResult;",method="setForecastTimeStep",optimizer@forecastLength)
+		result<-.jcall(forecastedValues,returnSig="Lcom/portfolioeffect/quant/client/result/MethodResult;",method="setForecastTimeStep",optimizer@forecastTimeStep)
 		util_checkErrors(result)
-		result<-.jcall(forecastedValues,returnSig="Lcom/portfolioeffect/quant/client/result/MethodResult;",method="makeSimpleCumulantsForecast",forecastingPortfolio@java,optimizer@forecastType)
-		util_checkErrors(result)
+#		result<-.jcall(forecastedValues,returnSig="Lcom/portfolioeffect/quant/client/result/MethodResult;",method="makeSimpleCumulantsForecast",forecastingPortfolio@java,optimizer@forecastType)
+#		util_checkErrors(result)
+		.jcall(optimizer@java,returnSig="V",method="setForecasterType",optimizer@forecastType)
+		.jcall(optimizer@java,returnSig="V",method="setForecastExpWindow",optimizer@forecastExponentialWindow)
+		.jcall(optimizer@java,returnSig="V",method="setForecastPortfolioWindow",optimizer@forecastPortfolioWindow)
 		if(!is.null(optimizer@forecastedValueLists))
 		{
 			for(forecastedValueList in optimizer@forecastedValueLists){	
@@ -206,9 +210,10 @@ optimization_goal<-function(portfolio,
 		direction=c("minimize", 
 				"maximize"),
 		confidenceInterval=0.05,
-		windowLength='1m', 
-		forecastLength='1m',
-        forecastType=c("exp_smoothing", "simple"),
+		forecastPortfolioWindow='1m',
+		forecastTimeStep='1m',
+		forecastType=c("exp_smoothing", "simple"),
+		forecastExponentialWindow='5m',
 		errorInDecimalPoints=1e-12,
 		globalOptimumProbability=0.99)
 {
@@ -230,7 +235,7 @@ if((globalOptimumProbability>=1)|(globalOptimumProbability<=0)){
 				portfolioValue=NULL, goal=goal, direction=direction, confidenceInterval=confidenceInterval,
 				constraintMerticSimple=NULL,	constraintTypeSimple=NULL,	constraintValueSimple=NULL,	constraintConfidenceInterval=NULL,
 				constraintSymbols=NULL,	constraintConfidenceIntervalFunctions=NULL,constraintSymbolsFunctions=NULL,		forecastedValueLists=NULL,
-				forecastLength='1m',windowLength='1m',forecastType=forecastType[1])
+				forecastTimeStep='1m',forecastType=forecastType[1],forecastExponentialWindow=forecastExponentialWindow,forecastPortfolioWindow=forecastPortfolioWindow)
 
 	
 	switch(goal[1], 
@@ -247,14 +252,10 @@ if((globalOptimumProbability>=1)|(globalOptimumProbability<=0)){
 			
 			stop("Optimization goal not supported"))
 	
-	if(is.numeric(windowLength)){
-		windowLength=paste(windowLength,'s',sep="")
+	if(is.numeric(forecastTimeStep)){
+		forecastTimeStep=paste(forecastTimeStep,'s',sep="")
 	}
-	if(is.numeric(forecastLength)){
-		forecastLength=paste(forecastLength,'s',sep="")
-	}
-	optimizer@forecastLength=forecastLength
-	optimizer@windowLength=windowLength
+	optimizer@forecastTimeStep=forecastTimeStep
 	return(optimizer)
 }
 

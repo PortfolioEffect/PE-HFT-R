@@ -36,5 +36,5 @@ portfolio_addPosition(portfolio,'C',300)
 portfolio_addPosition(portfolio,'GOOG',150)
 util_plot2d(position_calmarRatio(portfolio,'AAPL'))
 }}
-\keyword{PortfolioEffect}
+\keyword{PortfolioEffectHFT}
 \keyword{position_calmarRatio}

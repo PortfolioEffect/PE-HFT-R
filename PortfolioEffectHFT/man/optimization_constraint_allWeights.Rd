@@ -31,5 +31,5 @@ optimizer=optimization_constraint_allWeights(optimizer,">=",0)
 optimalPortfolio<-optimization_run(optimizer)
 print(optimalPortfolio)
 }}
-\keyword{PortfolioEffect}
+\keyword{PortfolioEffectHFT}
 \keyword{optimization_constraint_allWeights}

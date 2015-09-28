@@ -23,5 +23,5 @@ direction="maximize")
 optimizer=optimization_constraint_beta(optimizer,"<=",0.5)
 optimization_run(optimizer)
 }}
-\keyword{PortfolioEffect}
+\keyword{PortfolioEffectHFT}
 \keyword{optimization_run}

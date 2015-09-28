@@ -18,5 +18,5 @@ util_plot2d(aapl.data,title="Price",Legend="AAPL")+
         util_line2d(goog.data,Legend="GOOG")+
         util_line2d(spy.data,Legend="SPY")
 }
-\keyword{PortfolioEffect}
+\keyword{PortfolioEffectHFT}
 \keyword{aapl.data}

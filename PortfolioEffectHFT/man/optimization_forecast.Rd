@@ -65,5 +65,5 @@ util_plot2d(portfolio_sharpeRatio(portfolioTemp),"SharpeRatio",Legend="No foreca
 util_line2d(portfolio_sharpeRatio(portfolioTempForecast),Legend="Perfect forecast")
 
 }}
-\keyword{PortfolioEffect}
+\keyword{PortfolioEffectHFT}
 \keyword{optimization_forecast}

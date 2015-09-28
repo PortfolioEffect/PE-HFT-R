@@ -13,5 +13,5 @@ Removes existing records of client API credentials from the system.
 \dontrun{ 
 util_cleanCredentials()
 }}
-\keyword{PortfolioEffect}
+\keyword{PortfolioEffectHFT}
 \keyword{util_cleanCredentials}

@@ -12,5 +12,5 @@
 
 util_fillScheme()
 }}
-\keyword{PortfolioEffect}
+\keyword{PortfolioEffectHFT}
 \keyword{util_fillScheme}
