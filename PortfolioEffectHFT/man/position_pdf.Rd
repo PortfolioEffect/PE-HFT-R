@@ -45,4 +45,5 @@ util_plotDensity(position_pdf(portfolio,'AAPL',pValueLeft=0,pValueRight=1,
 nPoints=100,addNormalDensity=TRUE))
 }}
 \keyword{PortfolioEffectHFT}
+%\concept{high frequency, intraday analytics, market data, portfolio, portfolio management,realtime analytics, risk, risk management, toolbox tools, trading, trading strategies}
 \keyword{position_pdf}

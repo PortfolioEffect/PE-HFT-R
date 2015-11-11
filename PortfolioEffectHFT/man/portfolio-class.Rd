@@ -38,4 +38,5 @@ Class for storing portfolio settings.
 showClass("portfolio")
 }
 \keyword{PortfolioEffectHFT}
+%\concept{high frequency, intraday analytics, market data, portfolio, portfolio management,realtime analytics, risk, risk management, toolbox tools, trading, trading strategies}
 \keyword{classes}

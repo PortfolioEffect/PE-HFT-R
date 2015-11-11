@@ -177,7 +177,7 @@ getResult<-function(data){
 #		FLOAT_VECTOR  =.jcall(data,returnSig="[D", method="getFloatArray", dataName),
 #		FLOAT_MATRIX  =.jcall(data,returnSig="[[D", method="getDoubleMatrix", dataName, simplify=TRUE),
 #		STRING        =.jcall(data,returnSig="[D", method="getDoubleArray", dataName),
-#		STRING_VECTOR =.jcall(data,returnSig="[D", method="getDoubleArray", dataName),
+		STRING_VECTOR =.jcall(data,returnSig="[S", method="getStringArray", dataName),
 		PORTFOLIO     =.jcall(data,returnSig="Lcom/portfolioeffect/quant/client/portfolio/Portfolio;", method="getPortfolio", "portfolio"))
 if(dataType=="PORTFOLIO"){
 	result=resultTemp

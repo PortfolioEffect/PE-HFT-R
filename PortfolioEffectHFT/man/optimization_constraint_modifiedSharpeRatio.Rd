@@ -4,7 +4,7 @@
 \usage{optimization_constraint_modifiedSharpeRatio(optimizer,
 constraintType=c("=", ">=", "<="),
 constraintValue,
-confidenceInterval=0.05)
+confidenceInterval=0.95)
 }
 \arguments{
   \item{optimizer}{Optimizer object created using \link[=optimization_goal]{optimization_goal( )} function}
@@ -29,9 +29,10 @@ resultsSamplingInterval='60s')
 portfolio_addPosition(portfolio,'AAPL',100)
 portfolio_addPosition(portfolio,'C',300) 
 optimizer<-optimization_goal(portfolio,"Return","maximize")
-optimizer=optimization_constraint_modifiedSharpeRatio(optimizer,">=",0,0.01)
+optimizer=optimization_constraint_modifiedSharpeRatio(optimizer,">=",0,0.99)
 optimalPortfolio<-optimization_run(optimizer)
 print(optimalPortfolio)
 }}
 \keyword{PortfolioEffectHFT}
+%\concept{high frequency, market data, optimization, realtime analytics, risk, risk management, trading, trading strategies}
 \keyword{optimization_constraint_modifiedSharpeRatio}

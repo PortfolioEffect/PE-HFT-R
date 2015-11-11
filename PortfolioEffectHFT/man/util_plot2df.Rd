@@ -38,8 +38,13 @@ portfolio_addPosition(portfolio,'AAPL',300,priceData=aapl.data)
 portfolio_addPosition(portfolio,'SPY',150,priceData=spy.data)
 metric=portfolio_return(portfolio)
 n=NROW(metric)
-return<-data.frame(Data=metric[,2],Time=metric[,1],Legend=array("Return",dim=n))
-util_plot2df(Data~Time,return,title="Portfolio return")
+return<-data.frame(value=metric[,2],time=metric[,1],legend=array("Return",dim=n))
+util_plot2df(value~time,return,title="Portfolio return")
+
+metric=portfolio_variance(portfolio)
+return<-data.frame(metric,legend=array("Return",dim=n))
+util_plot2df(value~time,return,title="Portfolio variance")
 }}
 \keyword{PortfolioEffectHFT}
+%\concept{plot market data, plot}
 \keyword{util_plot2df}

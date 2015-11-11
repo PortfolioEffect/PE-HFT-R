@@ -35,4 +35,5 @@ Objects can be created by calls of the form \code{new("portfolioPlot", ...)}.
 showClass("portfolioPlot")
 }
 \keyword{PortfolioEffectHFT}
+%\concept{high frequency, intraday analytics, market data, portfolio, portfolio management,realtime analytics, risk, risk management, toolbox tools, trading, trading strategies}
 \keyword{classes}

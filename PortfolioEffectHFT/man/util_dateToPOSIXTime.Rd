@@ -16,4 +16,5 @@ time = "2014-11-17 09:30:00"
 util_dateToPOSIXTime(time)
 }}
 \keyword{PortfolioEffectHFT}
+%\concept{ market data}
 \keyword{util_dateToPOSIXTime}

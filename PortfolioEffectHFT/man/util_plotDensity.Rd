@@ -36,4 +36,5 @@ util_plotDensity(portfolio_pdf(portfolio,pValueLeft=0,pValueRight=1,nPoints=100,
 addNormalDensity=TRUE),bw=TRUE)
 }}
 \keyword{PortfolioEffectHFT}
+%\concept{plot market data, plot}
 \keyword{util_plotDensity}

@@ -50,19 +50,19 @@ util_multiplot(plot1,plot2,cols=1)
 # Part 3 - Trading strategy variance
 ############################################################
 
-util_plot2d(portfolio_variance(highFrequencyPortfolio),title="Variance, daily",Legend="HF Portfolio")+
-util_line2d(portfolio_variance(lowFrequencyportfolio),Legend="LF Portfolio")
+util_plot2d(portfolio_variance(highFrequencyPortfolio),title="Variance, daily",legend="HF Portfolio")+
+util_line2d(portfolio_variance(lowFrequencyportfolio),legend="LF Portfolio")
 
 ############################################################
 # Part 4 - Trading strategy Value-at-Risk (daily, 95% c.i.)
 ############################################################
 
-util_plot2d(portfolio_VaR(highFrequencyPortfolio,0.05),title="Value at Risk in %, daily (95% c.i.)",Legend="HF Portfolio")+
-util_line2d(portfolio_VaR(lowFrequencyportfolio,0.05),Legend="LF Portfolio")
+util_plot2d(portfolio_VaR(highFrequencyPortfolio,0.95),title="Value at Risk in %, daily (95% c.i.)",legend="HF Portfolio")+
+util_line2d(portfolio_VaR(lowFrequencyportfolio,0.95),legend="LF Portfolio")
 
 ############################################################
 # Part 5 - Trading strategy Sharpe ratio (daily)
 ############################################################
 
-util_plot2d(portfolio_sharpeRatio(highFrequencyPortfolio),title="Sharpe Ratio, daily",Legend="HF Portfolio")+
-util_line2d(portfolio_sharpeRatio(lowFrequencyportfolio),Legend="LF Portfolio")
+util_plot2d(portfolio_sharpeRatio(highFrequencyPortfolio),title="Sharpe Ratio, daily",legend="HF Portfolio")+
+util_line2d(portfolio_sharpeRatio(lowFrequencyportfolio),legend="LF Portfolio")

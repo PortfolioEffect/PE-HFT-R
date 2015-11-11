@@ -27,6 +27,7 @@ exportClass(optimizer)
 exportClass(portfolioPlot)
 exportMethods(show,plot)
 
+export(portfolio_availableSymbols)
 export(portfolio_startBatch)
 export(portfolio_endBatch)
 export(portfolio_getSettings)

@@ -1,7 +1,7 @@
 message<-function(messageType,names=""){
 	messageList<-list(
 			INFO_WELCOME='',
-			FILE_CREDENTIALS_NO_EXISTS='Function util_setCredentials() should be called before.To retrieve your account credentials, please log in to your account or register for a free account at https://www.portfolioeffect.com/registration.',
+			FILE_CREDENTIALS_NO_EXISTS='Function util_setCredentials() should be called before. To retrieve your account credentials, please log in to your account or register for a free account at https://www.portfolioeffect.com/registration.',
 			WRONG_SETTINGS_ARGUMENTS='',
 			NOT_PORTFOLIO_CLASS='The object must have the class "portfolio". Use the function portfolio_create to create it.',
 			NOT_OPTIMIZER_CLASS='The object must have the class "optimizer". Use the function optimization_goal to create it.',

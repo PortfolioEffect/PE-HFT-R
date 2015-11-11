@@ -21,4 +21,5 @@ util_getComputeTime("timeMax")
 util_getComputeTime("timeLeft")
 }}
 \keyword{PortfolioEffectHFT}
+%\concept{toolbox tools, trading}
 \keyword{util_getComputeTime}

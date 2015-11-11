@@ -38,4 +38,5 @@ Class for storing optimization goals and constraints.
 showClass("optimizer")
 }
 \keyword{PortfolioEffectHFT}
+%\concept{high frequency, market data, optimization, realtime analytics, risk, risk management, trading, trading strategies}
 \keyword{classes}

@@ -34,4 +34,5 @@ optimalPortfolio<-optimization_run(optimizer)
 print(optimalPortfolio)
 }}
 \keyword{PortfolioEffectHFT}
+%\concept{high frequency, market data, optimization, realtime analytics, risk, risk management, trading, trading strategies}
 \keyword{optimization_constraint_weight}

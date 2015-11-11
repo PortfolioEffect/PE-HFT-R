@@ -1,7 +1,7 @@
 \name{position_starrRatio}
 \alias{position_starrRatio}
 \title{Position STARR Ratio}
-\usage{position_starrRatio(portfolio,symbol,confidenceInterval=0.05)
+\usage{position_starrRatio(portfolio,symbol,confidenceInterval=0.95)
 }
 \arguments{
   \item{portfolio}{Portfolio object created using \link[=portfolio_create]{portfolio_create( )} function}
@@ -26,7 +26,7 @@ portfolio_settings(portfolio,windowLength = '3600s',resultsSamplingInterval='60s
 portfolio_addPosition(portfolio,'GOOG',100,priceData=goog.data)  
 portfolio_addPosition(portfolio,'AAPL',300,priceData=aapl.data) 
 portfolio_addPosition(portfolio,'SPY',150,priceData=spy.data)
-util_plot2d(position_starrRatio(portfolio,'GOOG', 0.05))
+util_plot2d(position_starrRatio(portfolio,'GOOG', 0.95))
 
 dateStart = "2014-11-17 09:30:00"
 dateEnd = "2014-11-17 16:00:00"
@@ -36,7 +36,8 @@ resultsSamplingInterval='60s')
 portfolio_addPosition(portfolio,'AAPL',100)
 portfolio_addPosition(portfolio,'C',300) 
 portfolio_addPosition(portfolio,'GOOG',150)
-util_plot2d(position_starrRatio(portfolio,'AAPL', 0.05))
+util_plot2d(position_starrRatio(portfolio,'AAPL', 0.95))
 }}
 \keyword{PortfolioEffectHFT}
+%\concept{high frequency, intraday analytics, market data, portfolio, portfolio management,realtime analytics, risk, risk management, toolbox tools, trading, trading strategies}
 \keyword{position_starrRatio}

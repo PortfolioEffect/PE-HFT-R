@@ -100,34 +100,34 @@ util_multiplot(plot1,plot2,cols=1)
 ############################################################
 # Part 4 - Trading strategy variance
 ############################################################
-util_plot2d(portfolio_variance(highFrequencyPortfolioHoldOnly),title="Variance, daily",Legend="HF HoldOnly")+
-util_line2d(portfolio_variance(highFrequencyPortfolioAllDay),Legend="HF AllDay")+
-util_line2d(portfolio_variance(lowFrequencyPortfolioHoldOnly),Legend="LF HoldOnly")+
-util_line2d(portfolio_variance(lowFrequencyPortfolioAllDay),Legend="LF AllDay")
+util_plot2d(portfolio_variance(highFrequencyPortfolioHoldOnly),title="Variance, daily",legend="HF HoldOnly")+
+util_line2d(portfolio_variance(highFrequencyPortfolioAllDay),legend="HF AllDay")+
+util_line2d(portfolio_variance(lowFrequencyPortfolioHoldOnly),legend="LF HoldOnly")+
+util_line2d(portfolio_variance(lowFrequencyPortfolioAllDay),legend="LF AllDay")
 
 ############################################################
 # Part 5 - Trading strategy Value-at-Risk
 ############################################################
 
-util_plot2d(portfolio_VaR(highFrequencyPortfolioHoldOnly,0.05),title="VaR, daily",Legend="HF HoldOnly")+
-util_line2d(portfolio_VaR(highFrequencyPortfolioAllDay,0.05),Legend="HF AllDay")+
-util_line2d(portfolio_VaR(lowFrequencyPortfolioHoldOnly,0.05),Legend="LF HoldOnly")+
-util_line2d(portfolio_VaR(lowFrequencyPortfolioAllDay,0.05),Legend="LF AllDay")
+util_plot2d(portfolio_VaR(highFrequencyPortfolioHoldOnly,0.95),title="VaR, daily",legend="HF HoldOnly")+
+util_line2d(portfolio_VaR(highFrequencyPortfolioAllDay,0.95),legend="HF AllDay")+
+util_line2d(portfolio_VaR(lowFrequencyPortfolioHoldOnly,0.95),legend="LF HoldOnly")+
+util_line2d(portfolio_VaR(lowFrequencyPortfolioAllDay,0.95),legend="LF AllDay")
 
 ############################################################
 # Part 6 - Trading strategy expected return
 ############################################################
 
-util_plot2d(portfolio_expectedReturn(highFrequencyPortfolioHoldOnly),title="Expected Return, daily",Legend="HF HoldOnly")+
-util_line2d(portfolio_expectedReturn(highFrequencyPortfolioAllDay),Legend="HF AllDay")+
-util_line2d(portfolio_expectedReturn(lowFrequencyPortfolioHoldOnly),Legend="LF HoldOnly")+
-util_line2d(portfolio_expectedReturn(lowFrequencyPortfolioAllDay),Legend="LF AllDay")
+util_plot2d(portfolio_expectedReturn(highFrequencyPortfolioHoldOnly),title="Expected Return, daily",legend="HF HoldOnly")+
+util_line2d(portfolio_expectedReturn(highFrequencyPortfolioAllDay),legend="HF AllDay")+
+util_line2d(portfolio_expectedReturn(lowFrequencyPortfolioHoldOnly),legend="LF HoldOnly")+
+util_line2d(portfolio_expectedReturn(lowFrequencyPortfolioAllDay),legend="LF AllDay")
 
 ############################################################
 # Part 7 - Trading strategy Sharpe ratio
 ############################################################
 
-util_plot2d(portfolio_sharpeRatio(highFrequencyPortfolioHoldOnly),title="Sharpe Ratio, daily",Legend="HF HoldOnly")+
-util_line2d(portfolio_sharpeRatio(highFrequencyPortfolioAllDay),Legend="HF AllDay")+
-util_line2d(portfolio_sharpeRatio(lowFrequencyPortfolioHoldOnly),Legend="LF HoldOnly")+
-util_line2d(portfolio_sharpeRatio(lowFrequencyPortfolioAllDay),Legend="LF AllDay")
+util_plot2d(portfolio_sharpeRatio(highFrequencyPortfolioHoldOnly),title="Sharpe Ratio, daily",legend="HF HoldOnly")+
+util_line2d(portfolio_sharpeRatio(highFrequencyPortfolioAllDay),legend="HF AllDay")+
+util_line2d(portfolio_sharpeRatio(lowFrequencyPortfolioHoldOnly),legend="LF HoldOnly")+
+util_line2d(portfolio_sharpeRatio(lowFrequencyPortfolioAllDay),legend="LF AllDay")

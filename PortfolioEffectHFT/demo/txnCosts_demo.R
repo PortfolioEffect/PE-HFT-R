@@ -67,27 +67,27 @@ plot2<-util_ggplot(util_plot2d(position_quantity(lowFrequencyPortfolioWithTransa
 ############################################################
 
 # portfolio and position variance over time
-util_plot2d(portfolio_variance(highFrequencyPortfolioWithTransactionCosts),title="Variance, daily",Legend="HF With Transaction Costs")+
-  util_line2d(portfolio_variance(highFrequencyPortfolioWithoutTransactionCosts)+cbind(array(0,dim=n),array(1/700000,dim=n)),Legend="HF Without Transaction Costs")+
-  util_line2d(portfolio_variance(lowFrequencyPortfolioWithTransactionCosts),Legend="LF With Transaction Costs")+
-  util_line2d(portfolio_variance(lowFrequencyPortfolioWithoutTransactionCosts)+cbind(array(0,dim=n),array(1/700000,dim=n)),Legend="LF Without Transaction Costs")
+util_plot2d(portfolio_variance(highFrequencyPortfolioWithTransactionCosts),title="Variance, daily",legend="HF With Transaction Costs")+
+  util_line2d(portfolio_variance(highFrequencyPortfolioWithoutTransactionCosts)+cbind(array(0,dim=n),array(1/700000,dim=n)),legend="HF Without Transaction Costs")+
+  util_line2d(portfolio_variance(lowFrequencyPortfolioWithTransactionCosts),legend="LF With Transaction Costs")+
+  util_line2d(portfolio_variance(lowFrequencyPortfolioWithoutTransactionCosts)+cbind(array(0,dim=n),array(1/700000,dim=n)),legend="LF Without Transaction Costs")
 
 ############################################################
 # Part 4 - Trading strategy expected return
 ############################################################
 
 # portfolio and position return over time
-util_plot2d(portfolio_expectedReturn(highFrequencyPortfolioWithTransactionCosts),title="Expected Return, daily",Legend="HF With Transaction Costs")+
-  util_line2d(portfolio_expectedReturn(highFrequencyPortfolioWithoutTransactionCosts),Legend="HF Without Transaction Costs")+
-  util_line2d(portfolio_expectedReturn(lowFrequencyPortfolioWithTransactionCosts),Legend="LF With Transaction Costs")+
-  util_line2d(portfolio_expectedReturn(lowFrequencyPortfolioWithoutTransactionCosts),Legend="LF Without Transaction Costs")
+util_plot2d(portfolio_expectedReturn(highFrequencyPortfolioWithTransactionCosts),title="Expected Return, daily",legend="HF With Transaction Costs")+
+  util_line2d(portfolio_expectedReturn(highFrequencyPortfolioWithoutTransactionCosts),legend="HF Without Transaction Costs")+
+  util_line2d(portfolio_expectedReturn(lowFrequencyPortfolioWithTransactionCosts),legend="LF With Transaction Costs")+
+  util_line2d(portfolio_expectedReturn(lowFrequencyPortfolioWithoutTransactionCosts),legend="LF Without Transaction Costs")
 
 ############################################################
 # Part 5 - Trading strategy Transactional Costs
 ############################################################
 
 # portfolio and position Sharpe Ratio over time
-util_plot2d(portfolio_txnCosts(highFrequencyPortfolioWithTransactionCosts),title="Transactional Costs",Legend="HF With Transaction Costs")+
-  util_line2d(portfolio_txnCosts(highFrequencyPortfolioWithoutTransactionCosts),Legend="HF Without Transaction Costs")+
-  util_line2d(portfolio_txnCosts(lowFrequencyPortfolioWithTransactionCosts),Legend="LF With Transaction Costs")+
-  util_line2d(portfolio_txnCosts(lowFrequencyPortfolioWithoutTransactionCosts)+cbind(array(0,dim=n),array(5,dim=n)),Legend="LF Without Transaction Costs")
+util_plot2d(portfolio_txnCosts(highFrequencyPortfolioWithTransactionCosts),title="Transactional Costs",legend="HF With Transaction Costs")+
+  util_line2d(portfolio_txnCosts(highFrequencyPortfolioWithoutTransactionCosts),legend="HF Without Transaction Costs")+
+  util_line2d(portfolio_txnCosts(lowFrequencyPortfolioWithTransactionCosts),legend="LF With Transaction Costs")+
+  util_line2d(portfolio_txnCosts(lowFrequencyPortfolioWithoutTransactionCosts)+cbind(array(0,dim=n),array(5,dim=n)),legend="LF Without Transaction Costs")

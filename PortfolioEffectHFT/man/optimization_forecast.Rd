@@ -61,9 +61,10 @@ portfolio_settings(forecastingPortfolio,windowLength=windowLength)
 
   optimizerTest<-optimization_goal(portfolio,goal="SharpeRatio", direction="maximize")
   portfolioTemp=optimization_run(optimizerTest)
-util_plot2d(portfolio_sharpeRatio(portfolioTemp),"SharpeRatio",Legend="No forecast")+
-util_line2d(portfolio_sharpeRatio(portfolioTempForecast),Legend="Perfect forecast")
+util_plot2d(portfolio_sharpeRatio(portfolioTemp),"SharpeRatio",legend="No forecast")+
+util_line2d(portfolio_sharpeRatio(portfolioTempForecast),legend="Perfect forecast")
 
 }}
 \keyword{PortfolioEffectHFT}
+%\concept{high frequency, market data, optimization, realtime analytics, risk, risk management, trading, trading strategies}
 \keyword{optimization_forecast}

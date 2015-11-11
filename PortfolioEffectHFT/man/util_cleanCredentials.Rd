@@ -14,4 +14,5 @@ Removes existing records of client API credentials from the system.
 util_cleanCredentials()
 }}
 \keyword{PortfolioEffectHFT}
+%\concept{toolbox tools, trading}
 \keyword{util_cleanCredentials}

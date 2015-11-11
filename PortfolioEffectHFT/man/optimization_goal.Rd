@@ -15,7 +15,7 @@
 				   		  ),
 				   direction=c("minimize", 
 				   			   "maximize"),
-				   confidenceInterval=0.05,
+				   confidenceInterval=0.95,
 		           forecastPortfolioWindow='1m',
 				   forecastTimeStep='1m',
 				   forecastType=c("exp_smoothing","simple"),
@@ -74,4 +74,5 @@ optimalPortfolio<-optimization_run(optimizer)
 print(optimalPortfolio)
 }}
 \keyword{PortfolioEffectHFT}
+%\concept{high frequency, market data, optimization, realtime analytics, risk, risk management, trading, trading strategies}
 \keyword{optimization_goal}

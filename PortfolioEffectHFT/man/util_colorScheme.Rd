@@ -11,8 +11,9 @@
 \dontrun{ 
 data(aapl.data) 
 aapl.frame<-data.frame(Data=aapl.data[,2],Time=as.POSIXct(aapl.data[,1]/1000, 
-origin = "1970-01-01", tz = "America/New_York"),Legend='AAPL')
+origin = "1970-01-01", tz = "America/New_York"),legend='AAPL')
 ggplot() + geom_line(data=aapl.frame, aes(x=Time,y=Data,col=Legend))+util_colorScheme()
 }}
 \keyword{PortfolioEffectHFT}
+%\concept{plot market data, plot}
 \keyword{util_colorScheme}

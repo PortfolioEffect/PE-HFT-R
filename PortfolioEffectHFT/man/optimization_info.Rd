@@ -32,4 +32,5 @@ optimalPortfolio=optimization_run(optimizer)
 optimization_info(optimalPortfolio)
 }}
 \keyword{PortfolioEffectHFT}
+%\concept{high frequency, market data, optimization, realtime analytics, risk, risk management, trading, trading strategies}
 \keyword{optimization_info}

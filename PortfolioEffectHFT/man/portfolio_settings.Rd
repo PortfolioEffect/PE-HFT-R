@@ -12,6 +12,7 @@
   "shortSalesMode" - Used to specify how position weights are computed. Available modes are: "lintner" - the sum of absolute weights is equal to 1 (Lintner assumption), "markowitz" - the sum of weights must equal to 1 (Markowitz assumption). Defaults to "lintner", which implies that the sum of absolute weights is used to normalize investment weights. \cr
   "jumpsModel" - Used to select jump filtering mode when computing return statistics. Available modes are: "none" - price jumps are not filtered anywhere, "moments" - price jumps are filtered only when computing moments (variance, skewness, kurtosis) and derived metrics, "all" - price jumps are filtered everywhere. Defaults to "moments", which implies that only return moments and related metrics would be using jump-filtered returns in their calculations. \cr
   "noiseModel" - Used to enable microstructure noise model of distribution returns.  Defaults to TRUE, which implies that microstructure effects are modeled and resulting HF noise is removed from metric calculations. \cr
+  "fractalPriceModel" - Used to enable mono-fractal price assumptions (fGBM) when time scaling return moments.  Defaults to TRUE, which implies that computed Hurst exponent is used to scale return moments. When FALSE, price is assumed to follow regular GBM with Hurst exponent = 0.5. \cr
   "factorModel" - Used to select factor model for computing portfolio metrics. Available models are: "sim" - portfolio metrics are computed using the Single Index Model, "direct" - portfolio metrics are computed using portfolio value itself. Defaults to "sim", which implies that the Single Index Model is used to compute portfolio metrics. \cr
   "densityModel" - Used to select density approximation model of return distribution. Available models are: "GLD" - Generalized Lambda Distribution, "CORNER_FISHER" - Corner-Fisher approximation, "NORMAL" - Gaussian distribution. Defaults to "GLD", which would fit a broad range of distribution shapes. \cr
   "driftTerm" - Used to enable drift term (expected return) when computing probability density approximation and related metrics (e.g. CVaR, Omega Ratio, etc.). Defaults to TRUE, which implies that distribution is centered around expected return. \cr
@@ -31,6 +32,7 @@ Default:
 		shortSalesMode = "lintner",
 		jumpsModel = "moments",
 		noiseModel = TRUE,
+		fractalPriceModel=TRUE,
 		factorModel = "sim",
 		densityModel="GLD",
 		driftTerm=TRUE,
@@ -59,9 +61,6 @@ print(portfolio)
 dateStart = "2014-11-17 09:30:00"
 dateEnd = "2014-11-17 16:00:00"
 portfolio<-portfolio_create(dateStart,dateEnd)
-portfolio_settings(portfolio,
-				   windowLength='600s',
-				   resultsSamplingInterval = '10s')
 portfolio_settings(portfolio,portfolioMetricsMode="price",windowLength = '3600s',
 resultsSamplingInterval='60s')
 portfolio_addPosition(portfolio,'AAPL',100)
@@ -70,4 +69,5 @@ portfolio_addPosition(portfolio,'GOOG',150)
 plot(portfolio)
 }}
 \keyword{PortfolioEffectHFT}
+%\concept{high frequency, intraday analytics, market data, portfolio, portfolio management,realtime analytics, risk, risk management, toolbox tools, trading, trading strategies}
 \keyword{portfolio_settings}

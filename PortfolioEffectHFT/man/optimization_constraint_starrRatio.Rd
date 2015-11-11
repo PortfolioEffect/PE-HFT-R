@@ -4,7 +4,7 @@
 \usage{optimization_constraint_starrRatio(optimizer,
 constraintType=c("=", ">=", "<="),
 constraintValue,
-confidenceInterval=0.05)
+confidenceInterval=0.95)
 }
 \arguments{
   \item{optimizer}{Optimizer object created using \link[=optimization_goal]{optimization_goal( )} function}
@@ -34,4 +34,5 @@ optimalPortfolio<-optimization_run(optimizer)
 print(optimalPortfolio)
 }}
 \keyword{PortfolioEffectHFT}
+%\concept{high frequency, market data, optimization, realtime analytics, risk, risk management, trading, trading strategies}
 \keyword{optimization_constraint_starrRatio}

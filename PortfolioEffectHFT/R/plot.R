@@ -4,7 +4,7 @@ setClass("portfolioPlot",
 
 setMethod ("show" , "portfolioPlot",
 		function (object){
-			p=ggplot() + geom_line(data=object@data, aes_string(x='Time',y='Data',col='Legend'),size=object@option$line_size,fill="#004A61") +
+			p=ggplot() + geom_line(data=object@data, aes_string(x='Time',y='Data',col='legend'),size=object@option$line_size,fill="#004A61") +
 					xlab(NULL) + 
 					ylab(NULL) +
 					ggtitle(bquote(atop(.(object@option$title), atop(italic(.(object@option$subtitle)), "")))) +
@@ -12,7 +12,7 @@ setMethod ("show" , "portfolioPlot",
 							labels=object@labels)+
 					util_plotTheme(base_size=object@option$font_size,bw=object@bw,axis.text.size=object@option$axis.text.size,
 							title.size=object@option$title.size,has.subtitle=T)+util_colorScheme()
-					if(length(unique(object@data$Legend))==1){
+					if(length(unique(object@data$legend))==1){
 						p=p+theme( legend.position = "none")
 					}
 			print(p)
@@ -20,7 +20,7 @@ setMethod ("show" , "portfolioPlot",
 		})
 
 util_ggplot<-function (portfolioPlot){
-			p=ggplot() + geom_line(data=portfolioPlot@data, aes_string(x='Time',y='Data',col='Legend'),size=portfolioPlot@option$line_size,fill="#004A61") +
+			p=ggplot() + geom_line(data=portfolioPlot@data, aes_string(x='Time',y='Data',col='legend'),size=portfolioPlot@option$line_size,fill="#004A61") +
 					xlab(NULL) + 
 					ylab(NULL) +
 					ggtitle(bquote(atop(.(portfolioPlot@option$title), atop(italic(.(portfolioPlot@option$subtitle)), "")))) +
@@ -28,7 +28,7 @@ util_ggplot<-function (portfolioPlot){
 							labels=portfolioPlot@labels)+
 					util_plotTheme(base_size=portfolioPlot@option$font_size,bw=portfolioPlot@bw,axis.text.size=portfolioPlot@option$axis.text.size,
 							title.size=portfolioPlot@option$title.size,has.subtitle=T)+util_colorScheme()
-			if(length(unique(portfolioPlot@data$Legend))==1){
+			if(length(unique(portfolioPlot@data$legend))==1){
 				p=p+theme( legend.position = "none")
 			}
 			return(p)
@@ -42,7 +42,7 @@ plotPlot2df<-function (x,y){
 setMethod("plot" ,c(x="portfolioPlot",y="missing"),plotPlot2df)
 
 plotPlot2d<-function (portfolioPlot){
-			p=ggplot() + geom_line(data=portfolioPlot@data, aes_string(x='Time',y='Data',col='Legend'),size=portfolioPlot@option$line_size,fill="#004A61") +
+			p=ggplot() + geom_line(data=portfolioPlot@data, aes_string(x='Time',y='Data',col='legend'),size=portfolioPlot@option$line_size,fill="#004A61") +
 					xlab(NULL) + 
 					ylab(NULL) +
 					ggtitle(bquote(atop(.(portfolioPlot@option$title), atop(italic(.(portfolioPlot@option$subtitle)), "")))) +
@@ -50,34 +50,33 @@ plotPlot2d<-function (portfolioPlot){
 							labels=portfolioPlot@labels)+
 					util_plotTheme(base_size=portfolioPlot@option$font_size,bw=portfolioPlot@bw,axis.text.size=portfolioPlot@option$axis.text.size,
 							title.size=portfolioPlot@option$title.size,has.subtitle=T)+util_colorScheme()
-			if(length(unique(portfolioPlot@data$Legend))==1){
+			if(length(unique(portfolioPlot@data$legend))==1){
 				p=p+theme( legend.position = "none")
 			}
 			print(p)
 			return(p)
 		}
 
-util_plot2d<-function(metric,title=NULL,subtitle = NULL,font_size=10,line_size=1.2,bw=FALSE,Legend="",axis.text.size=1.5,title.size=2){
+util_plot2d<-function(metric,title=NULL,subtitle = NULL,font_size=10,line_size=1.2,bw=FALSE,legend="",axis.text.size=1.5,title.size=2){
 	n=NROW(metric)
-	result<-data.frame(Data=metric[,2],Time=metric[,1],Legend=array(Legend,dim=n))
+	result<-data.frame(value=metric[,2],time=metric[,1],legend=array(legend,dim=n))
 	result=result[complete.cases(result),]
-	portfolioPlot=util_plot2df(Data~Time,result,title=title,subtitle = subtitle,font_size=font_size,line_size=line_size,bw=bw,axis.text.size=axis.text.size,title.size=title.size)
+	portfolioPlot=util_plot2df(value~time,result,title=title,subtitle = subtitle,font_size=font_size,line_size=line_size,bw=bw,axis.text.size=axis.text.size,title.size=title.size)
 	portfolioPlot
 }
 
 util_plot2df<-function(formula,data,title=NULL,subtitle=NULL,font_size=10,line_size=1.2,bw=FALSE,axis.text.size=1.5,title.size=2){
-  if(is.null(data$Legend)){
-    stop("Data should have a parameter 'Legend'")
+  if(is.null(data$legend)){
+    stop("Data should have a parameter 'legend'")
   }
   data=data[complete.cases(data),]
   fml = util_parseFormula(formula, data = data)
-  if(fml$right.name=="Time"){
+  if(fml$right.name=="time"){
     Time=sort(unique(fml$right))
     diff<-difftime(as.POSIXlt(max(Time)/1000,origin = "1970-01-01",tz="America/New_York"),
                    as.POSIXlt(min(Time)/1000,origin = "1970-01-01",tz="America/New_York"),units="days")
     diffNum<-which.max(diff> c(3*365,365,90,20,2,0.1,0.03,0.015,0.008,0.0025,0.001,0))
-    
-    Legends=data$Legend
+    legends=data$legend
     normTime<-as.POSIXlt(Time/1000,origin = "1970-01-01",tz="America/New_York")
     n<-NROW(normTime)
     TimeStep<-switch(diffNum,
@@ -163,30 +162,30 @@ util_plot2df<-function(formula,data,title=NULL,subtitle=NULL,font_size=10,line_s
 	}
     
     Time=cbind(Time,temp)
-    result<-data.frame(Data=fml$left,Time=temp[match(fml$right,Time)],Legend=data$Legend)
+    result<-data.frame(Data=fml$left,Time=temp[match(fml$right,Time)],legend=data$legend)
     result2=NULL
-    Legend=unique(Legends)
-    for(leg in Legend){
-      temp1=result[result$Legend==leg,]
+    legend=unique(legends)
+    for(leg in legend){
+      temp1=result[result$legend==leg,]
       n=NROW(temp1)
       if(n>=46800){
         s=n%/%23400
         tempSum=c(array(0,dim=s-1),(cumsum(temp1$Data)[-(1:(s-1))]-cumsum(c(0,temp1$Data))[-((n-s+2):(n+1))])/s)
-        result2=rbind(result2,data.frame(Data=tempSum[(1:n)%%s==0],Time=temp1$Time[(1:n)%%s==0],Legend=leg))	
+        result2=rbind(result2,data.frame(Data=tempSum[(1:n)%%s==0],Time=temp1$Time[(1:n)%%s==0],legend=leg))	
       }else{
         result2=rbind(result2,temp1)	
       }
     }
     
 	portfolioPlot=new("portfolioPlot",data=result2,
-			start.data=data.frame(Data=fml$left,Time=fml$right,Legend=data$Legend),
+			start.data=data.frame(Data=fml$left,Time=fml$right,legend=data$legend),
 			option=list(line_size=line_size,axis.text.size=axis.text.size,title.size=title.size,font_size=font_size,title=title,subtitle=subtitle),bw=bw,
 			breaks=temp[TimeStep],
 			labels=format(normTime[TimeStep],format))
 	portfolioPlot
   }else{
-    result<-data.frame(x=fml$right,y=fml$left,Legend=data$Legend)
-    p<-ggplot() + geom_line(data=result, aes_string(x='x',y='y',col='Legend'),size=line_size) +
+    result<-data.frame(x=fml$right,y=fml$left,legend=data$legend)
+    p<-ggplot() + geom_line(data=result, aes_string(x='x',y='y',col='legend'),size=line_size) +
       xlab(fml$right.name) + 
       ylab(fml$left.name) +
       ggtitle(bquote(atop(.(title), atop(italic(.(subtitle)), "")))) +
@@ -196,10 +195,10 @@ util_plot2df<-function(formula,data,title=NULL,subtitle=NULL,font_size=10,line_s
   }
 }
 		
-util_line2d<-function(metric,Legend=""){
+util_line2d<-function(metric,legend=""){
 	
 	portfolioPlot=new("portfolioPlot",data=data.frame(),
-			start.data=data.frame(Data=metric[,2],Time=metric[,1],Legend=array(Legend,dim=NROW(metric))),
+			start.data=data.frame(Data=metric[,2],Time=metric[,1],legend=array(legend,dim=NROW(metric))),
 			option=list(),bw=T,
 			breaks=0,
 			labels="")
@@ -213,7 +212,7 @@ setMethod("+", signature(e1 = "portfolioPlot", e2 = "portfolioPlot"), function(e
 						as.POSIXlt(min(Time)/1000,origin = "1970-01-01",tz="America/New_York"),units="days")
 				diffNum<-which.max(diff> c(3*365,365,90,20,2,0.1,0.03,0.015,0.008,0.0025,0.001,0))
 				
-				Legends=data$Legend
+				legends=data$legend
 				normTime<-as.POSIXlt(Time/1000,origin = "1970-01-01",tz="America/New_York")
 				n<-NROW(normTime)
 				TimeStep<-switch(diffNum,
@@ -272,16 +271,16 @@ setMethod("+", signature(e1 = "portfolioPlot", e2 = "portfolioPlot"), function(e
 				}
 				
 				Time=cbind(Time,temp)
-				result<-data.frame(Data=data$Data,Time=temp[match(data$Time,Time)],Legend=Legends)
+				result<-data.frame(Data=data$Data,Time=temp[match(data$Time,Time)],legend=legends)
 				result2=NULL
-				Legend=unique(Legends)
-				for(leg in Legend){
-					temp1=result[result$Legend==leg,]
+				legend=unique(legends)
+				for(leg in legend){
+					temp1=result[result$legend==leg,]
 					n=NROW(temp1)
 					if(n>=46800){
 						s=n%/%23400
 						tempSum=c(array(0,dim=s-1),(cumsum(temp1$Data)[-(1:(s-1))]-cumsum(c(0,temp1$Data))[-((n-s+2):(n+1))])/s)
-						result2=rbind(result2,data.frame(Data=tempSum[(1:n)%%s==0],Time=temp1$Time[(1:n)%%s==0],Legend=leg))	
+						result2=rbind(result2,data.frame(Data=tempSum[(1:n)%%s==0],Time=temp1$Time[(1:n)%%s==0],legend=leg))	
 					}else{
 						result2=rbind(result2,temp1)	
 					}
@@ -363,7 +362,7 @@ util_summary<-function(portfolio){
 		printMatrix1<-rbind(printMatrix1,other)
 	}
 	
-	result3<-data.frame(data=printMatrix[,1],symbols=symbols,Legend="Time2")
+	result3<-data.frame(data=printMatrix[,1],symbols=symbols,legend="Time2")
 	
 	
 	p2<-ggplot(data=result3, aes_string(x='symbols',y='data')) + geom_bar(stat="identity",position="dodge",fill="#01526D")+ coord_flip() +
@@ -375,7 +374,7 @@ util_summary<-function(portfolio){
 	
 	
 	
-	result4<-data.frame(data=printMatrix[,2],symbols=symbols,Legend="Time2")
+	result4<-data.frame(data=printMatrix[,2],symbols=symbols,legend="Time2")
 	
 	
 	p3<-ggplot(data=result4, aes_string(x='symbols',y='data')) + geom_bar(stat="identity",position="dodge",fill="#00A3DC")+ coord_flip() +
@@ -519,6 +518,12 @@ util_multiplot <- function(..., cols=1) {
 util_parseFormula<-function(model,data){
 	if(length(model)!=3){
 		stop('Failed to parse provided formula.')
+	}
+	if(!(paste(model[[2]]) %in% colnames(data))){
+		stop(paste("Data should have a parameter" ,paste(model[[2]])))
+	}
+	if(!(paste(model[[3]]) %in% colnames(data))){
+		stop(paste("Data should have a parameter" ,paste(model[[3]])))
 	}
 	result=list(left=data[[paste(model[[2]])]], right=data[[paste(model[[3]])]],  left.name=paste(model[[2]]),  right.name=paste(model[[3]]))
 }

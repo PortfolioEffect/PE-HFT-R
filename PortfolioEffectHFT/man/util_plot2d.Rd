@@ -7,7 +7,7 @@ subtitle=NULL,
 font_size=10,
 line_size=1.2,
 bw=FALSE,
-Legend="",
+legend="",
 axis.text.size=1.5,
 title.size=2)
 }
@@ -18,7 +18,7 @@ title.size=2)
   \item{font_size}{Baseline font size.}
   \item{line_size}{Line thickness.}
   \item{bw}{Black and white color scheme flag.}
-  \item{Legend}{Plot legend.}  
+  \item{legend}{Plot legend.}  
   \item{axis.text.size}{Axis font size.}
   \item{title.size}{Title font size.}
 }
@@ -39,4 +39,5 @@ portfolio_addPosition(portfolio,'SPY',150,priceData=spy.data)
 util_plot2d(portfolio_return(portfolio),title="Portfolio return")
 }}
 \keyword{PortfolioEffectHFT}
+%\concept{plot market data, plot}
 \keyword{util_plot2d}

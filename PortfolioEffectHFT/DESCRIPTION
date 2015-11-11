@@ -1,7 +1,7 @@
 Package: PortfolioEffectHFT
 Type: Package
 Title: High Frequency Portfolio Analytics by PortfolioEffect
-Version: 1.2
+Version: 1.3
 Date: 2015-09-28
 URL: https://www.portfolioeffect.com/
 Depends: R (>= 2.13.2), methods, grid, ggplot2, rJava

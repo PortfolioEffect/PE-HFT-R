@@ -25,16 +25,17 @@ portfolio_addPosition(portfolio,'GOOG',150)
 
 portfolio_startBatch(portfolio)
 
-portfolio_VaR(portfolio,0.05)
-position_VaR(portfolio,"AAPL",0.05)
-position_VaR(portfolio,"GOOG",0.05)		
+portfolio_VaR(portfolio,0.95)
+position_VaR(portfolio,"AAPL",0.95)
+position_VaR(portfolio,"GOOG",0.95)		
 
 portfolio_endBatch(portfolio)
 
-util_plot2d(position_VaR(portfolio,"AAPL",0.05),title="Value at Risk , daily",Legend="AAPL")+
-        util_line2d(position_VaR(portfolio,"GOOG",0.05),Legend="GOOG")+
-        util_line2d(portfolio_VaR(portfolio,0.05),Legend="Portfolio")
+util_plot2d(position_VaR(portfolio,"AAPL",0.95),title="Value at Risk , daily",legend="AAPL")+
+        util_line2d(position_VaR(portfolio,"GOOG",0.95),legend="GOOG")+
+        util_line2d(portfolio_VaR(portfolio,0.95),legend="Portfolio")
 }}
 \keyword{PortfolioEffectHFT}
+%\concept{high frequency, intraday analytics, market data, portfolio, portfolio management,realtime analytics, risk, risk management, toolbox tools, trading, trading strategies}
 \keyword{portfolio_startBatch}
 \keyword{portfolio_endBatch}

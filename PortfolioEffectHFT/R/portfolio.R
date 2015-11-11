@@ -15,6 +15,7 @@ setMethod ("show" , "portfolio" ,
 			r<-rbind(r,c('Short sales mode',			set$shortSalesMode))
 			r<-rbind(r,c('Price jumps model ',			set$jumpsModel))
 			r<-rbind(r,c('Microstructure noise model ',	set$noiseModel))
+			r<-rbind(r,c('Fractal price model ',	    set$fractalPriceModel))			
 			r<-rbind(r,c('Portfolio factor model ',		set$factorModel))
 			r<-rbind(r,c('Density model ',       		set$densityModel))
 			r<-rbind(r,c('Drift term enabled ',        	set$driftTerm))
@@ -79,9 +80,10 @@ portfolio_mainSettings<-function(portfolio){
 				shortSalesMode = "lintner",
 				jumpsModel = "moments",
 				noiseModel = TRUE,
+				fractalPriceModel=TRUE,
 				factorModel = "sim",
 				densityModel="GLD",
-				driftTerm=TRUE,
+				driftTerm=FALSE,
 				resultsSamplingInterval = "1s",
 				inputSamplingInterval="none",
 				timeScale="1d",
@@ -98,13 +100,13 @@ portfolio_settings<-function(
 	removeList<-NULL
 	for(i in 1:length(change)){
 		if(!(names(change[i]) %in% c( "portfolioMetricsMode","windowLength","holdingPeriodsOnly",     
-								"shortSalesMode","jumpsModel","noiseModel",             
+								"shortSalesMode","jumpsModel","noiseModel", "fractalPriceModel",             
 								"factorModel","resultsSamplingInterval","inputSamplingInterval",  
 								"timeScale","driftTerm","txnCostPerShare",        
 								"txnCostFixed","densityModel" ))){
 				stopMessage('WRONG_SETTINGS_ARGUMENTS')
 			}
-		if(names(change[i]) %in% c( 'holdingPeriodsOnly','noiseModel','resultsSamplingInterval','inputSamplingInterval','driftTerm','densityModel')){
+		if(names(change[i]) %in% c( 'fractalPriceModel','holdingPeriodsOnly','noiseModel','resultsSamplingInterval','inputSamplingInterval','driftTerm','densityModel')){
 		switch(names(change[i]),
 				holdingPeriodsOnly = {
 					change$isHoldingPeriodEnabled=if(change[[i]]){"true"}else{"false"}	
@@ -114,6 +116,9 @@ portfolio_settings<-function(
 				},
 				driftTerm = {
 					change$isDriftEnabled=if(change[[i]]){"true"}else{"false"}
+				},
+				fractalPriceModel = {
+					change$isFractalPriceModelEnabled=if(change[[i]]){"true"}else{"false"}
 				},
 				resultsSamplingInterval = {
 					if(is.character(change[[i]])){
@@ -146,6 +151,7 @@ portfolio_getSettings<-function(portfolio){
 	temp$shortSalesMode<-.jcall(portfolio@java,returnSig="S", method="getParam","shortSalesMode")
 	temp$jumpsModel<-.jcall(portfolio@java,returnSig="S", method="getParam","jumpsModel")
 	temp$noiseModel<-as.logical(.jcall(portfolio@java,returnSig="S", method="getParam","isNoiseModelEnabled"))
+	temp$fractalPriceModel<-as.logical(.jcall(portfolio@java,returnSig="S", method="getParam","isNoiseModelEnabled"))
 	temp$factorModel<-.jcall(portfolio@java,returnSig="S", method="getParam","factorModel")
 	temp$resultsSamplingInterval<-.jcall(portfolio@java,returnSig="S", method="getParam","samplingInterval")
 	temp$inputSamplingInterval<-.jcall(portfolio@java,returnSig="S", method="getParam","priceSamplingInterval")
@@ -387,7 +393,7 @@ position_metric<-function(argList,portfolio,...){
 }
 
 position_maxDrawdown<-function(portfolio,symbol){
-	result<-position_metric(argList=as.list(environment()),portfolio=portfolio,position=symbol,metric='POSITION_MAX_DRAW_DOWN')
+	result<-position_metric(argList=as.list(environment()),portfolio=portfolio,position=symbol,metric='POSITION_MAX_DRAWDOWN')
 	return(result)}
 
 position_calmarRatio<-function(portfolio,symbol){
@@ -437,19 +443,19 @@ position_variance<-function(portfolio,symbol){
 	return(result)
 }
 
-position_CVaR<-function(portfolio,symbol,confidenceInterval=0.05){
+position_CVaR<-function(portfolio,symbol,confidenceInterval=0.95){
 	result<-position_metric(argList=as.list(environment()),portfolio=portfolio,position=symbol,metric='POSITION_CVAR',confidenceInterval=as.double(confidenceInterval))
 	return(result)}
 
-position_VaR<-function(portfolio,symbol,confidenceInterval=0.05){
+position_VaR<-function(portfolio,symbol,confidenceInterval=0.95){
 	result<-position_metric(argList=as.list(environment()),portfolio=portfolio,position=symbol,metric='POSITION_VAR',confidenceInterval=as.double(confidenceInterval))
 	return(result)}
 
-position_modifiedSharpeRatio<-function(portfolio,symbol,confidenceInterval=0.05){
+position_modifiedSharpeRatio<-function(portfolio,symbol,confidenceInterval=0.95){
 	result<-position_metric(argList=as.list(environment()),portfolio=portfolio,position=symbol,metric='POSITION_SHARPE_RATIO_MOD',confidenceInterval=as.double(confidenceInterval))
 	return(result)}
 
-position_starrRatio<-function(portfolio,symbol,confidenceInterval=0.05){
+position_starrRatio<-function(portfolio,symbol,confidenceInterval=0.95){
 	result<-position_metric(argList=as.list(environment()),portfolio=portfolio,position=symbol,metric='POSITION_STARR_RATIO',confidenceInterval=as.double(confidenceInterval))
 	return(result)}
 
@@ -480,23 +486,12 @@ position_jensensAlpha<-function(portfolio,symbol){
 }
 
 position_covariance<-function(portfolio,symbol1,symbol2){
-	util_validate()
-	if(symbol1==symbol2){
-		result<-position_metric(argList=as.list(environment()),portfolio=portfolio,position=symbol1,metric='POSITION_VARIANCE')
-	}else{
-		result<-position_metric(argList=as.list(environment()),portfolio=portfolio,metric='POSITION_COVARIANCE',positionA=symbol1,positionB=symbol2)
-	}
+	result<-position_metric(argList=as.list(environment()),portfolio=portfolio,metric='POSITION_COVARIANCE',positionA=symbol1,positionB=symbol2)
 	return(result)
 }
 
 position_correlation<-function(portfolio,symbol1,symbol2){
-	util_validate()
-	if(symbol1==symbol2){
-		temp<-position_price(portfolio,symbol1) 
-		result<-array(1,dim=length(temp))
-	}else{
-		result<-position_metric(argList=as.list(environment()),portfolio=portfolio,metric='POSITION_CORRELATION',positionA=symbol1,positionB=symbol2)
-	}
+	result<-position_metric(argList=as.list(environment()),portfolio=portfolio,metric='POSITION_CORRELATION',positionA=symbol1,positionB=symbol2)
 	return(result)
 }
 
@@ -505,7 +500,7 @@ position_omegaRatio<-function(portfolio,symbol,thresholdReturn){
 	return(result)}
 
 
-position_rachevRatio<-function(portfolio,symbol,confidenceIntervalA=0.05,confidenceIntervalB=0.05){
+position_rachevRatio<-function(portfolio,symbol,confidenceIntervalA=0.95,confidenceIntervalB=0.95){
 	result<-position_metric(argList=as.list(environment()),portfolio=portfolio,position=symbol,metric='POSITION_RACHEV_RATIO',confidenceIntervalAlpha=as.double(confidenceIntervalA),confidenceIntervalBeta=as.double(confidenceIntervalB))
 	return(result)}
 
@@ -693,26 +688,26 @@ portfolio_variance<-function(portfolio){
 	return(result)}
 
 portfolio_maxDrawdown<-function(portfolio){
-	result<-position_metric(argList=as.list(environment()),portfolio=portfolio,metric='PORTFOLIO_MAX_DRAW_DOWN')
+	result<-position_metric(argList=as.list(environment()),portfolio=portfolio,metric='PORTFOLIO_MAX_DRAWDOWN')
 	return(result)}
 
 portfolio_calmarRatio<-function(portfolio){
 	result<-position_metric(argList=as.list(environment()),portfolio=portfolio,metric='PORTFOLIO_CALMAR_RATIO') 
 	return(result)}
 
-portfolio_VaR<-function(portfolio,confidenceInterval=0.05){
+portfolio_VaR<-function(portfolio,confidenceInterval=0.95){
 	result<-position_metric(argList=as.list(environment()),portfolio=portfolio,metric='PORTFOLIO_VAR',confidenceInterval=as.double(confidenceInterval))
 	return(result)}
 
-portfolio_CVaR<-function(portfolio,confidenceInterval=0.05){
+portfolio_CVaR<-function(portfolio,confidenceInterval=0.95){
 	result<-position_metric(argList=as.list(environment()),portfolio=portfolio,metric='PORTFOLIO_CVAR',confidenceInterval=as.double(confidenceInterval))
 	return(result)}
 
-portfolio_modifiedSharpeRatio<-function(portfolio,confidenceInterval=0.05){
+portfolio_modifiedSharpeRatio<-function(portfolio,confidenceInterval=0.95){
 	result<-position_metric(argList=as.list(environment()),portfolio=portfolio,metric='PORTFOLIO_SHARPE_RATIO_MOD',confidenceInterval=as.double(confidenceInterval))
 	return(result)}
 
-portfolio_starrRatio<-function(portfolio,confidenceInterval=0.05){
+portfolio_starrRatio<-function(portfolio,confidenceInterval=0.95){
 	result<-position_metric(argList=as.list(environment()),portfolio=portfolio,metric='PORTFOLIO_STARR_RATIO',confidenceInterval=as.double(confidenceInterval))
 	return(result)}
 
@@ -744,7 +739,7 @@ portfolio_omegaRatio<-function(portfolio,thresholdReturn){
 	result<-position_metric(argList=as.list(environment()),portfolio=portfolio,metric='PORTFOLIO_OMEGA_RATIO',thresholdReturn=as.double(thresholdReturn))
 	return(result)}
 
-portfolio_rachevRatio<-function(portfolio,confidenceIntervalA=0.05,confidenceIntervalB=0.05){
+portfolio_rachevRatio<-function(portfolio,confidenceIntervalA=0.95,confidenceIntervalB=0.95){
 	result<-position_metric(argList=as.list(environment()),portfolio=portfolio,metric='PORTFOLIO_RACHEV_RATIO',confidenceIntervalAlpha=as.double(confidenceIntervalA),confidenceIntervalBeta=as.double(confidenceIntervalB))
 	return(result)}
 
@@ -928,4 +923,11 @@ portfolio_startBatch<-function(portfolio){
 portfolio_endBatch<-function(portfolio){
 	result=.jcall(portfolio@java,returnSig="Lcom/portfolioeffect/quant/client/result/MethodResult;", method="finishBatch")
 	util_checkErrors(result)
+}
+
+
+portfolio_availableSymbols<-function(portfolio){
+	result=.jcall(portfolio@java,returnSig="Lcom/portfolioeffect/quant/client/result/MethodResult;", method="getAllSymbolsList")
+	result<-getResult(result)
+	return(result)
 }

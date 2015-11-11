@@ -23,4 +23,5 @@ portfolio_addPosition(portfolio,'SPY',150,priceData=spy.data)
 util_POSIXTimeToDate(portfolio_kurtosis(portfolio)[,1])
 }}
 \keyword{PortfolioEffectHFT}
+%\concept{ market data}
 \keyword{util_POSIXTimeToDate}

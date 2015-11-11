@@ -14,8 +14,8 @@ portfolio_addPosition(portfolio,"AAPL",100)
 portfolio_addPosition(portfolio,"GOOG",100)
 portfolio_addPosition(portfolio,"SPY",100)
 
-util_plot2d(position_jensensAlpha(portfolio,"AAPL"), title="Jensen's Alpha",Legend="AAPL")+
-util_line2d(position_jensensAlpha(portfolio,"GOOG"), Legend="GOOG")
+util_plot2d(position_jensensAlpha(portfolio,"AAPL"), title="Jensen's Alpha",legend="AAPL")+
+util_line2d(position_jensensAlpha(portfolio,"GOOG"), legend="GOOG")
 
 # compute optimal weights according to the Treynor-Black model
 timeUTC=position_jensensAlpha(portfolio,"AAPL")[,1]
@@ -26,8 +26,8 @@ treynorBlack=alpha/variance
 optimWeigth=treynorBlack/rowSums(abs(treynorBlack))
 
 # plot optimal position weights
-util_plot2d(cbind(timeUTC[!(is.na(optimWeigth[,1]))], optimWeigth[!(is.na(optimWeigth[,1])),1]), title="Optimal Weight",Legend="AAPL")+
-util_line2d(cbind(timeUTC[!(is.na(optimWeigth[,2]))], optimWeigth[!(is.na(optimWeigth[,2])),2]), Legend="GOOG")
+util_plot2d(cbind(timeUTC[!(is.na(optimWeigth[,1]))], optimWeigth[!(is.na(optimWeigth[,1])),1]), title="Optimal Weight",legend="AAPL")+
+util_line2d(cbind(timeUTC[!(is.na(optimWeigth[,2]))], optimWeigth[!(is.na(optimWeigth[,2])),2]), legend="GOOG")
 
 ################################################
 # Part 2- Compare two portfolios of equal value
@@ -53,10 +53,10 @@ meanGOOG=mean(position_price(portfolioOptimal,"GOOG")[,2])
 portfolioSimpleAlpha=portfolio_jensensAlpha(portfolioSimple)
 portfolioOptimAlpha=portfolio_jensensAlpha(portfolioOptimal)
 
-util_plot2d(portfolioSimpleAlpha, title="Jensen's Alpha",Legend="Simple portfolio")+
-util_line2d(portfolioOptimAlpha, Legend="Optimal portfolio")+
-util_line2d(cbind(timeUTC, mean(portfolioSimpleAlpha[,2])), Legend="Avg. of simple")+
-util_line2d(cbind(timeUTC, mean(portfolioOptimAlpha[,2])), Legend="Avg. of optimal")
+util_plot2d(portfolioSimpleAlpha, title="Jensen's Alpha",legend="Simple portfolio")+
+util_line2d(portfolioOptimAlpha, legend="Optimal portfolio")+
+util_line2d(cbind(timeUTC, mean(portfolioSimpleAlpha[,2])), legend="Avg. of simple")+
+util_line2d(cbind(timeUTC, mean(portfolioOptimAlpha[,2])), legend="Avg. of optimal")
 
 ############################################################
 # Part 3 - Use ARMA-class model to forecast alpha-decay
@@ -96,7 +96,7 @@ for(i in 1:100){
 } 
 forecastErrorsOptim=mean(forecastErrors) #Calculation of average values 
 
-resultdf=data.frame(err=c(forecastErrorsSimple,forecastErrorsOptim) ,mean=c(meanSimple,mean(portfolioOptimAlpha[,2])),Legend=c(array("Portfolio Simple Alpha",dim=21),"Portfolio Optimal Alpha"))
+resultdf=data.frame(err=c(forecastErrorsSimple,forecastErrorsOptim) ,mean=c(meanSimple,mean(portfolioOptimAlpha[,2])),legend=c(array("Portfolio Simple Alpha",dim=21),"Portfolio Optimal Alpha"))
 
 ggplot() + geom_point(data=resultdf, aes(x=err, y=mean,colour=Legend),size=5) +
   xlab("Forecast Error(%)") + 

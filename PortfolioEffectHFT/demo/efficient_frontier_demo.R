@@ -69,9 +69,9 @@ for(x in seq(0,0.016,0.004)){
 
 resultLintner20000Portfolio=resultLintner20000Portfolio[-1,]
 
-resultLintner6000Portfolio$Legend="$6000 Portfolio"
-resultLintner20000Portfolio$Legend="$20000 Portfolio"
-resultLintner$Legend="Theoretical Portfolio"
+resultLintner6000Portfolio$legend="$6000 Portfolio"
+resultLintner20000Portfolio$legend="$20000 Portfolio"
+resultLintner$legend="Theoretical Portfolio"
 result=rbind(resultLintner6000Portfolio,resultLintner20000Portfolio,resultLintner)
 
 ggplot()+geom_path(data=result, aes(x=Variance,y=ExpectedReturn,col=Legend),size=1.2)+
@@ -103,8 +103,8 @@ resultMarkowitz=resultMarkowitz[-1,]
 resultMarkowitz=data.frame(Variance=spline(resultMarkowitz$Variance, n=100)$y,
                            ExpectedReturn=spline(resultMarkowitz$ExpectedReturn, n=100)$y)
 
-resultMarkowitz$Legend="Markowitz"
-resultLintner$Legend="Lintner"
+resultMarkowitz$legend="Markowitz"
+resultLintner$legend="Lintner"
 result=rbind(resultMarkowitz,resultLintner)
 
 ggplot()+geom_path(data=result, aes(x=Variance,y=ExpectedReturn,col=Legend),size=1.2)+

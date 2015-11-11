@@ -14,9 +14,10 @@ spy.data
 data(aapl.data) 
 data(goog.data) 
 data(spy.data) 
-util_plot2d(aapl.data,title="Price",Legend="AAPL")+
-        util_line2d(goog.data,Legend="GOOG")+
-        util_line2d(spy.data,Legend="SPY")
+util_plot2d(aapl.data,title="Price",legend="AAPL")+
+        util_line2d(goog.data,legend="GOOG")+
+        util_line2d(spy.data,legend="SPY")
 }
 \keyword{PortfolioEffectHFT}
+%\concept{high frequency, market data}
 \keyword{aapl.data}

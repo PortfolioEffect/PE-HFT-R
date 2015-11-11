@@ -37,4 +37,5 @@ portfolio_addPosition(portfolio,'GOOG',150)
 util_plot2d(portfolio_upNumberRatio(portfolio))
 }}
 \keyword{PortfolioEffectHFT}
+%\concept{high frequency, intraday analytics, market data, portfolio, portfolio management,realtime analytics, risk, risk management, toolbox tools, trading, trading strategies}
 \keyword{portfolio_upNumberRatio}

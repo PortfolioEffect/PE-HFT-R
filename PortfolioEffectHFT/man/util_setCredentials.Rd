@@ -24,4 +24,5 @@ This function should be called before any other requests to the server are made.
 #util_setCredentials("User Name", "User Password ", "User apiKey")
 }
 \keyword{PortfolioEffectHFT}
+%\concept{toolbox tools, trading}
 \keyword{util_setCredentials}

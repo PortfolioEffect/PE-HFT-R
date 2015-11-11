@@ -24,4 +24,5 @@ plot2<-util_ggplot(util_plot2d(position_weight(portfolio,'C'),title="C Weight"))
 util_multiplot(plot1,plot2,cols=1)
 }}
 \keyword{PortfolioEffectHFT}
+%\concept{plot market data, plot}
 \keyword{util_ggplot}

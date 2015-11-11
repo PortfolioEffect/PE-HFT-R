@@ -26,4 +26,5 @@ portfolio_addPosition(portfolio,'GOOG',150)
 util_summary(portfolio)
 }}
 \keyword{PortfolioEffectHFT}
+%\concept{plot market data, plot}
 \keyword{util_summary}

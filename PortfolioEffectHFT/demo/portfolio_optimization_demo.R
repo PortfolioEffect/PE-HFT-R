@@ -39,15 +39,15 @@ plot(optimPortfolioTwoConstraints)
 # Part 4 - Compute optimal portfolio expected return
 ############################################################
 
-util_plot2d(portfolio_expectedReturn(optimPortfolioOneConstraints),"Portfolio Expected Return",Legend="Optimal Portfolio, with Constraints:\nReturn>=0")+
-  util_line2d(portfolio_expectedReturn(optimPortfolioTwoConstraints),Legend="Optimal Portfolio, with Constraints:\nReturn>=0, Sum of Abs Weights AAPL and GOOG >=0.5")
+util_plot2d(portfolio_expectedReturn(optimPortfolioOneConstraints),"Portfolio Expected Return",legend="Optimal Portfolio, with Constraints:\nReturn>=0")+
+  util_line2d(portfolio_expectedReturn(optimPortfolioTwoConstraints),legend="Optimal Portfolio, with Constraints:\nReturn>=0, Sum of Abs Weights AAPL and GOOG >=0.5")
 
 ############################################################
 # Part 5 - Compute optimal portfolio variance
 ############################################################
 
-util_plot2d(portfolio_variance(optimPortfolioOneConstraints),"Portfolio Variance",Legend="Optimal Portfolio, with Constraints:\nReturn>=0")+
-  util_line2d(portfolio_variance(optimPortfolioTwoConstraints),Legend="Optimal Portfolio, with Constraints:\nReturn>=0, \nSum of Abs Weights AAPL and GOOG >=0.5")
+util_plot2d(portfolio_variance(optimPortfolioOneConstraints),"Portfolio Variance",legend="Optimal Portfolio, with Constraints:\nReturn>=0")+
+  util_line2d(portfolio_variance(optimPortfolioTwoConstraints),legend="Optimal Portfolio, with Constraints:\nReturn>=0, \nSum of Abs Weights AAPL and GOOG >=0.5")
 
 ############################################################
 # Part 6 - Compute optimal po rtfolio sum of absolute weights
@@ -57,5 +57,5 @@ sumOfAbsWeightsOptimPortfolio=abs(position_weight(optimPortfolioOneConstraints,"
 sumOfAbsWeightsOptimPortfolioTwoConstraints=abs(position_weight(optimPortfolioTwoConstraints,"AAPL")[,2])+abs(position_weight(optimPortfolioTwoConstraints,"GOOG")[,2])
 timeUTC <- position_weight(optimPortfolioOneConstraints,"AAPL")[,1]
 
-util_plot2d(cbind(timeUTC,sumOfAbsWeightsOptimPortfolio),"Portfolio Sum Of Abs Weigth AAPL and GOOG",Legend="Optimal Portfolio, with Constraints:\nReturn>=0")+
-  util_line2d(cbind(timeUTC,sumOfAbsWeightsOptimPortfolioTwoConstraints),Legend="Optimal Portfolio, with Constraints:\nReturn>=0, \nSum of Abs Weights AAPL and GOOG >=0.5")
+util_plot2d(cbind(timeUTC,sumOfAbsWeightsOptimPortfolio),"Portfolio Sum Of Abs Weigth AAPL and GOOG",legend="Optimal Portfolio, with Constraints:\nReturn>=0")+
+  util_line2d(cbind(timeUTC,sumOfAbsWeightsOptimPortfolioTwoConstraints),legend="Optimal Portfolio, with Constraints:\nReturn>=0, \nSum of Abs Weights AAPL and GOOG >=0.5")

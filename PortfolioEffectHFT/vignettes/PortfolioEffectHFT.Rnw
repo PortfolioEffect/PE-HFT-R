@@ -86,11 +86,9 @@ breaklines=true}
 {\href{https://www.portfolioeffect.com}{www.portfolioeffect.com} \\ High
 Frequency Portfolio Analytics\\}
 \vspace{8cm}
-{\huge User Manual \\}
+{\Large \bfseries User Manual \\}
 \vspace{0.3cm}
-{\Huge\bfseries PortfolioEffectHFT \\ R Package \\}
-\vspace{0.4cm}
-{\Large High Frequency Backtests \& Portfolio Optimization \\}
+{\Huge\bfseries PortfolioEffectHFT Package \\ for R Software\\ }
 % ----------------------------------------------------------------
 \vspace{1.5cm}
 {Andrey Kostin \\ andrey.kostin@portfolioeffect.com} \\[14pt]
@@ -109,7 +107,7 @@ Inc.}}\\[2cm]
 \bibliographystyle{amsplain}%}
 \renewcommand{\bibname}{Contents}
 \tableofcontents
-%\VignetteIndexEntry{PorfolioEffect package}
+%\VignetteIndexEntry{PorfolioEffectHFT package}
 
 \SweaveOpts{concordance=TRUE}
 
@@ -274,6 +272,29 @@ portfolio=portfolio_create(fromTime="t-5",
 						   toTime="t")
 \end{lstlisting}
 
+\subsection {Get Symbols List}
+Once portfolio is created, 
+\href{https://www.portfolioeffect.com/docs/platform/quant/functions/general-functions/portfolio-available-symbols}{portfolio\_availableSymbols()} 
+method could be called to receive the list of all available symbols for position creation. 
+Each symbol is accompanied by a full company/instrument description and listing exchange name.
+
+\begin{lstlisting}
+portfolio_availableSymbols(portfolio)
+
+      id      description                                                 exchange  
+ [1,] "BBC"   "BioShares Biotechnology Clinical Trials Fund"              "NASDAQ"  
+ [2,] "SCS"   "Steelcase Inc. Common Stock"                               "NYSE"    
+ [3,] "BBD"   "Banco Bradesco Sa American Depositary Shares"              "NYSE"    
+ [4,] "BBG"   "Bill Barrett Corporation Common Stock"                     "NYSE"    
+ [5,] "STPP"  "Barclays PLC - iPath US Treasury Steepener ETN"            "NASDAQ"  
+ [6,] "BBF"   "BlackRock Municipal Income Investment Trust"               "NYSE"      
+ [8,] "BBH"   "Market Vectors Biotech ETF"                                "NYSEARCA"
+ [9,] "SCON"  "Superconductor Technologies Inc. - Common Stock"           "NASDAQ"  
+[10,] "SCX"   "L.S. Starrett Company (The) Common Stock"                  "NYSE"    
+[11,] "BBK"   "Blackrock Municipal Bond Trust"                            "NYSE"  
+\end{lstlisting}
+
+
 \subsection {Add Positions}
 Positions are added by calling
 \href{https://www.portfolioeffect.com/docs/platform/quant/functions/general-functions/portfolio-add-position}{portfolio\_addPosition()}
@@ -335,8 +356,8 @@ variance_price=portfolio_variance(portfolio);
 # "portfolio" mode
 portfolio_settings(portfolio, portfolioMetricsMode="portfolio")
 variance_portfolio=portfolio_variance(portfolio);
-util_plot2d(variance_portfolio,title="Variance, portfolioMetricsMode",Legend="price")+
-    util_line2d(variance_price,Legend="portfolio")
+util_plot2d(variance_portfolio,title="Variance, portfolioMetricsMode",legend="price")+
+    util_line2d(variance_price,legend="portfolio")
 \end{lstlisting}
 
 \subsection {Holding Periods Only}
@@ -366,8 +387,18 @@ variance_holdingPeriodsOnly_TRUE=portfolio_variance(portfolio);
 portfolio_settings(portfolio, holdingPeriodsOnly=FALSE)
 variance_holdingPeriodsOnly_FALSE=portfolio_variance(portfolio);
 
-util_plot2d(variance_holdingPeriodsOnly_TRUE,title="Variance,holdingPeriodsOnly",Legend="TRUE")+ util_line2d(variance_holdingPeriodsOnly_FALSE,Legend="FALSE")
+util_plot2d(variance_holdingPeriodsOnly_TRUE,title="Variance,holdingPeriodsOnly",legend="TRUE")+ util_line2d(variance_holdingPeriodsOnly_FALSE,legend="FALSE")
 \end{lstlisting}
+
+\subsection {Short Sales Mode}
+This setting is used to specify how position weights are computed. Available modes are:
+\begin{itemize} 
+  \item  ``lintner'' - the sum of absolute weights is equal to 1 (Lintner
+  assumption)
+  \item ``markowitz'' - the sum of weights must equal to 1 (Markowitz
+  assumption)
+\end{itemize}
+Defaults to "lintner", which implies that the sum of absolute weights is used to normalize investment weights.
 
 \begin{lstlisting}
 require(PortfolioEffectHFT)
@@ -386,18 +417,8 @@ variance_markowitz=portfolio_variance(portfolio);
 portfolio_settings(portfolio, shortSalesMode="lintner")
 variance_lintner=portfolio_variance(portfolio);
 
-util_plot2d(variance_markowitz,title="Variance,shortSalesMode",Legend="markowitz")+ util_line2d(variance_lintner,Legend="lintner")
+util_plot2d(variance_markowitz,title="Variance,shortSalesMode",legend="markowitz")+ util_line2d(variance_lintner,legend="lintner")
 \end{lstlisting}
-
-\subsection {Short Sales Mode}
-This setting is used to specify how position weights are computed. Available modes are:
-\begin{itemize} 
-  \item  ``lintner'' - the sum of absolute weights is equal to 1 (Lintner
-  assumption)
-  \item ``markowitz'' - the sum of weights must equal to 1 (Markowitz
-  assumption)
-\end{itemize}
-Defaults to "lintner", which implies that the sum of absolute weights is used to normalize investment weights.
 
 \section{Data Sampling}
 These settings regulate how results of portfolio computations are returned. 
@@ -434,7 +455,7 @@ variance_30s=portfolio_variance(portfolio);
 portfolio_settings(portfolio, resultsSamplingInterval="15m")
 variance_15m=portfolio_variance(portfolio);
 
-util_plot2d(variance_30s,title="Variance,resultsSamplingInterval",Legend="30s")+ util_line2d(variance_15m,Legend="15m")
+util_plot2d(variance_30s,title="Variance,resultsSamplingInterval",legend="30s")+ util_line2d(variance_15m,legend="15m")
 \end{lstlisting}
 \subsection{Input Sampling Interval}
 Interval to be used as a minimum step for sampling input prices. Available interval values are: 
@@ -464,7 +485,7 @@ variance_30s=portfolio_variance(portfolio);
 portfolio_settings(portfolio, inputSamplingInterval="5m")
 variance_5m=portfolio_variance(portfolio);
 
-util_plot2d(variance_30s,title="Variance,inputSamplingInterval",Legend="30s")+ util_line2d(variance_5m,Legend="5m")
+util_plot2d(variance_30s,title="Variance,inputSamplingInterval",legend="30s")+ util_line2d(variance_5m,legend="5m")
 \end{lstlisting}
 
 
@@ -499,7 +520,7 @@ variance_1h=portfolio_variance(portfolio);
 portfolio_settings(portfolio, windowLength="1d")
 variance_1d=portfolio_variance(portfolio);
 
-util_plot2d(variance_1h,title="Variance,windowLength",Legend="1h")+ util_line2d(variance_1d,Legend="1d")
+util_plot2d(variance_1h,title="Variance,windowLength",legend="1h")+ util_line2d(variance_1d,legend="1d")
 \end{lstlisting}
 
 \subsection{Time Scale}
@@ -530,7 +551,7 @@ variance_1h=portfolio_variance(portfolio);
 portfolio_settings(portfolio, timeScale="1d")
 variance_1d=portfolio_variance(portfolio);
 
-util_plot2d(variance_1h,title="Variance,timeScale",Legend="1h")+ util_line2d(variance_1d,Legend="1d")
+util_plot2d(variance_1h,title="Variance,timeScale",legend="1h")+ util_line2d(variance_1d,legend="1d")
 \end{lstlisting}
 
 \subsection{Microstructure Noise Model}
@@ -553,7 +574,7 @@ variance_noiseModel_TRUE=portfolio_variance(portfolio);
 portfolio_settings(portfolio, noiseModel=FALSE)
 variance_noiseModel_FALSE=portfolio_variance(portfolio);
 
-util_plot2d(variance_noiseModel_TRUE,title="Variance,noiseModel",Legend="TRUE")+ util_line2d(variance_noiseModel_FALSE,Legend="FALSE")
+util_plot2d(variance_noiseModel_TRUE,title="Variance,noiseModel",legend="TRUE")+ util_line2d(variance_noiseModel_FALSE,legend="FALSE")
 \end{lstlisting}
 
 \subsection{Jumps/Outliers Model}
@@ -581,7 +602,7 @@ variance_all=portfolio_variance(portfolio);
 portfolio_settings(portfolio, jumpsModel="none")
 variance_none=portfolio_variance(portfolio);
 
-util_plot2d(variance_all,title="Variance,jumpsModel",Legend="all")+ util_line2d(variance_none,Legend="none")
+util_plot2d(variance_all,title="Variance,jumpsModel",legend="all")+ util_line2d(variance_none,legend="none")
 \end{lstlisting}
 
 \subsection {Density Model}
@@ -633,12 +654,37 @@ variance_sim=portfolio_variance(portfolio);
 portfolio_settings(portfolio, factorModel="direct")
 variance_direct=portfolio_variance(portfolio);
 
-util_plot2d(variance_sim,title="Variance,factorModel",Legend="sim")+ util_line2d(variance_direct,Legend="direct")
+util_plot2d(variance_sim,title="Variance,factorModel",legend="sim")+ util_line2d(variance_direct,legend="direct")
 \end{lstlisting}
+
+
+\subsection {Fractal Price Model}
+Used to enable mono-fractal price assumptions (fGBM) when time scaling return moments.  
+Defaults to TRUE, which implies that computed Hurst exponent is used to scale return moments. 
+When FALSE, price is assumed to follow regular GBM with Hurst exponent = 0.5.
+
+\begin{lstlisting}
+require(PortfolioEffectHFT)
+portfolio=portfolio_create(fromTime="2014-10-01 09:30:00", 
+						   toTime="2014-10-02 16:00:00")
+
+portfolio_addPosition(portfolio,c('C','GOOG'),c(500,600))
+
+# Fractal price model is enabled
+portfolio_settings(portfolio, fractalPriceModel=TRUE)
+variance_fractal=portfolio_variance(portfolio);
+
+# Fractal price model is disabled
+portfolio_settings(portfolio, fractalPriceModel=FALSE)
+variance_nonfractal=portfolio_variance(portfolio);
+
+util_plot2d(variance_fractal,title="Variance,fractalPriceModel",legend="enabled")+ util_line2d(variance_nonfractal,legend="disabled")
+\end{lstlisting}
+
 
 \subsection{Drift Term}
 Used to enable drift term (expected return) when computing probability density approximation and related metrics (e.g. CVaR, Omega Ratio, etc.).
-Defaults to TRUE, which implies that distribution is centered around expected return.
+Defaults to FALSE, which implies that distribution is centered around expected return.
 
 \begin{lstlisting}
 require(PortfolioEffectHFT)
@@ -653,7 +699,7 @@ CVaR_driftTerm_TRUE=portfolio_CVaR(portfolio);
 portfolio_settings(portfolio, driftTerm=FALSE)
 CVaR_driftTerm_FALSE=portfolio_CVaR(portfolio);
 
-util_plot2d(CVaR_driftTerm_TRUE,title="CVaR,driftTerm",Legend="TRUE")+ util_line2d(CVaR_driftTerm_FALSE,Legend="FALSE")
+util_plot2d(CVaR_driftTerm_TRUE,title="CVaR,driftTerm",legend="TRUE")+ util_line2d(CVaR_driftTerm_FALSE,legend="FALSE")
 \end{lstlisting}
 
 \section{Transactional Costs}
@@ -675,8 +721,8 @@ return_5=portfolio_return(portfolio)
 portfolio_settings(portfolio, txnCostPerShare=0.001)
 return_1=portfolio_return(portfolio)
 
-util_plot2d(return_5,title="Return,txnCostPerShare",Legend="0.005")+
-util_line2d(return_1,Legend="0.001")
+util_plot2d(return_5,title="Return,txnCostPerShare",legend="0.005")+
+util_line2d(return_1,legend="0.001")
 \end{lstlisting}
 \subsection {Cost Per Transaction}
 Amount of fixed costs per transaction. Defaults to 0.
@@ -699,8 +745,8 @@ return_19=portfolio_return(portfolio)
 portfolio_settings(portfolio, txnCostFixed=1.0)
 return_1=portfolio_return(portfolio)
 
-util_plot2d(return_19,title="Return,txnCostFixed",Legend="19.0")+
-util_line2d(return_1,Legend="1.0")
+util_plot2d(return_19,title="Return,txnCostFixed",legend="19.0")+
+util_line2d(return_1,legend="1.0")
 \end{lstlisting}
 
 \chapter{Portfolio Optimization}
@@ -749,7 +795,7 @@ optimizer=optimization_goal(portfolio,
 # launch optimization and obtain optimal portfolio
 optimalPortfolio=optimization_run(optimizer)
 
-util_plot2d(portfolio_return(portfolio),title="Portfolio Return",Legend="Simple Portfolio")+ util_line2d(portfolio_return(optimalPortfolio),Legend="Optimal Portfolio")
+util_plot2d(portfolio_return(portfolio),title="Portfolio Return",legend="Simple Portfolio")+ util_line2d(portfolio_return(optimalPortfolio),legend="Optimal Portfolio")
 \end{lstlisting}
 
 The following portfolio metrics could currently be used as optimization goals:
@@ -814,14 +860,14 @@ optimization_constraint_variance(optimizer,"<=",0.02)
 # launch optimization and obtain optimal portfolio
 optimalPortfolio=optimization_run(optimizer)
 
-util_plot2d(portfolio_sharpeRatio(portfolio),title="Sharpe Ratio",Legend="Simple
-Portfolio")+ util_line2d(portfolio_sharpeRatio(optimalPortfolio),Legend="Optimal Portfolio")
+util_plot2d(portfolio_sharpeRatio(portfolio),title="Sharpe Ratio",legend="Simple
+Portfolio")+ util_line2d(portfolio_sharpeRatio(optimalPortfolio),legend="Optimal Portfolio")
 
-util_plot2d(portfolio_beta(portfolio),title="Beta",Legend="Simple Portfolio")+
-util_line2d(portfolio_beta(optimalPortfolio),Legend="Optimal Portfolio")
+util_plot2d(portfolio_beta(portfolio),title="Beta",legend="Simple Portfolio")+
+util_line2d(portfolio_beta(optimalPortfolio),legend="Optimal Portfolio")
 
-util_plot2d(portfolio_variance(portfolio),title="Variance",Legend="Simple Portfolio")+ 
-util_line2d(portfolio_variance(optimalPortfolio),Legend="Optimal Portfolio")
+util_plot2d(portfolio_variance(portfolio),title="Variance",legend="Simple Portfolio")+ 
+util_line2d(portfolio_variance(optimalPortfolio),legend="Optimal Portfolio")
 \end{lstlisting}
 
 The following constraint methods are available:
@@ -894,8 +940,8 @@ optimization_constraint_beta(optimizer, "<=", constraintValue = 0.1)
 optimalPortfolio=optimization_run(optimizer)
 
 # plot results
-util_plot2d(portfolio_beta(optimalPortfolio), title="Beta", Legend="Optimal Beta") + 
-util_line2d(portfolio_beta(portfolio), Legend="Original Beta")
+util_plot2d(portfolio_beta(optimalPortfolio), title="Beta", legend="Optimal Beta") + 
+util_line2d(portfolio_beta(portfolio), legend="Original Beta")
 \end{lstlisting}
 
 \subsection{Vector Constraints}
@@ -928,8 +974,8 @@ optimizer=optimization_constraint_beta(optimizer, "<=",
 optimalPortfolio=optimization_run(optimizer)
 
 # plot results
-util_plot2d(portfolio_beta(optimalPortfolio), title="Beta", Legend="Optimal Beta") + 
-util_line2d(portfolio_beta(portfolio), Legend="Original Beta")
+util_plot2d(portfolio_beta(optimalPortfolio), title="Beta", legend="Optimal Beta") + 
+util_line2d(portfolio_beta(portfolio), legend="Original Beta")
 \end{lstlisting}
 
 
@@ -974,8 +1020,8 @@ optimizer=optimization_constraint_beta(optimizer, ">=",
 optimalPortfolio=optimization_run(optimizer)
 
 # plot results
-util_plot2d(portfolio_beta(optimalPortfolio), title="Beta", Legend="Optimal Beta") + 
-util_line2d(portfolio_beta(my_portfolio), Legend="Original Beta")
+util_plot2d(portfolio_beta(optimalPortfolio), title="Beta", legend="Optimal Beta") + 
+util_line2d(portfolio_beta(my_portfolio), legend="Original Beta")
 \end{lstlisting}
 
  

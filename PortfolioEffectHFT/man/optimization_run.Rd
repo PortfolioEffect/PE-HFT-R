@@ -24,4 +24,5 @@ optimizer=optimization_constraint_beta(optimizer,"<=",0.5)
 optimization_run(optimizer)
 }}
 \keyword{PortfolioEffectHFT}
+%\concept{high frequency, market data, optimization, realtime analytics, risk, risk management, trading, trading strategies}
 \keyword{optimization_run}

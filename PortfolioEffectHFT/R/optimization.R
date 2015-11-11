@@ -209,7 +209,7 @@ optimization_goal<-function(portfolio,
 		),
 		direction=c("minimize", 
 				"maximize"),
-		confidenceInterval=0.05,
+		confidenceInterval=0.95,
 		forecastPortfolioWindow='1m',
 		forecastTimeStep='1m',
 		forecastType=c("exp_smoothing", "simple"),
@@ -338,7 +338,7 @@ optimization_constraint_modifiedSharpeRatio<-function(
 		optimizer,
 		constraintType=c("=", ">=", "<="),
 		constraintValue,
-		confidenceInterval=0.05){
+		confidenceInterval=0.95){
 	util_validate(as.list(environment()))
 	
 	constraintMertic="MODIFIED_SHARPE_RATIO"
@@ -349,7 +349,7 @@ optimization_constraint_starrRatio<-function(
 		optimizer,
 		constraintType=c("=", ">=", "<="),
 		constraintValue,
-		confidenceInterval=0.05){
+		confidenceInterval=0.95){
 	util_validate(as.list(environment()))
 	
 	constraintMertic="STARR_RATIO"
@@ -360,7 +360,7 @@ optimization_constraint_VaR<-function(
 		optimizer,
 		constraintType=c("=", ">=", "<="),
 		constraintValue,
-		confidenceInterval=0.05){
+		confidenceInterval=0.95){
 	util_validate(as.list(environment()))
 	
 	constraintMertic="VAR"
@@ -371,7 +371,7 @@ optimization_constraint_CVaR<-function(
 		optimizer,
 		constraintType=c("=", ">=", "<="),
 		constraintValue,
-		confidenceInterval=0.05){
+		confidenceInterval=0.95){
 	util_validate(as.list(environment()))
 	
 	constraintMertic="CVAR"
