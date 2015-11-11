@@ -65,7 +65,7 @@ locate your API credentials on the main page:
 
 <img src="https://www.portfolioeffect.com/img/screenshots/quant/tutorials/api-settings.png" alt="API Credentials">
 
-### Set API Credentials in R
+### Set API Credentials
 
 Run the following commands to set your account API credentials for the
 PortfolioEffectHFT Package for R.
