@@ -37,7 +37,7 @@ Authors@R: c(person("Aleksey", "Zemnitskiy", role = c("aut", "cre"),
                    comment = "GNU Trove and GNU Crypto libraries")
            )
 Maintainer: Aleksey Zemnitskiy <aleksey.zemnitskiy@portfolioeffect.com>
-Description: R interface to PortfolioEffect Quant service for backtesting
+Description: R interface to PortfolioEffect cloud service for backtesting
     high frequency trading (HFT) strategies, intraday portfolio analysis 
     and optimization. Includes auto-calibrating model pipeline for market
     microstructure noise, risk factors, price jumps/outliers, tail risk 

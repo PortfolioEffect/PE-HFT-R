@@ -3,7 +3,7 @@
 </a>
 
 # PortfolioEffectHFT Package for R 
-R package/API to PortfolioEffect Quant service for high frequency trading (HFT) strategy backtests, intraday portfolio 
+R package/API to PortfolioEffect cloud service for high frequency trading (HFT) strategy backtests, intraday portfolio 
 analysis and portfolio optimization.
 
 ## About PortfolioEffect

@@ -310,7 +310,7 @@ util_summary<-function(portfolio){
 	
 		tempSet<-set
 		symbols<-portfolio_symbols(portfolioTemp)
-	.jcall(portfolioTemp@java,returnSig="V", method="createCallGroup",as.integer(2*length(symbols)+3))
+	.jcall(portfolioTemp@java,returnSig="V", method="createCallGroup",as.integer(2))
 	portfolio_startBatch(portfolioTemp)
 	portfolio_value(portfolioTemp)
 	portfolio_expectedReturn(portfolioTemp)

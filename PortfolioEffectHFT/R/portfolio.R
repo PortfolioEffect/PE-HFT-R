@@ -34,7 +34,7 @@ setMethod ("show" , "portfolio" ,
 			.jcall(portfolio@java,returnSig="V", method="setParam","samplingInterval","last")
 			
 			portfolio_startBatch(portfolio)
-			.jcall(portfolio@java,returnSig="V", method="createCallGroup",as.integer(9))
+			.jcall(portfolio@java,returnSig="V", method="createCallGroup",as.integer(7))
 			.jcall(portfolio@java,returnSig="Lcom/portfolioeffect/quant/client/result/MethodResult;", method="getMetric",paste('{"metric":"PORTFOLIO_PROFIT"}'))
 			.jcall(portfolio@java,returnSig="Lcom/portfolioeffect/quant/client/result/MethodResult;", method="getMetric",paste('{"metric":"PORTFOLIO_RETURN"}'))
 			.jcall(portfolio@java,returnSig="Lcom/portfolioeffect/quant/client/result/MethodResult;", method="getMetric",paste('{"metric":"PORTFOLIO_VALUE"}'))
@@ -140,6 +140,25 @@ change[removeList]<-NULL
 for(i in 1:length(change)){
 	.jcall(portfolio@java,returnSig="V", method="setParam",names(change[i]),paste(change[[i]]))
 }
+}
+
+portfolio_settingsRiskMetrics<-function(portfolio){
+	portfolio_settings(portfolio,portfolioMetricsMode="price",
+			windowLength = "1s",
+			holdingPeriodsOnly = FALSE,
+			shortSalesMode = "lintner",
+			jumpsModel = "none",
+			noiseModel = FALSE,
+			fractalPriceModel=FALSE,
+			factorModel = "sim",
+			densityModel="NORMAL",
+			driftTerm=FALSE,
+			resultsSamplingInterval = "1d",
+			inputSamplingInterval="1d",
+			timeScale="1d",
+			txnCostPerShare=0,
+			txnCostFixed=0)
+	.jcall(portfolio@java,returnSig="V", method="setParam","riskMethodology", "RiskMetrics")
 }
 
 portfolio_getSettings<-function(portfolio){
