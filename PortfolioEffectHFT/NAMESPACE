@@ -1,9 +1,12 @@
 import('methods')
 import('ggplot2')
-import('grid')
 import('rJava')
 importFrom("stats", "complete.cases")
 importFrom("utils", "data")
+importFrom("grid", "grid.newpage")
+importFrom("grid", "pushViewport")
+importFrom("grid", "grid.layout")
+importFrom("grid", "viewport")
 
 
 export(util_setCredentials)

@@ -11,7 +11,7 @@
 \description{Converts date strings to corresponding timestamps in milliseconds.}
 \author{Kostin Andrey <andrey.kostin@portfolioeffect.com>}
 \examples{
-\dontrun{ 
+\dontrun{
 time = "2014-11-17 09:30:00"
 util_dateToPOSIXTime(time)
 }}

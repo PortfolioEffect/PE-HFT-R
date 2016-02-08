@@ -24,11 +24,11 @@ has.subtitle = FALSE)
 \description{Customizable plot style for PortfolioEffect color theme.}
 \author{Kostin Andrey <andrey.kostin@portfolioeffect.com>}
 \examples{
-\dontrun{ 
+\dontrun{
 data(aapl.data) 
 aapl.frame<-data.frame(Data=aapl.data[,2],Time=as.POSIXct(aapl.data[,1]/1000, 
 origin = "1970-01-01", tz = "America/New_York"),legend='AAPL')
-ggplot() + geom_line(data=aapl.frame, aes(x=Time,y=Data,col=Legend))+
+ggplot() + geom_line(data=aapl.frame, aes(x=Time,y=Data,col=legend))+
 util_plotTheme()+util_colorScheme()+util_fillScheme()
 }}
 \keyword{PortfolioEffectHFT}

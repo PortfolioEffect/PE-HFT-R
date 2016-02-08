@@ -14,7 +14,7 @@
 }
 \author{Kostin Andrey <andrey.kostin@portfolioeffect.com>}
 \examples{
-\dontrun{ 
+\dontrun{
 dateStart = "2014-11-17 09:30:00"
 dateEnd = "2014-11-30 16:00:00"
 portfolio<-portfolio_create(dateStart,dateEnd)
@@ -23,7 +23,7 @@ resultsSamplingInterval='60s')
 portfolio_addPosition(portfolio,'AAPL',100)
 portfolio_addPosition(portfolio,'C',300) 
 portfolio_addPosition(portfolio,'GOOG',150)
-util_plot2d(position_returnJumpSize(portfolio,'AAPL'))
+util_plot2d(position_returnJumpSize(portfolio,'AAPL'),title="Position Return Jump Size, AAPL")
 }}
 \keyword{PortfolioEffectHFT}
 %\concept{high frequency, intraday analytics, market data, portfolio, portfolio management,realtime analytics, risk, risk management, toolbox tools, trading, trading strategies}

@@ -74,7 +74,7 @@ resultLintner20000Portfolio$legend="$20000 Portfolio"
 resultLintner$legend="Theoretical Portfolio"
 result=rbind(resultLintner6000Portfolio,resultLintner20000Portfolio,resultLintner)
 
-ggplot()+geom_path(data=result, aes(x=Variance,y=ExpectedReturn,col=Legend),size=1.2)+
+ggplot()+geom_path(data=result, aes(x=Variance,y=ExpectedReturn,col=legend),size=1.2)+
 util_plotTheme()+ggtitle("Efficient Frontier of Theoretical/$20000/$6000  portfolio")+
 ylab("Expected Return")+util_colorScheme()
 
@@ -107,6 +107,6 @@ resultMarkowitz$legend="Markowitz"
 resultLintner$legend="Lintner"
 result=rbind(resultMarkowitz,resultLintner)
 
-ggplot()+geom_path(data=result, aes(x=Variance,y=ExpectedReturn,col=Legend),size=1.2)+
+ggplot()+geom_path(data=result, aes(x=Variance,y=ExpectedReturn,col=legend),size=1.2)+
 util_plotTheme()+ggtitle("Markowitz and Lintner Efficient Frontier")+ylab("Expected Return")+
 util_colorScheme()

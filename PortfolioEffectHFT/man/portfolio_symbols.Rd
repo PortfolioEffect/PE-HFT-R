@@ -14,7 +14,7 @@ Returns a list of portfolio symbols with non-zero weights.
 }
 \author{Kostin Andrey <andrey.kostin@portfolioeffect.com>}
 \examples{
-\dontrun{ 
+\dontrun{
 data(aapl.data) 
 data(goog.data) 
 data(spy.data) 

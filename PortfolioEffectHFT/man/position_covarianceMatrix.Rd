@@ -15,7 +15,7 @@
 \author{Kostin Andrey <andrey.kostin@portfolioeffect.com>}
 \seealso{\code{\link{position_covariance}} }
 \examples{
-\dontrun{ 
+\dontrun{
 data(aapl.data) 
 data(goog.data) 
 data(spy.data) 

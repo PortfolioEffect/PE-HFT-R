@@ -161,7 +161,6 @@ printStatus<-function(){
 
 getResult<-function(data){
 	util_checkErrors(data)
-	.jcall(data,returnSig="V", method="setNaNFiltered",F)
 	dataNames<-.jcall(data,returnSig="[S", method="getDataNames")
 	result=NULL
 	for(dataName in dataNames){

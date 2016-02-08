@@ -19,7 +19,7 @@
 Probability density is computed based on a "densityModel" specified in \link[=portfolio_settings]{portfolio_settings( )} method.}
 \author{Kostin Andrey <andrey.kostin@portfolioeffect.com>}
 \examples{
-\dontrun{ 
+\dontrun{
 data(aapl.data) 
 data(goog.data) 
 data(spy.data) 

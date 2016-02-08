@@ -28,7 +28,7 @@
 By default value of the metric at time "t" is used as a forecast for "t+1". }
 \author{Kostin Andrey <andrey.kostin@portfolioeffect.com>}
 \examples{
-\dontrun{ 
+\dontrun{
 windowLength='10m'
   
   portfolio<-portfolio_create("2014-11-03 09:30:00","2014-11-03 16:00:00")
@@ -51,7 +51,7 @@ portfolio_settings(forecastingPortfolio,windowLength=windowLength)
   }
     
   optimizerTest1<-optimization_goal(portfolio,goal="SharpeRatio", 
-  direction="maximize",windowLength=windowLength,forecastLength=windowLength)
+  direction="maximize",forecastPortfolioWindow=windowLength,forecastExponentialWindow=windowLength)
  
   for(symbol in portfolio_symbols(portfolio)){
     optimizerTest1=optimization_forecast(optimizerTest1,'ExpReturn',

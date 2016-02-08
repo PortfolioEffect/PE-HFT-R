@@ -12,26 +12,19 @@
 }
 \author{Kostin Andrey <andrey.kostin@portfolioeffect.com>}
 \examples{
-\dontrun{ 
+\dontrun{
+
 data(aapl.data) 
 data(goog.data) 
 data(spy.data) 
 portfolio<-portfolio_create(priceDataIx=spy.data)
-portfolio_settings(portfolio,windowLength = '3600s',resultsSamplingInterval='60s')
-portfolio_addPosition(portfolio,'GOOG',100,priceData=goog.data)  
-portfolio_addPosition(portfolio,'AAPL',300,priceData=aapl.data) 
+portfolio_settings(portfolio,windowLength = '3600s',resultsSamplingInterval='60s',txnCostFixed=100)
+portfolio_addPosition(portfolio,'GOOG',c(100,200),time=c(1412256601000,1412266600000),
+priceData=goog.data) 
+portfolio_addPosition(portfolio,'AAPL',c(300,150),time=c(1412266600000,1412276600000),
+priceData=aapl.data) 
 portfolio_addPosition(portfolio,'SPY',150,priceData=spy.data)
-util_plot2d(portfolio_txnCosts(portfolio))
-
-dateStart = "2014-11-17 09:30:00"
-dateEnd = "2014-11-17 16:00:00"
-portfolio<-portfolio_create(dateStart,dateEnd)
-portfolio_settings(portfolio,portfolioMetricsMode="price",windowLength = '3600s',
-resultsSamplingInterval='60s')
-portfolio_addPosition(portfolio,'AAPL',100)
-portfolio_addPosition(portfolio,'C',300) 
-portfolio_addPosition(portfolio,'GOOG',150)
-util_plot2d(portfolio_txnCosts(portfolio))
+util_plot2d(portfolio_txnCosts(portfolio),title="Portfolio Transactional Costs")
 }}
 \keyword{PortfolioEffectHFT}
 %\concept{high frequency, intraday analytics, market data, portfolio, portfolio management,realtime analytics, risk, risk management, toolbox tools, trading, trading strategies}

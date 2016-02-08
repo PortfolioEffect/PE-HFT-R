@@ -12,7 +12,7 @@
 \description{Adds another line chart on the existing plot using a time series of metric values.}
 \author{Kostin Andrey <andrey.kostin@portfolioeffect.com>}
 \examples{
-\dontrun{ 
+\dontrun{
 data(aapl.data) 
 data(goog.data) 
 data(spy.data) 

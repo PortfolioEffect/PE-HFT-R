@@ -17,7 +17,7 @@
 \author{Kostin Andrey <andrey.kostin@portfolioeffect.com>}
 \seealso{\code{\link{position_covariance}} }
 \examples{
-\dontrun{ 
+\dontrun{
 data(aapl.data) 
 data(goog.data) 
 data(spy.data) 
@@ -25,7 +25,8 @@ portfolio<-portfolio_create(priceDataIx=spy.data)
 portfolio_settings(portfolio,windowLength = '3600s',resultsSamplingInterval='60s')
 portfolio_addPosition(portfolio,'GOOG',100,priceData=goog.data)  
 portfolio_addPosition(portfolio,'AAPL',300,priceData=aapl.data) 
-util_plot2d(position_correlation(portfolio,'GOOG','AAPL'))
+util_plot2d(position_correlation(portfolio,'GOOG','AAPL'),
+title="Position Correlation, GOOG and AAPL")
 
 dateStart = "2014-11-17 09:30:00"
 dateEnd = "2014-11-17 16:00:00"
@@ -35,7 +36,8 @@ resultsSamplingInterval='60s')
 portfolio_addPosition(portfolio,'AAPL',100)
 portfolio_addPosition(portfolio,'C',300) 
 portfolio_addPosition(portfolio,'GOOG',150)
-util_plot2d(position_correlation(portfolio,'AAPL','C'))
+util_plot2d(position_correlation(portfolio,'AAPL','C'),
+title="Position Correlation, AAPL and C")
 }}
 \keyword{PortfolioEffectHFT}
 %\concept{high frequency, intraday analytics, market data, portfolio, portfolio management,realtime analytics, risk, risk management, toolbox tools, trading, trading strategies}

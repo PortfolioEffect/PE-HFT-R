@@ -20,7 +20,7 @@ util_line2d(position_jensensAlpha(portfolio,"GOOG"), legend="GOOG")
 # compute optimal weights according to the Treynor-Black model
 timeUTC=position_jensensAlpha(portfolio,"AAPL")[,1]
 alpha=cbind (position_jensensAlpha(portfolio,"AAPL")[,2], position_jensensAlpha(portfolio,"GOOG")[,2])
-variance=cbind(position_variance(portfolio,"AAPL")[,2], position_variance(portfolio,"GOOG")[,2])-position_beta(portfolio,"GOOG")[,2]^2*position_variance(portfolio,"SPY")[,2]
+variance=cbind(position_variance(portfolio,"AAPL")[,2], position_variance(portfolio,"GOOG")[,2])
 
 treynorBlack=alpha/variance
 optimWeigth=treynorBlack/rowSums(abs(treynorBlack))
@@ -98,7 +98,7 @@ forecastErrorsOptim=mean(forecastErrors) #Calculation of average values
 
 resultdf=data.frame(err=c(forecastErrorsSimple,forecastErrorsOptim) ,mean=c(meanSimple,mean(portfolioOptimAlpha[,2])),legend=c(array("Portfolio Simple Alpha",dim=21),"Portfolio Optimal Alpha"))
 
-ggplot() + geom_point(data=resultdf, aes(x=err, y=mean,colour=Legend),size=5) +
+ggplot() + geom_point(data=resultdf, aes(x=err, y=mean,colour=legend),size=5) +
   xlab("Forecast Error(%)") + 
   ylab("Alpha mean") +
   util_plotTheme(base_size = 15)+util_colorScheme()

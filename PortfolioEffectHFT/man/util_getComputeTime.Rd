@@ -16,7 +16,7 @@ Remaining time is reset to maximum time every day at 12am ET.
 }
 \author{Kostin Andrey <andrey.kostin@portfolioeffect.com>}
 \examples{
-\dontrun{ 
+\dontrun{
 util_getComputeTime("timeMax")
 util_getComputeTime("timeLeft")
 }}

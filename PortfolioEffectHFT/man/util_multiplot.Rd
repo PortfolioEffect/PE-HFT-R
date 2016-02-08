@@ -12,7 +12,7 @@
 \description{Plots several ggplot2 charts on one page.}
 \author{Kostin Andrey <andrey.kostin@portfolioeffect.com>}
 \examples{
-\dontrun{ 
+\dontrun{
 dateStart = "2014-11-17 09:30:00"
 dateEnd = "2014-11-17 16:00:00"
 portfolio<-portfolio_create(dateStart,dateEnd)

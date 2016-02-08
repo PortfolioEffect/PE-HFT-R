@@ -8,7 +8,7 @@
 \description{Custom fill scheme for charts based on ggplot2 discrete scale.}
 \author{Kostin Andrey <andrey.kostin@portfolioeffect.com>}
 \examples{
-\dontrun{ 
+\dontrun{
 
 util_fillScheme()
 }}

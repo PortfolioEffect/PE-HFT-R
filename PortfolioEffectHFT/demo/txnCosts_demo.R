@@ -18,7 +18,6 @@ portfolio<-portfolio_create("2014-10-10 09:30:00","2014-10-10 16:00:00")
 portfolio_addPosition(portfolio,"GOOG",1)
 goog<-position_price(portfolio,"GOOG")
 printTime<-goog[,1]
-n=NROW(printTime);
 
 # Create two strategy by moving average differents length
 highFrequencyStrategy<-array(0,dim=NROW(goog))
@@ -67,10 +66,12 @@ plot2<-util_ggplot(util_plot2d(position_quantity(lowFrequencyPortfolioWithTransa
 ############################################################
 
 # portfolio and position variance over time
+PV1=portfolio_variance(highFrequencyPortfolioWithoutTransactionCosts)
+PV2=portfolio_variance(lowFrequencyPortfolioWithoutTransactionCosts)
 util_plot2d(portfolio_variance(highFrequencyPortfolioWithTransactionCosts),title="Variance, daily",legend="HF With Transaction Costs")+
-  util_line2d(portfolio_variance(highFrequencyPortfolioWithoutTransactionCosts)+cbind(array(0,dim=n),array(1/700000,dim=n)),legend="HF Without Transaction Costs")+
+  util_line2d(PV1+cbind(array(0,dim=NROW(PV1)),array(1/700000,dim=NROW(PV1))),legend="HF Without Transaction Costs")+
   util_line2d(portfolio_variance(lowFrequencyPortfolioWithTransactionCosts),legend="LF With Transaction Costs")+
-  util_line2d(portfolio_variance(lowFrequencyPortfolioWithoutTransactionCosts)+cbind(array(0,dim=n),array(1/700000,dim=n)),legend="LF Without Transaction Costs")
+  util_line2d(PV2+cbind(array(0,dim=NROW(PV2)),array(1/700000,dim=NROW(PV2))),legend="LF Without Transaction Costs")
 
 ############################################################
 # Part 4 - Trading strategy expected return
@@ -87,7 +88,8 @@ util_plot2d(portfolio_expectedReturn(highFrequencyPortfolioWithTransactionCosts)
 ############################################################
 
 # portfolio and position Sharpe Ratio over time
+txnCosts=portfolio_txnCosts(lowFrequencyPortfolioWithoutTransactionCosts);
 util_plot2d(portfolio_txnCosts(highFrequencyPortfolioWithTransactionCosts),title="Transactional Costs",legend="HF With Transaction Costs")+
   util_line2d(portfolio_txnCosts(highFrequencyPortfolioWithoutTransactionCosts),legend="HF Without Transaction Costs")+
   util_line2d(portfolio_txnCosts(lowFrequencyPortfolioWithTransactionCosts),legend="LF With Transaction Costs")+
-  util_line2d(portfolio_txnCosts(lowFrequencyPortfolioWithoutTransactionCosts)+cbind(array(0,dim=n),array(5,dim=n)),legend="LF Without Transaction Costs")
+  util_line2d(txnCosts+cbind(array(0,dim=NROW(txnCosts)),array(5,dim=NROW(txnCosts))),legend="LF Without Transaction Costs")

@@ -12,7 +12,7 @@
 \description{Plot probability density by produced by the \link[=portfolio_pdf]{portfolio_pdf( )} or \link[=position_pdf]{position_pdf( )} functions.}
 \author{Kostin Andrey <andrey.kostin@portfolioeffect.com>}
 \examples{
-\dontrun{ 
+\dontrun{
 data(aapl.data) 
 data(goog.data) 
 data(spy.data) 

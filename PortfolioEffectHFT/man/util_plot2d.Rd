@@ -27,7 +27,7 @@ title.size=2)
 \description{Draws a new line plot using a time series of metric values.}
 \author{Kostin Andrey <andrey.kostin@portfolioeffect.com>}
 \examples{
-\dontrun{ 
+\dontrun{
 data(aapl.data) 
 data(goog.data) 
 data(spy.data) 

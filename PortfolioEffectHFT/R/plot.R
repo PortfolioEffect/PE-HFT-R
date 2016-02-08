@@ -4,10 +4,14 @@ setClass("portfolioPlot",
 
 setMethod ("show" , "portfolioPlot",
 		function (object){
-			p=ggplot() + geom_line(data=object@data, aes_string(x='Time',y='Data',col='legend'),size=object@option$line_size,fill="#004A61") +
+			p=ggplot() + geom_line(data=object@data, aes_string(x='Time',y='Data',col='legend'),size=object@option$line_size) +
 					xlab(NULL) + 
 					ylab(NULL) +
-					ggtitle(bquote(atop(.(object@option$title), atop(italic(.(object@option$subtitle)), "")))) +
+					ggtitle(if(!is.null(object@option$subtitle)){
+					  bquote(atop(.(object@option$title), atop(italic(.(object@option$subtitle)), "")))
+					  }else{
+					    object@option$title
+					  }) +
 					scale_x_continuous(breaks=object@breaks,
 							labels=object@labels)+
 					util_plotTheme(base_size=object@option$font_size,bw=object@bw,axis.text.size=object@option$axis.text.size,
@@ -20,10 +24,14 @@ setMethod ("show" , "portfolioPlot",
 		})
 
 util_ggplot<-function (portfolioPlot){
-			p=ggplot() + geom_line(data=portfolioPlot@data, aes_string(x='Time',y='Data',col='legend'),size=portfolioPlot@option$line_size,fill="#004A61") +
+			p=ggplot() + geom_line(data=portfolioPlot@data, aes_string(x='Time',y='Data',col='legend'),size=portfolioPlot@option$line_size) +
 					xlab(NULL) + 
 					ylab(NULL) +
-					ggtitle(bquote(atop(.(portfolioPlot@option$title), atop(italic(.(portfolioPlot@option$subtitle)), "")))) +
+					ggtitle(if(!is.null(portfolioPlot@option$subtitle)){
+					  bquote(atop(.(portfolioPlot@option$title), atop(italic(.(portfolioPlot@option$subtitle)), "")))
+					}else{
+					  portfolioPlot@option$title
+					}) +
 					scale_x_continuous(breaks=portfolioPlot@breaks,
 							labels=portfolioPlot@labels)+
 					util_plotTheme(base_size=portfolioPlot@option$font_size,bw=portfolioPlot@bw,axis.text.size=portfolioPlot@option$axis.text.size,
@@ -42,10 +50,14 @@ plotPlot2df<-function (x,y){
 setMethod("plot" ,c(x="portfolioPlot",y="missing"),plotPlot2df)
 
 plotPlot2d<-function (portfolioPlot){
-			p=ggplot() + geom_line(data=portfolioPlot@data, aes_string(x='Time',y='Data',col='legend'),size=portfolioPlot@option$line_size,fill="#004A61") +
+			p=ggplot() + geom_line(data=portfolioPlot@data, aes_string(x='Time',y='Data',col='legend'),size=portfolioPlot@option$line_size,col="#004A61") +
 					xlab(NULL) + 
 					ylab(NULL) +
-					ggtitle(bquote(atop(.(portfolioPlot@option$title), atop(italic(.(portfolioPlot@option$subtitle)), "")))) +
+					ggtitle(if(!is.null(portfolioPlot@option$subtitle)){
+					  bquote(atop(.(portfolioPlot@option$title), atop(italic(.(portfolioPlot@option$subtitle)), "")))
+					}else{
+					  portfolioPlot@option$title
+					}) +
 					scale_x_continuous(breaks=portfolioPlot@breaks,
 							labels=portfolioPlot@labels)+
 					util_plotTheme(base_size=portfolioPlot@option$font_size,bw=portfolioPlot@bw,axis.text.size=portfolioPlot@option$axis.text.size,
@@ -167,6 +179,7 @@ util_plot2df<-function(formula,data,title=NULL,subtitle=NULL,font_size=10,line_s
     legend=unique(legends)
     for(leg in legend){
       temp1=result[result$legend==leg,]
+      temp1=temp1[!is.na(temp1$Data),]
       n=NROW(temp1)
       if(n>=46800){
         s=n%/%23400
@@ -188,7 +201,11 @@ util_plot2df<-function(formula,data,title=NULL,subtitle=NULL,font_size=10,line_s
     p<-ggplot() + geom_line(data=result, aes_string(x='x',y='y',col='legend'),size=line_size) +
       xlab(fml$right.name) + 
       ylab(fml$left.name) +
-      ggtitle(bquote(atop(.(title), atop(italic(.(subtitle)), "")))) +
+      ggtitle(if(!is.null(subtitle)){
+        bquote(atop(.(title), atop(italic(.(subtitle)), "")))
+      }else{
+        title
+      }) +
       util_plotTheme(base_size=font_size,bw=bw,axis.text.size=axis.text.size,title.size=title.size,has.subtitle=T)+
 	  util_colorScheme()
     p
@@ -276,8 +293,9 @@ setMethod("+", signature(e1 = "portfolioPlot", e2 = "portfolioPlot"), function(e
 				legend=unique(legends)
 				for(leg in legend){
 					temp1=result[result$legend==leg,]
+					temp1=temp1[!is.na(temp1$Data),]
 					n=NROW(temp1)
-					if(n>=46800){
+					if(n>46800){
 						s=n%/%23400
 						tempSum=c(array(0,dim=s-1),(cumsum(temp1$Data)[-(1:(s-1))]-cumsum(c(0,temp1$Data))[-((n-s+2):(n+1))])/s)
 						result2=rbind(result2,data.frame(Data=tempSum[(1:n)%%s==0],Time=temp1$Time[(1:n)%%s==0],legend=leg))	
@@ -297,7 +315,7 @@ setMethod("+", signature(e1 = "portfolioPlot", e2 = "portfolioPlot"), function(e
 
 
 
-util_summary<-function(portfolio){
+util_summary<-function(portfolio,bw=FALSE){
 
 	portfolioTemp=portfolio_create(portfolio)
 	set<-portfolio_getSettings(portfolioTemp)
@@ -317,9 +335,9 @@ util_summary<-function(portfolio){
 	portfolio_variance(portfolioTemp)
 	portfolio_endBatch(portfolioTemp)
 	
-	p1<-util_ggplot(util_plot2d(portfolio_value(portfolioTemp),title='Portfolio value ($)'))
-	p4<-util_ggplot(util_plot2d(portfolio_expectedReturn(portfolioTemp),title="Portfolio Expected Return"))+geom_hline(yintercept=0,col='red',size=0.5)
-	p5<-util_ggplot(util_plot2d(portfolio_variance(portfolioTemp),title="Portfolio Variance"))
+	p1<-util_ggplot(util_plot2d(portfolio_value(portfolioTemp),title='Portfolio value ($)',bw=bw))
+	p4<-util_ggplot(util_plot2d(portfolio_expectedReturn(portfolioTemp),title="Portfolio Expected Return",bw=bw))+geom_hline(yintercept=0,col='red',size=0.5)
+	p5<-util_ggplot(util_plot2d(portfolio_variance(portfolioTemp),title="Portfolio Variance",bw=bw))
 
 	tempSet$resultsSamplingInterval='last'
 	portfolio_settings(portfolioTemp,tempSet)
@@ -370,7 +388,7 @@ util_summary<-function(portfolio){
 			xlab(NULL) + 
 			ylab(NULL) +
 			xlim(rev(symbols))+
-			ggtitle('Position Weight (%)')+util_plotTheme(axis.text.size=1.5) 
+			ggtitle('Position Weight (%)')+util_plotTheme(axis.text.size=1.5,bw=bw) 
 	
 	
 	
@@ -382,7 +400,7 @@ util_summary<-function(portfolio){
 	        xlab(NULL) + 
 			ylab(NULL) +
 			xlim(rev(symbols))+
-			ggtitle('Position Profit ($)')+util_plotTheme(axis.text.size=1.5) + scale_fill_brewer()
+			ggtitle('Position Profit ($)')+util_plotTheme(axis.text.size=1.5,bw=bw) + scale_fill_brewer()
 	
 	portfolio_settings(portfolioTemp,set)
 	
@@ -416,16 +434,14 @@ util_plotTheme<-function (base_size = 10, base_family = "sans", horizontal = TRU
                axis.text.x = element_text(vjust = 1), axis.text.y = element_text(hjust = 0), 
                axis.ticks = element_line(), axis.ticks.y = element_blank(), 
                axis.title = element_text(size = rel(1)), axis.title.x = element_text(size=base_size*1.5), 
-               axis.title.y = element_text(angle = 90,size=base_size*1.5), axis.ticks.length = unit(-base_size * 
-                                                                                                      0.5, "points"), axis.ticks.margin = unit(base_size * 
-                                                                                                                                                 1.25, "points"),
-               legend.margin = unit(base_size * 1.5, "points"), legend.key = element_rect(linetype = 0), 
+               axis.title.y = element_text(angle = 90,size=base_size*1.5), axis.ticks.length = unit(base_size * 
+                                                                                                      0.5, "points"),
+               legend.margin = unit(-0.1, "cm"), legend.key = element_rect(linetype = 0,fill = bgcolors["ebg"]), 
                legend.key.size = unit(1.2, "lines"), legend.key.height = NULL, 
                legend.key.width = NULL, legend.text = element_text(size = rel(1.25)), 
                legend.text.align = NULL,legend.title=element_blank(), legend.title.align = NULL,
-               legend.direction = NULL, legend.justification = "center", 
-               legend.position = "top",
-               panel.background = element_rect(linetype = 0), panel.border = element_blank(), 
+               legend.direction = NULL, legend.justification = "center", legend.position = "top",
+               panel.background = element_rect(linetype = 0,fill = bgcolors["ebg"]), panel.border = element_blank(), 
                panel.grid.major = element_line(colour = bgcolors["line"], size = rel(1)), 
                panel.grid.minor = element_blank(), panel.margin = unit(0.25, 
                                                                        "lines"), strip.background = element_rect(fill = bgcolors["ebg"], 
@@ -433,7 +449,7 @@ util_plotTheme<-function (base_size = 10, base_family = "sans", horizontal = TRU
                strip.text.x = element_text(), strip.text.y = element_text(angle = -90), 
                plot.background = element_rect(fill = bgcolors["ebg"], 
                                               colour = NA), plot.title = element_text(size = rel(title.size)), plot.margin = unit(c(0, 
-                                                                                                                       5, 6, 5) * 2, "points"), complete = TRUE)
+                                                                                                                       5, 6, 5) * 2, "points"))
   if (horizontal) {
     ret <- ret + theme(panel.grid.major.x = element_blank())
   }

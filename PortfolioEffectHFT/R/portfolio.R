@@ -19,6 +19,7 @@ setMethod ("show" , "portfolio" ,
 			r<-rbind(r,c('Portfolio factor model ',		set$factorModel))
 			r<-rbind(r,c('Density model ',       		set$densityModel))
 			r<-rbind(r,c('Drift term enabled ',        	set$driftTerm))
+			r<-rbind(r,c('Results NA filter ',        	set$resultsNAFilter))
 			r<-rbind(r,c('Results sampling interval ',	set$resultsSamplingInterval))
 			r<-rbind(r,c('Input sampling interval ',	set$inputSamplingInterval))
 			r<-rbind(r,c('Transaction cost per share ',	set$txnCostPerShare))
@@ -71,9 +72,13 @@ setMethod ("show" , "portfolio" ,
 util_summaryPlot<-function (x,y){	
 util_summary(x)
 }
+#util_summaryPlotBW<-function (x,y){	
+#	util_summary(x,bw=y)
+#}
 setMethod("plot" ,c(x="portfolio",y="missing"),util_summaryPlot)
+#setMethod("plot" ,c(x="portfolio",y='logical'),util_summaryPlotBW)
 
-portfolio_mainSettings<-function(portfolio){
+portfolio_defaultSettings<-function(portfolio){
 	portfolio_settings(portfolio,portfolioMetricsMode="portfolio",
 				windowLength = "1d",
 				holdingPeriodsOnly = FALSE,
@@ -84,8 +89,9 @@ portfolio_mainSettings<-function(portfolio){
 				factorModel = "sim",
 				densityModel="GLD",
 				driftTerm=FALSE,
+				resultsNAFilter= TRUE,
 				resultsSamplingInterval = "1s",
-				inputSamplingInterval="none",
+				inputSamplingInterval="1s",
 				timeScale="1d",
 				txnCostPerShare=0,
 				txnCostFixed=0)
@@ -103,7 +109,7 @@ portfolio_settings<-function(
 								"shortSalesMode","jumpsModel","noiseModel", "fractalPriceModel",             
 								"factorModel","resultsSamplingInterval","inputSamplingInterval",  
 								"timeScale","driftTerm","txnCostPerShare",        
-								"txnCostFixed","densityModel" ))){
+								"txnCostFixed","densityModel",'resultsNAFilter' ))){
 				stopMessage('WRONG_SETTINGS_ARGUMENTS')
 			}
 		if(names(change[i]) %in% c( 'fractalPriceModel','holdingPeriodsOnly','noiseModel','resultsSamplingInterval','inputSamplingInterval','driftTerm','densityModel')){
@@ -138,7 +144,11 @@ portfolio_settings<-function(
 }
 change[removeList]<-NULL
 for(i in 1:length(change)){
+	if(names(change[i]) %in% 	c( 'resultsNAFilter')){
+		.jcall(portfolio@java,returnSig="V", method="setNaNFiltered",as.logical(change[i]))
+	}else{
 	.jcall(portfolio@java,returnSig="V", method="setParam",names(change[i]),paste(change[[i]]))
+}
 }
 }
 
@@ -153,6 +163,7 @@ portfolio_settingsRiskMetrics<-function(portfolio){
 			factorModel = "sim",
 			densityModel="NORMAL",
 			driftTerm=FALSE,
+			resultsNAFilter= TRUE,
 			resultsSamplingInterval = "1d",
 			inputSamplingInterval="1d",
 			timeScale="1d",
@@ -172,6 +183,7 @@ portfolio_getSettings<-function(portfolio){
 	temp$noiseModel<-as.logical(.jcall(portfolio@java,returnSig="S", method="getParam","isNoiseModelEnabled"))
 	temp$fractalPriceModel<-as.logical(.jcall(portfolio@java,returnSig="S", method="getParam","isNoiseModelEnabled"))
 	temp$factorModel<-.jcall(portfolio@java,returnSig="S", method="getParam","factorModel")
+	temp$resultsNAFilter<-.jcall(portfolio@java,returnSig="Z", method="isNaNFiltered")
 	temp$resultsSamplingInterval<-.jcall(portfolio@java,returnSig="S", method="getParam","samplingInterval")
 	temp$inputSamplingInterval<-.jcall(portfolio@java,returnSig="S", method="getParam","priceSamplingInterval")
 	temp$timeScale<-.jcall(portfolio@java,returnSig="S", method="getParam","timeScale")
@@ -181,64 +193,6 @@ portfolio_getSettings<-function(portfolio){
 	temp$densityModel<-.jcall(portfolio@java,returnSig="S", method="getParam","densityApproxModel")
 	temp
 }
-#portfolio_create<-function(
-#		index,fromTime,toTime,priceDataIx){
-#}
-
-#portfolio_create_funct=function(
-#		index,fromTime,toTime){
-#	util_validate()
-##	clientConnection=get('clientConnection', envir=globalenv())
-#	clientConnection=getOption('clientConnection')
-#	portfolio=new("portfolio", java=.jnew("com.portfolioeffect.quant.client.portfolio.Portfolio",clientConnection),optimization_info=NULL)
-#	result<-.jcall(portfolio@java,returnSig="Lcom/portfolioeffect/quant/client/result/MethodResult;", method="setFromTime", fromTime)
-#	util_checkErrors(result)
-#	result<-.jcall(portfolio@java,returnSig="Lcom/portfolioeffect/quant/client/result/MethodResult;", method="setToTime", toTime)
-#	util_checkErrors(result)
-#	result<-.jcall(portfolio@java,returnSig="Lcom/portfolioeffect/quant/client/result/MethodResult;", method="addIndex", index)
-#	util_checkErrors(result)
-#	portfolio_mainSettings(portfolio)
-#	return(portfolio)
-#}
-#portfolio_create_functSPY=function(fromTime,toTime){
-#	portfolio_create_funct("SPY",fromTime,toTime)
-#}
-#portfolio_create_funct_SPY=function(index,fromTime){
-#	portfolio_create_funct("SPY",index,fromTime)
-#}
-
-#setMethod("portfolio_create" ,c(index="character",fromTime="character",toTime="character",priceDataIx="missing"),portfolio_create_funct)
-#setMethod("portfolio_create" ,c(index="missing",fromTime="character",toTime="character",priceDataIx="missing"),portfolio_create_functSPY)
-#setMethod("portfolio_create" ,c(index="character",fromTime="character",toTime="missing",priceDataIx="missing"),portfolio_create_funct_SPY)
-		
-#setMethod("portfolio_create" ,c(index="missing",fromTime="missing",toTime="missing",priceDataIx="matrix"),function(
-#				priceDataIx){
-#			util_validate()
-#			clientConnection=getOption('clientConnection')
-#			portfolio=new("portfolio", java=.jnew("com.portfolioeffect.quant.client.portfolio.Portfolio",clientConnection),optimization_info=NULL)
-#			result<-.jcall(portfolio@java,returnSig="Lcom/portfolioeffect/quant/client/result/MethodResult;", method="addIndex", as.double(priceDataIx[,2]),.jlong(priceDataIx[,1]))
-#			util_checkErrors(result)
-#			portfolio_mainSettings(portfolio)
-#			return(portfolio)
-#		})
-#
-#setMethod("portfolio_create" ,c(index="matrix",fromTime="missing",toTime="missing",priceDataIx="missing"),function(
-#				index){
-#			util_validate()
-#			clientConnection=getOption('clientConnection')
-#			portfolio=new("portfolio", java=.jnew("com.portfolioeffect.quant.client.portfolio.Portfolio",clientConnection),optimization_info=NULL)
-#			result<-.jcall(portfolio@java,returnSig="Lcom/portfolioeffect/quant/client/result/MethodResult;", method="addIndex", as.double(index[,2]),.jlong(index[,1]))
-#			util_checkErrors(result)
-#			portfolio_mainSettings(portfolio)
-#			return(portfolio)
-#		})
-
-#setMethod("portfolio_create" ,c(index="portfolio",fromTime="missing",toTime="missing",priceDataIx="missing"),function(
-#				index){
-#			util_validate()
-#			portfolio=new("portfolio", java=.jnew("com.portfolioeffect.quant.client.portfolio.Portfolio",index@java),optimization_info=NULL)
-#			return(portfolio)
-#		})
 
 portfolio_create<-function(index=NULL,fromTime=NULL,toTime=NULL,priceDataIx=NULL){
 	
@@ -254,7 +208,7 @@ portfolio_create<-function(index=NULL,fromTime=NULL,toTime=NULL,priceDataIx=NULL
 		portfolio=new("portfolio", java=.jnew("com.portfolioeffect.quant.client.portfolio.Portfolio",clientConnection),optimization_info=NULL)
 		result<-.jcall(portfolio@java,returnSig="Lcom/portfolioeffect/quant/client/result/MethodResult;", method="addIndex", as.double(priceDataIx[,2]),.jlong(priceDataIx[,1]))
 		util_checkErrors(result)
-		portfolio_mainSettings(portfolio)
+		portfolio_defaultSettings(portfolio)
 		return(portfolio)
 	}
 	if(((class(fromTime)=="character")&(class(toTime)=="character")&(is.null(priceDataIx)))||((class(fromTime)=="character")&(class(index)=="character")&(is.null(toTime))&(is.null(priceDataIx)))){
@@ -275,7 +229,7 @@ portfolio_create<-function(index=NULL,fromTime=NULL,toTime=NULL,priceDataIx=NULL
 		util_checkErrors(result)
 		result<-.jcall(portfolio@java,returnSig="Lcom/portfolioeffect/quant/client/result/MethodResult;", method="addIndex", index)
 		util_checkErrors(result)
-		portfolio_mainSettings(portfolio)
+		portfolio_defaultSettings(portfolio)
 		return(portfolio)
 	}
 	if((class(index)=="portfolio")&(is.null(fromTime))&(is.null(toTime))&(is.null(priceDataIx))){
@@ -321,7 +275,6 @@ setMethod("portfolio_addPosition" ,c(portfolio="portfolio",symbol="character",qu
 	if(!is.numeric(time)){
 		time<-util_dateToPOSIXTime(time)
 	}
-			time<-util_dateToPOSIXTime(time)
 			result<-.jcall(portfolio@java,returnSig="Lcom/portfolioeffect/quant/client/result/MethodResult;", method="addPosition",symbol, as.double(priceData[,2]),.jlong(priceData[,1]), as.integer(quantity),.jlong(time))
 			util_checkErrors(result)
 		})

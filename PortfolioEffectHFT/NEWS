@@ -1,3 +1,23 @@
+PortfolioEffectHFT v1.5 (Release date: 2016-02-01)
+==============
+
+Changes:
+
+* Switched to using ggplot 2.0
+* Added "bw" (black and white) output option to util_summary()
+* Added "resultsNAFilter" to portfolio_settings()
+
+PortfolioEffectHFT v1.4 (Release date: 2015-12-17)
+==============
+
+Changes:
+
+* Improvements in estimates precision 
+* Fixed a number of bugs that occurred only under high load
+* Improvements in server-side data caching 
+* Output "NaN" for missing values, computational errors, warm-up periods and possible artifacts
+
+
 PortfolioEffectHFT v1.3 (Release date: 2015-11-08)
 ==============
 

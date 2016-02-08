@@ -27,23 +27,20 @@ title.size=2)
 \description{Draws a new line plot using a a dataframe with one or many metric values.}
 \author{Kostin Andrey <andrey.kostin@portfolioeffect.com>}
 \examples{
-\dontrun{ 
-data(aapl.data) 
-data(goog.data) 
-data(spy.data) 
-portfolio<-portfolio_create(priceDataIx=spy.data)
-portfolio_settings(portfolio,portfolioMetricsMode="price",windowLength = '3600s')
-portfolio_addPosition(portfolio,'GOOG',100,priceData=goog.data)  
-portfolio_addPosition(portfolio,'AAPL',300,priceData=aapl.data) 
-portfolio_addPosition(portfolio,'SPY',150,priceData=spy.data)
-metric=portfolio_return(portfolio)
-n=NROW(metric)
-return<-data.frame(value=metric[,2],time=metric[,1],legend=array("Return",dim=n))
-util_plot2df(value~time,return,title="Portfolio return")
+\dontrun{
+portfolio<-portfolio_create(fromTime="2014-10-02 09:30:00", toTime="2014-10-02 16:00:00")
+portfolio_settings(portfolio,resultsSamplingInterval='60s')
+portfolio_addPosition(portfolio,c('SPY','C'),c(500,600))
+metricSPY=position_return(portfolio,'SPY')
+n=NROW(metricSPY)
+metricSPY<-data.frame(metricSPY,legend=array("SPY return",dim=n))
+util_plot2df(value~time,metricSPY,title="Return, SPY")
 
-metric=portfolio_variance(portfolio)
-return<-data.frame(metric,legend=array("Return",dim=n))
-util_plot2df(value~time,return,title="Portfolio variance")
+metricC=position_return(portfolio,'C')
+n=NROW(metricC)
+metricC<-data.frame(metricC,legend=array("C return",dim=n))
+metric=rbind(metricSPY,metricC)
+util_plot2df(value~time,metric,title="Return")
 }}
 \keyword{PortfolioEffectHFT}
 %\concept{plot market data, plot}

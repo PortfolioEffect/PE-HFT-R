@@ -50,7 +50,7 @@ util_plot2d(portfolio_variance(optimPortfolioOneConstraints),"Portfolio Variance
   util_line2d(portfolio_variance(optimPortfolioTwoConstraints),legend="Optimal Portfolio, with Constraints:\nReturn>=0, \nSum of Abs Weights AAPL and GOOG >=0.5")
 
 ############################################################
-# Part 6 - Compute optimal po rtfolio sum of absolute weights
+# Part 6 - Compute optimal portfolio sum of absolute weights
 ############################################################
 
 sumOfAbsWeightsOptimPortfolio=abs(position_weight(optimPortfolioOneConstraints,"AAPL")[,2])+abs(position_weight(optimPortfolioOneConstraints,"GOOG")[,2])
